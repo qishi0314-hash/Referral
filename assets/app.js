@@ -253,7 +253,7 @@ function renderProviders() {
           ${p.session_format !== "Unknown" ? `<span class="badge badge-blue">${escapeHtml(p.session_format)}</span>` : ""}
         </div>
       </div>
-      ${p.insurance.length ? `<div class="card-insurance">${p.insurance.slice(0, 5).map((i) => `<span class="badge">${escapeHtml(i)}</span>`).join(" ")}${p.insurance.length > 5 ? `<span class="badge">+${p.insurance.length - 5}</span>` : ""}</div>` : ""}
+      ${p.insurance.length ? `<div class="card-insurance">${p.insurance.slice(0, 5).map((i) => `<span class="badge">${escapeHtml(i)}</span>`).join("")}${p.insurance.length > 5 ? `<span class="badge">+${p.insurance.length - 5}</span>` : ""}</div>` : ""}
       ${p.specialties.length ? `<p class="card-specialties"><strong>Specialties:</strong> ${escapeHtml(p.specialties.join(", "))}</p>` : ""}
       ${p.address ? `<p class="card-address">${escapeHtml(p.address)}</p>` : ""}
     </article>
@@ -303,7 +303,7 @@ async function openProvider(id) {
         ${provider.address ? `<div class="modal-section"><h4>Address</h4><p>${escapeHtml(provider.address)}</p></div>` : ""}
         ${provider.licensed_states?.length ? `<div class="modal-section"><h4>Licensed states</h4><p>${escapeHtml(provider.licensed_states.join(", "))}</p></div>` : ""}
       </div>
-      ${provider.insurance?.length ? `<div class="modal-section"><h4>Insurance accepted</h4><div class="badges">${provider.insurance.map((i) => `<span class="badge">${escapeHtml(i)}</span>`).join("")}</div></div>` : ""}
+      ${provider.insurance?.length ? `<div class="modal-section"><h4>Insurance accepted</h4><div class="tag-list">${provider.insurance.map((i) => `<span class="badge">${escapeHtml(i)}</span>`).join("")}</div></div>` : ""}
       ${provider.specialties?.length || provider.modalities?.length ? `<div class="modal-grid">
         ${provider.specialties?.length ? `<div class="modal-section"><h4>Specialties</h4><p>${escapeHtml(provider.specialties.join(", "))}</p></div>` : ""}
         ${provider.modalities?.length ? `<div class="modal-section"><h4>Modalities</h4><p>${escapeHtml(provider.modalities.join(", "))}</p></div>` : ""}
