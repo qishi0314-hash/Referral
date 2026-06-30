@@ -1,9 +1,6 @@
-// Cloud sync via Google Sheets (recommended — see docs/GOOGLE_SETUP.md)
-// Leave googleScriptUrl empty until admin completes one-time Google setup.
+// Leave empty for static GitHub Pages (comments saved in browser).
+// When deployed to Vercel, set apiBase to your site URL e.g. "https://your-app.vercel.app"
 window.APP_CONFIG = {
-  googleScriptUrl: "",
+  googleScriptUrl: "https://script.google.com/macros/s/AKfycbylYn2g8isnHqAkNz9iSrczrBsypnJP-QjqtkOpysh6Bar7b2WsEK0gbGuYFb_Bng/exec",
   apiBase: "",
-  // Only used for local/offline mode when googleScriptUrl is empty:
-  staffPassword: "fordham-cps-staff",
-  editorPassword: "fordham-cps-editor",
 };
