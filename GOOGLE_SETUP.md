@@ -8,7 +8,7 @@
 ## 原理
 
 - 网站仍放在 GitHub Pages（现在的链接）
-- 备注和描述修改保存在 **Google 表格**（云端）
+- 备注、provider 修改、新建/删除保存在 **Google 表格**（云端）
 - 所有员工、所有浏览器看到的都是同一份数据
 - 管理员还可以直接在 Google 表格里查看所有备注
 
@@ -22,17 +22,19 @@
 2. 命名为：`CPS Referral Staff Notes`
 3. 创建两个工作表（底部标签页），分别命名为：
    - `Comments`
-   - `Descriptions`
+   - `Providers`
 
 4. 在 **Comments** 第一行输入表头：
 
-   | created_at | provider_id | author_name | body |
-   |------------|-------------|-------------|------|
+   | created_at | provider_id | author_name | body | comment_id |
+   |------------|-------------|-------------|------|------------|
 
-5. 在 **Descriptions** 第一行输入表头：
+5. 在 **Providers** 第一行输入表头：
 
-   | provider_id | description | updated_by | updated_at |
-   |-------------|-------------|------------|------------|
+   | id | active | data | updated_at | updated_by |
+   |----|--------|------|------------|------------|
+
+   （`data` 列存完整 provider 信息的 JSON，由网站自动写入，无需手填。）
 
 ### 第 2 步：添加 Apps Script
 
@@ -56,10 +58,12 @@
 4. 点击 **部署**，按提示授权 Google 账号
 5. **复制 Web 应用 URL**（形如 `https://script.google.com/macros/s/...../exec`）
 
+> **更新代码后**：必须点 **部署 → 管理部署 → 编辑 → 版本选「新版本」→ 部署**，否则网站仍运行旧脚本。
+
 ### 第 4 步：连接到网站
 
 **重要：** 线上网站是从 **`gh-pages` 分支** 发布的，不是 `main`。  
-请编辑 **`gh-pages` 分支** 里的 `assets/config.js`（路径与 `docs/assets/config.js` 相同内容）：
+请编辑 **`gh-pages` 分支** 里的 `assets/config.js`：
 
 ```javascript
 window.APP_CONFIG = {
@@ -80,7 +84,11 @@ window.APP_CONFIG = {
 2. 点击 **Staff login**，输入管理员发给他们的访问码
 3. 搜索 provider → 点击卡片
 4. **员工码**：可添加备注（所有人可见）
-5. **编辑码**：还可点击 Description 旁的 **Edit** 修改描述
+5. **编辑码** 还可：
+   - 点击 **+ Add provider** 新建条目
+   - 在 provider 详情里 **Edit provider** 修改所有字段（电话、邮箱、保险、专长等）
+   - **Delete provider** 删除（有确认提示）
+   - **Delete** 删除 staff 备注
 
 换电脑、换浏览器、同事之间都会看到相同内容。
 
@@ -91,15 +99,16 @@ window.APP_CONFIG = {
 | 访问码 | 谁能拿到 | 能做什么 |
 |--------|----------|----------|
 | 员工码 | 所有 CPS staff | 添加 staff 备注 |
-| 编辑码 | 负责人 / 少数管理员 | 修改描述 + 添加备注 |
+| 编辑码 | 负责人 / 少数管理员 | 新建/编辑/删除 provider、删除备注、添加备注 |
 
 密码只保存在 Google Apps Script 里（不在公开网页代码中）。
 
 ---
 
-## 在 Google 表格里查看备注
+## 在 Google 表格里查看数据
 
-打开 `CPS Referral Staff Notes` 表格 → **Comments** 标签页，可看到所有备注记录，方便备份或导出。
+- **Comments** 标签页：所有 staff 备注
+- **Providers** 标签页：editor 新建或修改的 provider 记录
 
 ---
 
@@ -111,8 +120,11 @@ A: 不需要。只有设置表格的管理员需要 Google 账号。
 **Q: 还需要 Vercel 吗？**  
 A: 不需要。Google 表格就是云端数据库。
 
-**Q: 数据安全吗？**  
-A: 表格可设为仅管理员可编辑；网站通过访问码控制谁能写入。不要把编辑码发给所有员工。
-
 **Q: 修改 config.js 后没生效？**  
-A: 等 1–2 分钟，然后强制刷新页面（Ctrl+Shift+R）。
+A: 确认改的是 **`gh-pages` 分支** 的 `assets/config.js`。等 1–2 分钟后强制刷新（Ctrl+Shift+R）。
+
+**Q: 登录了但还是不能编辑？**  
+A: 必须用 **编辑码** 登录。登录后右上角应显示 **Editor mode**。需要已配置 `googleScriptUrl` 才能保存 provider 修改。
+
+**Q: 更新了 Apps Script 但没新功能？**  
+A: 在 Apps Script 里 **重新部署新版本**（见第 3 步说明）。
