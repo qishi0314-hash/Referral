@@ -16,11 +16,15 @@ const SPECIALTY_OPTIONS = [
   "Grief/Bereavement", "LGBTQ+", "Substance Abuse", "Trauma", "Veterans",
 ];
 
-const config = window.APP_CONFIG || { apiBase: "", staffPassword: "fordham-cps-staff" };
+const config = window.APP_CONFIG || {
+  apiBase: "",
+  staffPassword: "fordham-cps-staff",
+  editorPassword: "fordham-cps-editor",
+};
 
 let providers = [];
 let comments = loadLocalComments();
-let isStaff = false;
+let auth = { authenticated: false, canComment: false, canEdit: false, role: null };
 let selectedProvider = null;
 
 const filters = {
@@ -44,12 +48,16 @@ function saveLocalComments() {
 }
 
 function loadStaffSession() {
-  return sessionStorage.getItem("cps_staff") === "1";
+  try {
+    return JSON.parse(sessionStorage.getItem("cps_auth") || "null");
+  } catch {
+    return null;
+  }
 }
 
-function setStaffSession(on) {
-  if (on) sessionStorage.setItem("cps_staff", "1");
-  else sessionStorage.removeItem("cps_staff");
+function setStaffSession(state) {
+  if (state) sessionStorage.setItem("cps_auth", JSON.stringify(state));
+  else sessionStorage.removeItem("cps_auth");
 }
 
 async function api(path, options = {}) {
@@ -66,11 +74,19 @@ async function api(path, options = {}) {
 async function init() {
   const res = await fetch("data/providers.json");
   providers = await res.json();
-  isStaff = loadStaffSession();
+  auth = loadStaffSession() || { authenticated: false, canComment: false, canEdit: false, role: null };
   if (config.apiBase) {
     try {
-      const auth = await api("/api/auth");
-      isStaff = auth?.authenticated;
+      const data = await api("/api/auth");
+      if (data?.authenticated) {
+        auth = {
+          authenticated: true,
+          canComment: data.canComment,
+          canEdit: data.canEdit,
+          role: data.role,
+        };
+        setStaffSession(auth);
+      }
     } catch { /* static fallback */ }
   }
   renderStaffControls();
@@ -81,16 +97,16 @@ async function init() {
 function renderStaffControls() {
   const el = document.getElementById("staff-controls");
   const nameInput = document.getElementById("staff-name");
-  if (isStaff) {
+  if (auth.authenticated) {
     nameInput.classList.remove("hidden");
     el.innerHTML = `<div style="display:flex;align-items:center;gap:0.75rem">
-      <span style="font-size:0.85rem;color:#065f46">Staff mode</span>
+      <span style="font-size:0.85rem;color:#065f46">${auth.canEdit ? "Editor mode" : "Staff mode"}</span>
       <button class="btn btn-ghost" id="logout-btn">Sign out</button>
     </div>`;
     document.getElementById("logout-btn").onclick = async () => {
       if (config.apiBase) await api("/api/auth", { method: "DELETE" }).catch(() => {});
-      setStaffSession(false);
-      isStaff = false;
+      setStaffSession(null);
+      auth = { authenticated: false, canComment: false, canEdit: false, role: null };
       nameInput.classList.add("hidden");
       renderStaffControls();
       if (selectedProvider) openProvider(selectedProvider.id);
@@ -108,8 +124,8 @@ function showLoginModal() {
   root.innerHTML = `<div class="modal-panel" style="max-width:24rem;margin:4rem auto">
     <div class="modal-header"><h2 style="margin:0;font-size:1.1rem">Staff access</h2></div>
     <div class="modal-body">
-      <p style="font-size:0.875rem;color:#64748b;margin:0 0 1rem">Sign in to add comments and update listings.</p>
-      <input type="password" id="login-password" placeholder="Staff password" />
+      <p style="font-size:0.875rem;color:#64748b;margin:0 0 1rem">Enter your access code. Staff codes add notes; editor codes edit descriptions and save to the database.</p>
+      <input type="password" id="login-password" placeholder="Access code" />
       <p id="login-error" class="hidden" style="color:#dc2626;font-size:0.85rem;margin:0.5rem 0 0"></p>
       <div style="display:flex;justify-content:flex-end;gap:0.5rem;margin-top:1rem">
         <button class="btn btn-ghost" id="login-cancel">Cancel</button>
@@ -130,15 +146,25 @@ function showLoginModal() {
           body: JSON.stringify({ password }),
         });
         if (!res.ok) throw new Error("bad password");
-      } else if (password !== config.staffPassword) {
+        const data = await res.json();
+        auth = {
+          authenticated: true,
+          canComment: data.canComment,
+          canEdit: data.canEdit,
+          role: data.role,
+        };
+      } else if (password === config.editorPassword) {
+        auth = { authenticated: true, canComment: true, canEdit: false, role: "editor" };
+      } else if (password === config.staffPassword) {
+        auth = { authenticated: true, canComment: true, canEdit: false, role: "staff" };
+      } else {
         throw new Error("bad password");
       }
-      setStaffSession(true);
-      isStaff = true;
+      setStaffSession(auth);
       closeModal();
       renderStaffControls();
     } catch {
-      err.textContent = "Invalid staff password";
+      err.textContent = "Invalid access code";
       err.classList.remove("hidden");
     }
   };
@@ -283,26 +309,60 @@ async function openProvider(id) {
         ${provider.modalities?.length ? `<div class="modal-section"><h4>Modalities</h4><p>${escapeHtml(provider.modalities.join(", "))}</p></div>` : ""}
       </div>` : ""}
       ${websiteLinks.length ? `<div class="modal-section"><h4>Websites & profiles</h4>${websiteLinks.map(([label, url]) => `<a class="link-btn" href="${normalizeUrl(url)}" target="_blank" rel="noopener">${label} ↗</a> `).join("")}</div>` : ""}
-      ${provider.description ? `<div class="modal-section"><h4>Description</h4><p style="white-space:pre-wrap">${escapeHtml(provider.description)}</p></div>` : ""}
+      <div class="modal-section" id="description-section">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:0.35rem">
+          <h4 style="margin:0">Description</h4>
+          ${auth.canEdit && config.apiBase ? `<button class="btn btn-ghost" id="edit-desc-btn" style="padding:0.25rem 0.5rem;font-size:0.8rem">Edit</button>` : ""}
+        </div>
+        <div id="description-content">
+          ${provider.description ? `<p style="white-space:pre-wrap;margin:0">${escapeHtml(provider.description)}</p>` : `<p style="color:#64748b;margin:0">No description yet.</p>`}
+        </div>
+      </div>
       <div class="comment-box">
         <h4 style="margin:0 0 0.75rem;font-size:0.9rem">Staff notes</h4>
         <div id="comments-list">${renderComments(providerComments)}</div>
-        ${isStaff ? `<div style="margin-top:1rem;border-top:1px solid #e2e8f0;padding-top:1rem">
+        ${auth.canComment ? `<div style="margin-top:1rem;border-top:1px solid #e2e8f0;padding-top:1rem">
           <input type="text" id="comment-author" placeholder="Your name (e.g., Sally S.)" style="margin-bottom:0.5rem" />
           <textarea id="comment-body" rows="3" placeholder="Add a staff note about this provider..."></textarea>
           <button class="btn btn-primary" id="add-comment" style="margin-top:0.5rem">Add comment</button>
         </div>` : ""}
-        ${!config.apiBase ? `<p class="notice">Comments on this page are saved in your browser only. For shared team notes across all staff, deploy the full web app to Vercel.</p>` : ""}
+        ${!config.apiBase ? `<p class="notice">Comments are saved in your browser only. To edit descriptions and save for all staff, connect this page to the Vercel app (set apiBase in config.js).</p>` : ""}
       </div>
     </div>
   </div>`;
 
   document.getElementById("close-modal").onclick = closeModal;
-  if (isStaff) {
+  if (auth.canComment) {
     const staffName = document.getElementById("staff-name");
     if (staffName?.value) document.getElementById("comment-author").value = staffName.value;
     document.getElementById("add-comment").onclick = () => addComment(id);
   }
+  if (auth.canEdit && config.apiBase) {
+    document.getElementById("edit-desc-btn").onclick = () => showDescriptionEditor(id, provider.description || "");
+  }
+}
+
+function showDescriptionEditor(providerId, current) {
+  const container = document.getElementById("description-content");
+  const editBtn = document.getElementById("edit-desc-btn");
+  if (editBtn) editBtn.style.display = "none";
+  container.innerHTML = `
+    <textarea id="desc-editor" rows="8" style="width:100%">${escapeHtml(current)}</textarea>
+    <div style="display:flex;gap:0.5rem;margin-top:0.5rem">
+      <button class="btn btn-accent" id="save-desc-btn">Save description</button>
+      <button class="btn btn-ghost" id="cancel-desc-btn">Cancel</button>
+    </div>`;
+  document.getElementById("cancel-desc-btn").onclick = () => openProvider(providerId);
+  document.getElementById("save-desc-btn").onclick = async () => {
+    const description = document.getElementById("desc-editor").value;
+    await api(`/api/providers/${providerId}`, {
+      method: "PATCH",
+      body: JSON.stringify({ description }),
+    });
+    const idx = providers.findIndex((p) => p.id === providerId);
+    if (idx >= 0) providers[idx].description = description;
+    openProvider(providerId);
+  };
 }
 
 function renderComments(list) {
