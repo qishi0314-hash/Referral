@@ -6,13 +6,13 @@
 
 代码已全部准备好。您只需在 GitHub 上**开启一次 Pages**（约 30 秒）：
 
-1. 打开 **[仓库 Settings → Pages](https://github.com/qishi0314-hash/Fordham_Referral/settings/pages)**
+1. 打开 **[仓库 Settings → Pages](https://github.com/qishi0314-hash/Referral/settings/pages)**
 2. **Build and deployment → Source** 选择 **Deploy from a branch**
 3. **Branch** 选 `gh-pages`，文件夹选 `/ (root)`，点击 **Save**
 
 完成后网站地址为：
 
-### **https://qishi0314-hash.github.io/Fordham_Referral/**
+### **https://qishi0314-hash.github.io/Referral/**
 
 无需安装任何软件，员工用浏览器直接打开即可。
 
@@ -43,7 +43,7 @@ turso db tokens create fordham-referral
 ### 2. 部署到 Vercel
 
 1. 打开 [vercel.com](https://vercel.com)，用 GitHub 登录
-2. **Import** 本仓库 `Fordham_Referral`
+2. **Import** 本仓库 `Referral`
 3. 在 Environment Variables 中添加：
    - `STAFF_PASSWORD` — 员工码（仅添加备注）
    - `EDITOR_PASSWORD` — 编辑码（修改描述并保存到数据库）
