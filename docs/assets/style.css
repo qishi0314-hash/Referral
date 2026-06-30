@@ -50,9 +50,12 @@ body {
   gap: 1.25rem;
 }
 
-.fordham-logo {
-  margin-top: 0.15rem;
+.fordham-seal {
+  height: 3.5rem;
+  width: auto;
+  margin-top: 0.1rem;
   flex-shrink: 0;
+  display: block;
 }
 
 .eyebrow {
@@ -456,5 +459,5 @@ input:focus, textarea:focus, select:focus {
 
 @media (max-width: 640px) {
   .header-brand { flex-direction: column; gap: 0.75rem; }
-  .fordham-logo { width: 120px; height: auto; }
+  .fordham-seal { height: 3rem; }
 }
