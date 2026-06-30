@@ -101,7 +101,7 @@ async function googlePost(payload) {
   if (data.error) {
     if (data.error === "Unknown action") {
       throw new Error(
-        "Your Google Apps Script is out of date. Open the spreadsheet → Extensions → Apps Script, paste the latest scripts/google-apps-script.gs from this repo, then Deploy → Manage deployments → Edit → New version → Deploy. See GOOGLE_SETUP.md for details."
+        "This action is not supported by the connected Google Script URL. Hard refresh the page (Ctrl+Shift+R) to load the latest config. If it persists, redeploy the latest scripts/google-apps-script.gs as a new version in Apps Script (see GOOGLE_SETUP.md)."
       );
     }
     throw new Error(data.error);
