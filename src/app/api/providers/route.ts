@@ -9,8 +9,6 @@ export async function GET(request: NextRequest) {
   const type = searchParams.getAll("type");
   const session_format = searchParams.getAll("session_format");
   const specialties = searchParams.getAll("specialties");
-  const low_cost = searchParams.get("low_cost") === "true";
-  const accepting_clients = searchParams.get("accepting_clients") === "true";
   const include_inactive = searchParams.get("include_inactive") === "true";
   const meta = searchParams.get("meta") === "true";
 
@@ -24,8 +22,6 @@ export async function GET(request: NextRequest) {
     type: type.length ? type : undefined,
     session_format: session_format.length ? session_format : undefined,
     specialties: specialties.length ? specialties : undefined,
-    low_cost: low_cost || undefined,
-    accepting_clients: accepting_clients || undefined,
     active_only: !include_inactive,
   });
 

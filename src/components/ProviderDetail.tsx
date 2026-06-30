@@ -101,23 +101,11 @@ export function ProviderDetail({
 
         <div className="space-y-6 px-6 py-5">
           <div className="flex flex-wrap gap-2">
-            {provider.accepting_clients ? (
-              <span className="rounded-full bg-emerald-50 px-3 py-1 text-xs font-medium text-emerald-800">
-                Accepting clients
-              </span>
-            ) : (
-              <span className="rounded-full bg-slate-100 px-3 py-1 text-xs font-medium text-slate-600">
-                Status unknown / waitlist
+            {provider.session_format !== "Unknown" && (
+              <span className="rounded-full bg-sky-50 px-3 py-1 text-xs font-medium text-sky-800">
+                {provider.session_format}
               </span>
             )}
-            {provider.low_cost && (
-              <span className="rounded-full bg-amber-50 px-3 py-1 text-xs font-medium text-amber-800">
-                Low-cost option
-              </span>
-            )}
-            <span className="rounded-full bg-sky-50 px-3 py-1 text-xs font-medium text-sky-800">
-              {provider.session_format}
-            </span>
             {!provider.active && (
               <span className="rounded-full bg-red-50 px-3 py-1 text-xs font-medium text-red-700">
                 Inactive

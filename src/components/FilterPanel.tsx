@@ -8,8 +8,6 @@ export interface SearchFilters {
   type: string[];
   session_format: string[];
   specialties: string[];
-  low_cost: boolean;
-  accepting_clients: boolean;
 }
 
 interface FilterPanelProps {
@@ -80,27 +78,6 @@ export function FilterPanel({ filters, onChange, filterOptions }: FilterPanelPro
         />
       </div>
 
-      <div className="flex flex-col gap-2">
-        <label className="flex items-center gap-2 text-sm text-slate-600">
-          <input
-            type="checkbox"
-            checked={filters.accepting_clients}
-            onChange={(e) => onChange({ ...filters, accepting_clients: e.target.checked })}
-            className="rounded border-slate-300 text-[var(--primary)]"
-          />
-          Accepting new clients only
-        </label>
-        <label className="flex items-center gap-2 text-sm text-slate-600">
-          <input
-            type="checkbox"
-            checked={filters.low_cost}
-            onChange={(e) => onChange({ ...filters, low_cost: e.target.checked })}
-            className="rounded border-slate-300 text-[var(--primary)]"
-          />
-          Low-cost / sliding scale
-        </label>
-      </div>
-
       <CheckboxGroup
         label="Insurance"
         options={insuranceOpts}
@@ -138,8 +115,6 @@ export function FilterPanel({ filters, onChange, filterOptions }: FilterPanelPro
             type: [],
             session_format: [],
             specialties: [],
-            low_cost: false,
-            accepting_clients: false,
           })
         }
         className="w-full rounded-lg border border-slate-200 py-2 text-sm text-slate-600 hover:bg-slate-50"

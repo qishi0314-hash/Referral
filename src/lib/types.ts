@@ -66,6 +66,7 @@ export const INSURANCE_OPTIONS = [
   "Oxford",
   "TriCare",
   "United HealthCare",
+  "Sliding Scale",
 ] as const;
 
 export const SPECIALTY_OPTIONS = [

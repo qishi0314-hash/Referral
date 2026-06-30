@@ -151,8 +151,6 @@ export interface ProviderFilters {
   type?: string[];
   session_format?: string[];
   specialties?: string[];
-  low_cost?: boolean;
-  accepting_clients?: boolean;
   active_only?: boolean;
 }
 
@@ -172,14 +170,6 @@ export async function listProviders(filters: ProviderFilters = {}): Promise<Prov
     )`;
     const q = `%${filters.q}%`;
     args.push(q, q, q, q, q);
-  }
-
-  if (filters.low_cost) {
-    sql += " AND low_cost = 1";
-  }
-
-  if (filters.accepting_clients) {
-    sql += " AND accepting_clients = 1";
   }
 
   sql += " ORDER BY name COLLATE NOCASE ASC";

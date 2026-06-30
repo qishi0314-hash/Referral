@@ -14,8 +14,6 @@ const DEFAULT_FILTERS: SearchFilters = {
   type: [],
   session_format: [],
   specialties: [],
-  low_cost: false,
-  accepting_clients: false,
 };
 
 export default function HomePage() {
@@ -49,8 +47,6 @@ export default function HomePage() {
     filters.type.forEach((t) => params.append("type", t));
     filters.session_format.forEach((s) => params.append("session_format", s));
     filters.specialties.forEach((s) => params.append("specialties", s));
-    if (filters.low_cost) params.set("low_cost", "true");
-    if (filters.accepting_clients) params.set("accepting_clients", "true");
 
     const res = await fetch(`/api/providers?${params}`);
     const data = await res.json();

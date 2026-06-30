@@ -11,6 +11,7 @@
       "HIP",
       "Medicare",
       "Oxford",
+      "Sliding Scale",
       "United HealthCare"
     ],
     "in_person": true,
@@ -45,6 +46,7 @@
       "Cigna",
       "Healthfirst",
       "Oxford",
+      "Sliding Scale",
       "United HealthCare"
     ],
     "in_person": false,
@@ -77,6 +79,7 @@
       "Cigna",
       "Out of Network",
       "Oxford",
+      "Sliding Scale",
       "United HealthCare"
     ],
     "in_person": false,
@@ -116,6 +119,7 @@
       "Medicaid",
       "Medicare",
       "Oxford",
+      "Sliding Scale",
       "United HealthCare"
     ],
     "in_person": false,
@@ -151,6 +155,7 @@
       "Aetna",
       "Cigna",
       "Oxford",
+      "Sliding Scale",
       "United HealthCare"
     ],
     "in_person": false,
@@ -175,12 +180,34 @@
     "active": true
   },
   {
+    "name": "Campus Care Collective",
+    "type": "Group Practice",
+    "insurance": [
+      "Aetna"
+    ],
+    "session_format": "Both",
+    "address": "343 West 58th Street, suite 11B, first floor",
+    "email": "info@campuscarecollective.com",
+    "phone": "212-477-5342",
+    "websites": {},
+    "specialties": [],
+    "modalities": [],
+    "low_cost": false,
+    "licensed_states": [
+      "NY"
+    ],
+    "description": "Dr. Victor Mensah. In-person and remote services. Specializes in student care. Accepts Aetna.",
+    "accepting_clients": true,
+    "active": true
+  },
+  {
     "name": "Casey Kirton, LMHC",
     "type": "Therapist",
     "insurance": [
       "Aetna",
       "Cigna",
       "Oxford",
+      "Sliding Scale",
       "United HealthCare"
     ],
     "in_person": false,
@@ -212,12 +239,13 @@
     "insurance": [
       "Blue Cross Blue Shield",
       "Emblem",
-      "HIP",
       "Healthfirst",
+      "HIP",
       "Humana",
       "Medicaid",
       "Out of Network",
       "Oxford",
+      "Sliding Scale",
       "TriCare",
       "United HealthCare"
     ],
@@ -252,6 +280,7 @@
       "Cigna",
       "Emblem",
       "Oxford",
+      "Sliding Scale",
       "United HealthCare"
     ],
     "in_person": true,
@@ -296,6 +325,7 @@
     "insurance": [
       "Aetna",
       "Oxford",
+      "Sliding Scale",
       "United HealthCare"
     ],
     "in_person": true,
@@ -340,6 +370,7 @@
       "Cigna",
       "HIP",
       "Oxford",
+      "Sliding Scale",
       "United HealthCare"
     ],
     "in_person": false,
@@ -379,6 +410,7 @@
     "type": "Psychiatrist / Medication",
     "insurance": [
       "Healthfirst",
+      "Sliding Scale",
       "United HealthCare"
     ],
     "in_person": false,
@@ -428,6 +460,7 @@
       "HIP",
       "MagnaCare",
       "Oxford",
+      "Sliding Scale",
       "United HealthCare"
     ],
     "in_person": true,
@@ -459,6 +492,7 @@
     "insurance": [
       "Aetna",
       "Cigna",
+      "Sliding Scale",
       "United HealthCare"
     ],
     "in_person": true,
@@ -494,6 +528,7 @@
       "Medicaid",
       "Medicare",
       "Oxford",
+      "Sliding Scale",
       "United HealthCare"
     ],
     "in_person": true,
@@ -528,6 +563,7 @@
       "Blue Cross Blue Shield",
       "Cigna",
       "Humana",
+      "Sliding Scale",
       "United HealthCare"
     ],
     "in_person": true,
@@ -557,6 +593,34 @@
     "active": true
   },
   {
+    "name": "Hillary Lewin Tuvia, PhD",
+    "type": "Psychologist",
+    "insurance": [
+      "Blue Cross Blue Shield",
+      "Cigna",
+      "GHI",
+      "Sliding Scale"
+    ],
+    "session_format": "Both",
+    "address": "110 West 96th Street",
+    "email": "Hillary.lewin@gmail.com",
+    "phone": "(646) 415-1405",
+    "websites": {
+      "practice": "https://www.uwstherapygroup.com"
+    },
+    "specialties": [],
+    "modalities": [
+      "Psychodynamic"
+    ],
+    "low_cost": true,
+    "licensed_states": [
+      "NY"
+    ],
+    "description": "Interpersonal psychodynamic, emerging adults (college students, grad students). Sliding scale $45-$175. Offers online therapy and in person.",
+    "accepting_clients": true,
+    "active": true
+  },
+  {
     "name": "Institute for Human Identity Therapy Center (IHI)",
     "type": "Group Practice",
     "insurance": [
@@ -564,6 +628,7 @@
       "Blue Cross Blue Shield",
       "Cigna",
       "Oxford",
+      "Sliding Scale",
       "United HealthCare"
     ],
     "in_person": false,
@@ -603,6 +668,7 @@
       "Blue Cross Blue Shield",
       "Cigna",
       "Oxford",
+      "Sliding Scale",
       "United HealthCare"
     ],
     "in_person": true,
@@ -632,6 +698,30 @@
     "active": true
   },
   {
+    "name": "Jessica Del Vita, Ph.D.",
+    "type": "Psychologist",
+    "insurance": [
+      "Aetna",
+      "Sliding Scale"
+    ],
+    "session_format": "Unknown",
+    "address": null,
+    "email": null,
+    "phone": null,
+    "websites": {
+      "alma": "https://secure.helloalma.com/providers/jessica-vita/"
+    },
+    "specialties": [],
+    "modalities": [],
+    "low_cost": true,
+    "licensed_states": [
+      "NY"
+    ],
+    "description": "In-network with Aetna. See provider website for other insurance plans.",
+    "accepting_clients": true,
+    "active": true
+  },
+  {
     "name": "Jiexuan Li, LMHC, CASAC",
     "type": "Group Practice",
     "insurance": [
@@ -641,6 +731,7 @@
       "HIP",
       "Out of Network",
       "Oxford",
+      "Sliding Scale",
       "United HealthCare"
     ],
     "in_person": false,
@@ -676,6 +767,7 @@
     "insurance": [
       "Aetna",
       "Oxford",
+      "Sliding Scale",
       "United HealthCare"
     ],
     "in_person": false,
@@ -703,6 +795,30 @@
     "active": true
   },
   {
+    "name": "Jung Eun Kim, Ph.D.",
+    "type": "Psychologist",
+    "insurance": [
+      "Aetna",
+      "Sliding Scale"
+    ],
+    "session_format": "Unknown",
+    "address": null,
+    "email": null,
+    "phone": null,
+    "websites": {
+      "alma": "https://secure.helloalma.com/providers/jung-eun-kim/"
+    },
+    "specialties": [],
+    "modalities": [],
+    "low_cost": true,
+    "licensed_states": [
+      "NY"
+    ],
+    "description": "In-network with Aetna. See provider website for other insurance plans.",
+    "accepting_clients": true,
+    "active": true
+  },
+  {
     "name": "Karen Horney Clinic",
     "type": "Psychiatrist / Medication",
     "insurance": [
@@ -715,6 +831,7 @@
       "HIP",
       "MagnaCare",
       "Oxford",
+      "Sliding Scale",
       "United HealthCare"
     ],
     "in_person": true,
@@ -746,6 +863,7 @@
       "Blue Cross Blue Shield",
       "Cigna",
       "Oxford",
+      "Sliding Scale",
       "United HealthCare"
     ],
     "in_person": true,
@@ -774,6 +892,7 @@
       "1199",
       "Aetna",
       "Oxford",
+      "Sliding Scale",
       "United HealthCare"
     ],
     "in_person": false,
@@ -798,39 +917,6 @@
     "active": true
   },
   {
-    "name": "Phronetic Psychotherapy",
-    "type": "Psychiatrist / Medication",
-    "insurance": [
-      "Aetna",
-      "Blue Cross Blue Shield",
-      "Emblem",
-      "GHI",
-      "Healthfirst",
-      "Medicaid",
-      "Medicare",
-      "Oxford",
-      "United HealthCare"
-    ],
-    "in_person": true,
-    "session_format": "Virtual",
-    "address": "329 East 62nd Street New York, NY",
-    "email": "kvnrustam@gmail.com",
-    "phone": "929.367.1692",
-    "websites": {
-      "practice": "https://www.modernintegrativepsychiatry.com/"
-    },
-    "specialties": [],
-    "modalities": [],
-    "low_cost": true,
-    "licensed_states": [
-      "MA",
-      "NY"
-    ],
-    "description": "646 515 5738 eastman.j@gmail.com In-network with Aetna and UHI Full fee sliding scale $150 - $250 In-person and/or remote Specializes in relational, psychodynamic modalities with adults struggling with anxiety, depression, interpersonal difficulties, life transitions https://secure.helloalma.com/providers/john-eastman/\n329 East 62nd Street New York, NY 10065 212-838-4333 Ext 137 http://www.karenhorneyclinic.org/ TheClinic@karenhorneyclinic.org cfuller@karenhorneyclinic.org (associate executive director Craig Fuller) Accepts Aetna, Affinity Health Plan, Amida Care, BCBS, Emblem Health, Fidelis, GHI, Healthfirst, Health Plus, Medicaid, MVP Healthcare, Medicare, MetroPlus, The Empire Plan, Wellcare, United Healthcare/Oxford There has been negative feedback regarding psychiatrist Primary orientation: psychodynamic Offer sliding scale based on income In person and virtual Updated 1/16/2024 Reed M\nkvnrustam@gmail.com 929.367.1692 (t) https://www.psychologytoday.com/profile/930489 Primary orientation is psychodynamic/psychoanalytic and specialities are relationship, personality, and anxiety and depression. Former CPS Postdoc Accepts: Aetna, AllSavers UHC, Allied Benefit Systems - AetnaBlue Cross Blue Shield of Massachusetts, Christian Brothers Services - Aetna, Harvard Pilgrim, Health Plans Inc.Health Scope - Aetna, Meritain, Nippon, Oscar, Oxford Health Plans, Surest (Formerly Bind)Trustmark Health Benefits - AetnaTrustmark Small Business Benefits - AetnaUHC Student ResourcesUMRUnited Healthcare Shared ServicesUnitedHealthcare UnitedHealthcare Global Telehealth Added 9/21/20 MH Updated 1/16/2024- FSR\nNew York, NY 10023 (215) 692-4083 lesliebeckerlcsw@gmail.com https://www.psychologytoday.com/us/therapists/leslie-b-becker-new-york-ny/112022 Adults only - only interested in working with graduate students (not undergrads) Orientation: Eclectic, Psychodynamic, Supportive, Feminist, Person-Centered Insurance through Headway: Aetna, Oscar Health, United Healthcare, Oxford. Offers sliding scale $100-200. Virtual only, but gives clients the option to meet with her in person at least once or for special circumstances. Updated 1/9/2024 - Reed M",
-    "accepting_clients": false,
-    "active": true
-  },
-  {
     "name": "MCM Collaborative",
     "type": "Psychiatrist / Medication",
     "insurance": [
@@ -840,6 +926,7 @@
       "HIP",
       "Medicare",
       "Oxford",
+      "Sliding Scale",
       "United HealthCare"
     ],
     "in_person": false,
@@ -870,6 +957,7 @@
     "insurance": [
       "Aetna",
       "Oxford",
+      "Sliding Scale",
       "United HealthCare"
     ],
     "in_person": true,
@@ -908,6 +996,7 @@
       "Blue Cross Blue Shield",
       "Cigna",
       "Oxford",
+      "Sliding Scale",
       "United HealthCare"
     ],
     "in_person": true,
@@ -948,6 +1037,7 @@
       "Emblem",
       "GHI",
       "Oxford",
+      "Sliding Scale",
       "United HealthCare"
     ],
     "in_person": true,
@@ -989,12 +1079,13 @@
       "Cigna",
       "Emblem",
       "GHI",
-      "HIP",
       "Healthfirst",
+      "HIP",
       "MagnaCare",
       "Medicaid",
       "Medicare",
       "Oxford",
+      "Sliding Scale",
       "TriCare",
       "United HealthCare"
     ],
@@ -1057,6 +1148,7 @@
       "Cigna",
       "Healthfirst",
       "Oxford",
+      "Sliding Scale",
       "United HealthCare"
     ],
     "in_person": true,
@@ -1083,6 +1175,30 @@
     "active": true
   },
   {
+    "name": "Narolyn Mendez, Ph.D.",
+    "type": "Psychologist",
+    "insurance": [
+      "Aetna",
+      "Sliding Scale"
+    ],
+    "session_format": "Unknown",
+    "address": null,
+    "email": null,
+    "phone": null,
+    "websites": {
+      "headway": "https://care.headway.co/providers/narolyn-mendez"
+    },
+    "specialties": [],
+    "modalities": [],
+    "low_cost": true,
+    "licensed_states": [
+      "NY"
+    ],
+    "description": "In-network with Aetna. See provider website for other insurance plans.",
+    "accepting_clients": true,
+    "active": true
+  },
+  {
     "name": "National Institute for Psychotherapies (NIP)",
     "type": "Psychiatrist / Medication",
     "insurance": [
@@ -1090,12 +1206,13 @@
       "Aetna",
       "Cigna",
       "GHI",
-      "HIP",
       "Healthfirst",
+      "HIP",
       "Humana",
       "Medicaid",
       "Medicare",
       "Oxford",
+      "Sliding Scale",
       "United HealthCare"
     ],
     "in_person": true,
@@ -1132,6 +1249,7 @@
       "Healthfirst",
       "Medicare",
       "Oxford",
+      "Sliding Scale",
       "United HealthCare"
     ],
     "in_person": false,
@@ -1171,6 +1289,7 @@
       "GHI",
       "Homestead",
       "Oxford",
+      "Sliding Scale",
       "United HealthCare"
     ],
     "in_person": true,
@@ -1211,6 +1330,7 @@
       "MagnaCare",
       "Medicaid",
       "Oxford",
+      "Sliding Scale",
       "United HealthCare"
     ],
     "in_person": true,
@@ -1238,6 +1358,40 @@
     "active": true
   },
   {
+    "name": "Phronetic Psychotherapy",
+    "type": "Psychiatrist / Medication",
+    "insurance": [
+      "Aetna",
+      "Blue Cross Blue Shield",
+      "Emblem",
+      "GHI",
+      "Healthfirst",
+      "Medicaid",
+      "Medicare",
+      "Oxford",
+      "Sliding Scale",
+      "United HealthCare"
+    ],
+    "in_person": true,
+    "session_format": "Virtual",
+    "address": "329 East 62nd Street New York, NY",
+    "email": "kvnrustam@gmail.com",
+    "phone": "929.367.1692",
+    "websites": {
+      "practice": "https://www.modernintegrativepsychiatry.com/"
+    },
+    "specialties": [],
+    "modalities": [],
+    "low_cost": true,
+    "licensed_states": [
+      "MA",
+      "NY"
+    ],
+    "description": "646 515 5738 eastman.j@gmail.com In-network with Aetna and UHI Full fee sliding scale $150 - $250 In-person and/or remote Specializes in relational, psychodynamic modalities with adults struggling with anxiety, depression, interpersonal difficulties, life transitions https://secure.helloalma.com/providers/john-eastman/\n329 East 62nd Street New York, NY 10065 212-838-4333 Ext 137 http://www.karenhorneyclinic.org/ TheClinic@karenhorneyclinic.org cfuller@karenhorneyclinic.org (associate executive director Craig Fuller) Accepts Aetna, Affinity Health Plan, Amida Care, BCBS, Emblem Health, Fidelis, GHI, Healthfirst, Health Plus, Medicaid, MVP Healthcare, Medicare, MetroPlus, The Empire Plan, Wellcare, United Healthcare/Oxford There has been negative feedback regarding psychiatrist Primary orientation: psychodynamic Offer sliding scale based on income In person and virtual Updated 1/16/2024 Reed M\nkvnrustam@gmail.com 929.367.1692 (t) https://www.psychologytoday.com/profile/930489 Primary orientation is psychodynamic/psychoanalytic and specialities are relationship, personality, and anxiety and depression. Former CPS Postdoc Accepts: Aetna, AllSavers UHC, Allied Benefit Systems - AetnaBlue Cross Blue Shield of Massachusetts, Christian Brothers Services - Aetna, Harvard Pilgrim, Health Plans Inc.Health Scope - Aetna, Meritain, Nippon, Oscar, Oxford Health Plans, Surest (Formerly Bind)Trustmark Health Benefits - AetnaTrustmark Small Business Benefits - AetnaUHC Student ResourcesUMRUnited Healthcare Shared ServicesUnitedHealthcare UnitedHealthcare Global Telehealth Added 9/21/20 MH Updated 1/16/2024- FSR\nNew York, NY 10023 (215) 692-4083 lesliebeckerlcsw@gmail.com https://www.psychologytoday.com/us/therapists/leslie-b-becker-new-york-ny/112022 Adults only - only interested in working with graduate students (not undergrads) Orientation: Eclectic, Psychodynamic, Supportive, Feminist, Person-Centered Insurance through Headway: Aetna, Oscar Health, United Healthcare, Oxford. Offers sliding scale $100-200. Virtual only, but gives clients the option to meet with her in person at least once or for special circumstances. Updated 1/9/2024 - Reed M",
+    "accepting_clients": false,
+    "active": true
+  },
+  {
     "name": "Resilience Lab",
     "type": "Therapist",
     "insurance": [
@@ -1246,12 +1400,13 @@
       "Blue Cross Blue Shield",
       "Emblem",
       "GHI",
-      "HIP",
       "Healthfirst",
+      "HIP",
       "MagnaCare",
       "Medicaid",
       "Medicare",
       "Oxford",
+      "Sliding Scale",
       "United HealthCare"
     ],
     "in_person": true,
@@ -1289,6 +1444,7 @@
       "Cigna",
       "MagnaCare",
       "Oxford",
+      "Sliding Scale",
       "United HealthCare"
     ],
     "in_person": true,
@@ -1317,6 +1473,61 @@
     "active": true
   },
   {
+    "name": "Robert (Bobby) Cox, Jr., Ph.D.",
+    "type": "Psychologist",
+    "insurance": [
+      "Aetna",
+      "Sliding Scale"
+    ],
+    "session_format": "Unknown",
+    "address": null,
+    "email": null,
+    "phone": null,
+    "websites": {
+      "alma": "https://secure.helloalma.com/providers/robert-cox/"
+    },
+    "specialties": [],
+    "modalities": [],
+    "low_cost": true,
+    "licensed_states": [
+      "NY"
+    ],
+    "description": "In-network with Aetna. See provider website for other insurance plans.",
+    "accepting_clients": true,
+    "active": true
+  },
+  {
+    "name": "Rose Hill Psychological Services",
+    "type": "Group Practice",
+    "insurance": [
+      "Aetna",
+      "Blue Cross Blue Shield",
+      "Cigna",
+      "GHI",
+      "Out of Network",
+      "Oxford",
+      "Sliding Scale",
+      "UMR",
+      "United HealthCare"
+    ],
+    "session_format": "Both",
+    "address": "330 West 58th Street, Suite #409, New York, NY 10019; 696 East 187th Street, Suite #205, Bronx, NY 10458; 80 Central Park West, Suite #1A&B, New York, NY 10023",
+    "email": null,
+    "phone": null,
+    "websites": {
+      "practice": "http://www.rosehillpsychological.com/"
+    },
+    "specialties": [],
+    "modalities": [],
+    "low_cost": true,
+    "licensed_states": [
+      "NY"
+    ],
+    "description": "Manhattan & Bronx locations. $100 deductible for Fordham insurance, coinsurance $40. Wiggle room with fees for out of network. Offering video and phone sessions.",
+    "accepting_clients": true,
+    "active": true
+  },
+  {
     "name": "Rosemarie Livingston, LCSW",
     "type": "Social Work",
     "insurance": [
@@ -1326,11 +1537,12 @@
       "Cigna",
       "Emblem",
       "GHI",
-      "HIP",
       "Healthfirst",
+      "HIP",
       "MagnaCare",
       "Medicaid",
       "Medicare",
+      "Sliding Scale",
       "TriCare",
       "United HealthCare"
     ],
@@ -1372,6 +1584,7 @@
       "Aetna",
       "Humana",
       "Oxford",
+      "Sliding Scale",
       "United HealthCare"
     ],
     "in_person": true,
@@ -1411,6 +1624,7 @@
       "GHI",
       "Medicaid",
       "Oxford",
+      "Sliding Scale",
       "United HealthCare"
     ],
     "in_person": true,
@@ -1443,6 +1657,7 @@
       "Blue Cross Blue Shield",
       "HIP",
       "Oxford",
+      "Sliding Scale",
       "United HealthCare"
     ],
     "in_person": false,
@@ -1477,6 +1692,7 @@
       "Aetna",
       "Humana",
       "Oxford",
+      "Sliding Scale",
       "United HealthCare"
     ],
     "in_person": true,
@@ -1508,6 +1724,7 @@
       "Cigna",
       "Humana",
       "Medicare",
+      "Sliding Scale",
       "TriCare",
       "United HealthCare"
     ],
@@ -1544,6 +1761,7 @@
       "Blue Cross Blue Shield",
       "Cigna",
       "Oxford",
+      "Sliding Scale",
       "United HealthCare"
     ],
     "in_person": true,
@@ -1573,45 +1791,60 @@
   },
   {
     "name": "The Blanton-Peale Counseling Center",
-    "type": "Therapist",
+    "type": "Group Practice",
     "insurance": [
       "1199",
       "Aetna",
-      "Cigna",
+      "Blue Cross Blue Shield",
+      "Emblem",
       "GHI",
-      "MagnaCare",
+      "Medicaid",
       "Medicare",
       "Oxford",
+      "Sliding Scale",
       "United HealthCare"
     ],
     "in_person": true,
     "session_format": "Both",
-    "address": "2436 Eastchester Rd Bronx, NY",
-    "email": "callcenterreferrals@sohomd.com",
-    "phone": "212-369-6757",
+    "address": "7 West 30th Street, 9th and 10th Fls, New York, NY 10001",
+    "email": "intake@blantonpeale.org",
+    "phone": "212-725-7850",
     "websites": {
-      "practice": "https://www.citymh.com/"
+      "practice": "https://www.blantonpeale.org/"
     },
-    "specialties": [
-      "CBT",
-      "DBT",
-      "Grief/Bereavement",
-      "Trauma"
-    ],
+    "specialties": [],
     "modalities": [
-      "CBT",
-      "DBT",
-      "Psychodynamic",
-      "IFS"
+      "Psychodynamic"
     ],
     "low_cost": true,
     "licensed_states": [
-      "CO",
-      "MA",
       "NY"
     ],
-    "description": "2436 Eastchester Rd Bronx, NY 10469 (917) 208 4273 (Accessible on the #12 bus line) Accepts: 1199SEIU, Aetna, Anthem, BlueCross BlueShield, Cigna, Magellan, Medicare, MultiPlan, Optum, Oxford, UnitedHealthcare Only providing telehealth at this time Rec by Debbie Lawrence: added 5/7/21\n16 E 96th street, unit 1A NY , NY 10128 212-595-6901 http://www.drsherispirt.com/ ssdr18@aol.com Areas of expertise are in treating anxiety, depression, and ADD. Accepts Cigna, United Behavioral Health, Oxford, and Aetna, sliding scale. Limited  limited psychotherapy, mainly medication management Please review the website for administrative charges information.  There are fees to complete paperwork.   Both in person and virtual visits, although for an initial consultation prefer in person. There is an office dog. Rec Dr. Bach Updated 1/4/2023 FSR\n169 Wythe Ave, Ste 104, Brooklyn, NY 11249 844-384-2779 https://skypiatrist.com help@skypiatrist.com drbuch@skypiatrist.com (founder\u2019s email) Practice of 12 psychiatrists and 5 therapists. Does medication management primarily but they do have 5 therapists as well who do talk therapy. In network with Aetna, Cigna, Empire BCBS, Oscar, Oxford and United insurance. Otherwise, new appointments are $450 and follow ups are $250. Virtual service only. *Former Fordham psychiatry resident Annie Chen works here. Dr. Chen\u2019s specialities are depression, anxiety, and bipolar disorder in adults and college-age patients. She has a particular interest in first- and second-generation Americans. Updated 1/14/2024 Reed M\n110 Lafayette Street New York, NY 10013 Phone: 212-369-6757 Fax: 212-369-3941 callcenterreferrals@sohomd.com https://www.sohomd.com/ Provides virtual sessions Most commercial insurance plans accepted including Aetna, Optum (Oscar, Oxford health plans, United Healthcare), Cigna, Humana, Meritain Health, and Wellfleet. Does not offer sliding scale. Orientations/specialties: EMDR, Motivational Interviewing, CBT, DBT, EFT Tapping, Supportive therapy, Trauma and Grief, Interpersonal Behavior, Couples Therapy, Psychodynamic therapy, Integrative, and holistic. Two Psychiatrists oversee several Psychiatric Nurse Practitioners.  Evening and weekend hours. Updated 1/9/2024 - Reed M\nColumbus Circle 33 W 60th Street, Suite 205 Union Square 39 West 14th Street, Suite 406 Long Island City 31-00 47th Avenue, Suite 3100 Brooklyn Heights 300 Cadman Plaza West, Suite 12131 Williamsburg 195 Broadway, Suite 403 Scheduling: 929-777-0173 (Option 1) Referrals",
-    "accepting_clients": false,
+    "description": "To make an appointment contact Client Coordinator at 1-212-725-7850 ext. 119 or Email: intake@blantonpeale.org (email preferred & faster). Individual Appointment w/o insurance: $90. Sliding scale: $60-105 depending on income. Accepts most insurances including 1199 Benefits Fund, AARP, Aetna, Affinity Health Plans, Amida Care, Beacon, Emblem Health, Empire BCBS, Fidelis Care, GHI, Health First, Magnacare, Metro Plus, NYS Medicaid, Optum, Oscar, Oxford Health Plans, Student Resources, UBH, UMR, United Healthcare, Wellcare.",
+    "accepting_clients": true,
+    "active": true
+  },
+  {
+    "name": "The Dean Hope Center for Educational and Psychological Services (DHCEPS)",
+    "type": "Group Practice",
+    "insurance": [
+      "Sliding Scale"
+    ],
+    "session_format": "Both",
+    "address": "525 West 120th Street, Thorndike Hall 6th Floor, New York, NY 10027",
+    "email": "dhceps@tc.columbia.edu",
+    "phone": "212-678-3262",
+    "websites": {
+      "practice": "https://www.tc.columbia.edu/deanhope/services/"
+    },
+    "specialties": [],
+    "modalities": [],
+    "low_cost": true,
+    "licensed_states": [
+      "NY"
+    ],
+    "description": "Individual, group, couples therapy, learning disabilities and testing. Practicum site for TC doctoral students. Sliding scale $7-40/session (full), $100-1000 for assessments. Testing Library: 212-678-3881.",
+    "accepting_clients": true,
     "active": true
   },
   {
@@ -1621,6 +1854,7 @@
       "Aetna",
       "Cigna",
       "Oxford",
+      "Sliding Scale",
       "United HealthCare"
     ],
     "in_person": true,
@@ -1659,6 +1893,7 @@
       "Blue Cross Blue Shield",
       "Cigna",
       "Oxford",
+      "Sliding Scale",
       "United HealthCare"
     ],
     "in_person": true,
@@ -1729,6 +1964,7 @@
       "MagnaCare",
       "Medicaid",
       "Oxford",
+      "Sliding Scale",
       "United HealthCare"
     ],
     "in_person": true,

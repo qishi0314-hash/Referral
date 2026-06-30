@@ -11,6 +11,7 @@
       "HIP",
       "Medicare",
       "Oxford",
+      "Sliding Scale",
       "United HealthCare"
     ],
     "in_person": true,
@@ -46,6 +47,7 @@
       "Cigna",
       "Healthfirst",
       "Oxford",
+      "Sliding Scale",
       "United HealthCare"
     ],
     "in_person": false,
@@ -79,6 +81,7 @@
       "Cigna",
       "Out of Network",
       "Oxford",
+      "Sliding Scale",
       "United HealthCare"
     ],
     "in_person": false,
@@ -119,6 +122,7 @@
       "Medicaid",
       "Medicare",
       "Oxford",
+      "Sliding Scale",
       "United HealthCare"
     ],
     "in_person": false,
@@ -155,6 +159,7 @@
       "Aetna",
       "Cigna",
       "Oxford",
+      "Sliding Scale",
       "United HealthCare"
     ],
     "in_person": false,
@@ -180,12 +185,35 @@
     "id": 5
   },
   {
+    "name": "Campus Care Collective",
+    "type": "Group Practice",
+    "insurance": [
+      "Aetna"
+    ],
+    "session_format": "Both",
+    "address": "343 West 58th Street, suite 11B, first floor",
+    "email": "info@campuscarecollective.com",
+    "phone": "212-477-5342",
+    "websites": {},
+    "specialties": [],
+    "modalities": [],
+    "low_cost": false,
+    "licensed_states": [
+      "NY"
+    ],
+    "description": "Dr. Victor Mensah. In-person and remote services. Specializes in student care. Accepts Aetna.",
+    "accepting_clients": true,
+    "active": true,
+    "id": 6
+  },
+  {
     "name": "Casey Kirton, LMHC",
     "type": "Therapist",
     "insurance": [
       "Aetna",
       "Cigna",
       "Oxford",
+      "Sliding Scale",
       "United HealthCare"
     ],
     "in_person": false,
@@ -210,7 +238,7 @@
     "description": "Virtual Only Email: brittanyblechertherapy@gmail.com Psychology Today To book a consultation: Click here I accept Aetna, Anthem, BlueCross BlueShield, Cigna, Carelon Behavioral Health, and Quest Behavioral Health I am waiting to be approved for United Healthcare, Oscar (Optum), and Oxford (Optum) but hopefully will be credentialed soon!\nhttps://secure.helloalma.com/providers/casey-kirton/ Takes Aetna, Cigna, UnitedHealthcare Remote only - New York and New Jersey\nhttps://www.charliehealth.com/ (986) 206-0414 or admissions@charliehealth.com How to refer: All we need for a referral is the patient's name, DOB, contact info, and insurance (if possible). You're welcome to refer through any of the following channels: Online submission: https://referrals.charliehealth.com/referral-form Call or Email me: (929) 798 - 0699 or celeste.mastronardi@charliehealth.com Call or Email admissions: (986) 206-0414 or admissions@charliehealth.com Charlie Health is an evidence-based mental health virtual IOP for patients ages 8-64. We serve a broad range of clients who would benefit from more than just 1x per week therapy. Our program is short term (average of 8-10 weeks) and involves group, individual, and (optional) family therapy (10-11 hours total each week), along with 24-7 crisis care support, care coaches, and medication management (as needed). Immediate availability: There is no waitlist! After a referral, intake phone calls typically occur within 24-48 hours. We can get them scheduled for their first group as soon as insurance is good to go! Personalized therapy: Clients are placed in curated groups of peers who they can relate to, which enhances their experience and improves their outcomes. Groups are based on age, diagnosis, modality, and life experience, and are offered in English and Spanish. Insurance: We are in network with the below plans in NY . If we're out of network and/or if the cost is a barrier, we do have the option for single case agreements (SCAs) and/or financial hardship waivers. Anthem Empire BCBS Wellfleet United Healthcare / Optum / Oxford Carelon NYSHIP EmblemHealth Fidelis (Centene) - Commercial & Medicaid Healthfirst - Medicaid UHC Community Plan - Medicaid CDPHP - Medicaid MVP - Medicaid Tricare East and West BCBS PPO Plans Oscar UMR FirstHealth ComPsych Ascension (SmartHealth) Surest (formerly Bind)\nbernie@citymhg.com (founder\u2019s email) 347-813-8819 Virtual Services In person services in astoria Has clinicians that specialize in LGBTQ+, Substanc",
     "accepting_clients": false,
     "active": true,
-    "id": 6
+    "id": 7
   },
   {
     "name": "Charlie Health",
@@ -218,12 +246,13 @@
     "insurance": [
       "Blue Cross Blue Shield",
       "Emblem",
-      "HIP",
       "Healthfirst",
+      "HIP",
       "Humana",
       "Medicaid",
       "Out of Network",
       "Oxford",
+      "Sliding Scale",
       "TriCare",
       "United HealthCare"
     ],
@@ -248,7 +277,7 @@
     "description": "Virtual Only Email: brittanyblechertherapy@gmail.com Psychology Today To book a consultation: Click here I accept Aetna, Anthem, BlueCross BlueShield, Cigna, Carelon Behavioral Health, and Quest Behavioral Health I am waiting to be approved for United Healthcare, Oscar (Optum), and Oxford (Optum) but hopefully will be credentialed soon!\nhttps://secure.helloalma.com/providers/casey-kirton/ Takes Aetna, Cigna, UnitedHealthcare Remote only - New York and New Jersey\nhttps://www.charliehealth.com/ (986) 206-0414 or admissions@charliehealth.com How to refer: All we need for a referral is the patient's name, DOB, contact info, and insurance (if possible). You're welcome to refer through any of the following channels: Online submission: https://referrals.charliehealth.com/referral-form Call or Email me: (929) 798 - 0699 or celeste.mastronardi@charliehealth.com Call or Email admissions: (986) 206-0414 or admissions@charliehealth.com Charlie Health is an evidence-based mental health virtual IOP for patients ages 8-64. We serve a broad range of clients who would benefit from more than just 1x per week therapy. Our program is short term (average of 8-10 weeks) and involves group, individual, and (optional) family therapy (10-11 hours total each week), along with 24-7 crisis care support, care coaches, and medication management (as needed). Immediate availability: There is no waitlist! After a referral, intake phone calls typically occur within 24-48 hours. We can get them scheduled for their first group as soon as insurance is good to go! Personalized therapy: Clients are placed in curated groups of peers who they can relate to, which enhances their experience and improves their outcomes. Groups are based on age, diagnosis, modality, and life experience, and are offered in English and Spanish. Insurance: We are in network with the below plans in NY . If we're out of network and/or if the cost is a barrier, we do have the option for single case agreements (SCAs) and/or financial hardship waivers. Anthem Empire BCBS Wellfleet United Healthcare / Optum / Oxford Carelon NYSHIP EmblemHealth Fidelis (Centene) - Commercial & Medicaid Healthfirst - Medicaid UHC Community Plan - Medicaid CDPHP - Medicaid MVP - Medicaid Tricare East and West BCBS PPO Plans Oscar UMR FirstHealth ComPsych Ascension (SmartHealth) Surest (formerly Bind)\nbernie@citymhg.com (founder\u2019s email) 347-813-8819 Virtual Services In person services in astoria Has clinicians that specialize in LGBTQ+, Substanc",
     "accepting_clients": false,
     "active": true,
-    "id": 7
+    "id": 8
   },
   {
     "name": "City Mental Health Counseling",
@@ -259,6 +288,7 @@
       "Cigna",
       "Emblem",
       "Oxford",
+      "Sliding Scale",
       "United HealthCare"
     ],
     "in_person": true,
@@ -296,7 +326,7 @@
     "description": "bernie@citymhg.com 347-813-8819 Virtual Services In person services in astoria Has clinicians that specialize in LGBTQ+, Substance use, CPTSD, and women\u2019s issues. DBT, psychodynamic, CBT, and IFS trained clinicians. Accepts BCBS, Aetna, United, Cigna. Will provide superbills for OON. Sliding scale $50-75. https://www.citymh.com/ added 9/26/2024 Kate Dotson\n302 5th Avenue #1104 New York, NY 10001 (212) 354-2567 cknp.com hello@cknp.com crystal@cknp.com Provides medication management and psychotherapy visits (cognitive-behavioral therapy, psychodynamic therapy, supportive therapy) Specialize in reproductive psychiatry, depression, anxiety, ADHD In-network with: Aetna, United Healthcare and Oxford insurances Offers sliding scale - typical intake fee is $350 and med management fee is $210 per visit, lowest fee would be $250 for intakes and $175 for med management Virtual only (has office, but is not being used) Updated 2/2/2024 Reed M\nRust Wellness Group Email : services@rustwellnessgroup.com Telephone Number: 732-903-5266 We specialize in providing compassionate, personalized therapy for LGBTQIA+ concerns, chronic illness, ADHD, Autism Spectrum Disorder, life transitions, school challenges, self-confidence, sex therapy, anxiety. depression and more. Our therapists are experienced in working with college students and young adults, helping you build coping skills, improve relationships, and gain confidence. We use evidence-based approaches like CBT, ACT, EMDR, IFS, EFT, and Solution-Focused Therapy. Plus, our team speaks English, Spanish, Mandarin, and Turkish, and we\u2019re licensed in NY , NJ, and FL. We strive to make therapy accessible by accepting major insurance plans, including United Healthcare, Aetna, Cigna, Oscar, Oxford, and BCBS. We also offer private pay ( $150 for Individual and $200 Couples), sliding scale and out-of-network options. At this time we provide virtual sessions in NY , NJ and FL.\nWethersfield, CT 06109, United States (305) 965-9320 email: DerekPsyD@gmail.com individual psychotherapy private practice, with an emphasis on work with the LGBTQ community Added 4/21 DS\nSoho Center for Mental Health Counseling https://www.thesohocenter.com/provider/dominika-bredova-lmhc dominikabredova@thesohocenter.com (929) 400-7481 Specializes in relational, psychodynamic modalities In person and Virtual services 159 Bleeker Street, 2nd floor, New York, NY 10012 Accepts insurance: Aetna, Anthem BlueCross and BlueShield, Carelon Behavioral Health, CDPHP . Cign",
     "accepting_clients": false,
     "active": true,
-    "id": 8
+    "id": 9
   },
   {
     "name": "CK NP Psychiatry",
@@ -304,6 +334,7 @@
     "insurance": [
       "Aetna",
       "Oxford",
+      "Sliding Scale",
       "United HealthCare"
     ],
     "in_person": true,
@@ -338,7 +369,7 @@
     "description": "bernie@citymhg.com 347-813-8819 Virtual Services In person services in astoria Has clinicians that specialize in LGBTQ+, Substance use, CPTSD, and women\u2019s issues. DBT, psychodynamic, CBT, and IFS trained clinicians. Accepts BCBS, Aetna, United, Cigna. Will provide superbills for OON. Sliding scale $50-75. https://www.citymh.com/ added 9/26/2024 Kate Dotson\n302 5th Avenue #1104 New York, NY 10001 (212) 354-2567 cknp.com hello@cknp.com crystal@cknp.com Provides medication management and psychotherapy visits (cognitive-behavioral therapy, psychodynamic therapy, supportive therapy) Specialize in reproductive psychiatry, depression, anxiety, ADHD In-network with: Aetna, United Healthcare and Oxford insurances Offers sliding scale - typical intake fee is $350 and med management fee is $210 per visit, lowest fee would be $250 for intakes and $175 for med management Virtual only (has office, but is not being used) Updated 2/2/2024 Reed M\nRust Wellness Group Email : services@rustwellnessgroup.com Telephone Number: 732-903-5266 We specialize in providing compassionate, personalized therapy for LGBTQIA+ concerns, chronic illness, ADHD, Autism Spectrum Disorder, life transitions, school challenges, self-confidence, sex therapy, anxiety. depression and more. Our therapists are experienced in working with college students and young adults, helping you build coping skills, improve relationships, and gain confidence. We use evidence-based approaches like CBT, ACT, EMDR, IFS, EFT, and Solution-Focused Therapy. Plus, our team speaks English, Spanish, Mandarin, and Turkish, and we\u2019re licensed in NY , NJ, and FL. We strive to make therapy accessible by accepting major insurance plans, including United Healthcare, Aetna, Cigna, Oscar, Oxford, and BCBS. We also offer private pay ( $150 for Individual and $200 Couples), sliding scale and out-of-network options. At this time we provide virtual sessions in NY , NJ and FL.\nWethersfield, CT 06109, United States (305) 965-9320 email: DerekPsyD@gmail.com individual psychotherapy private practice, with an emphasis on work with the LGBTQ community Added 4/21 DS\nSoho Center for Mental Health Counseling https://www.thesohocenter.com/provider/dominika-bredova-lmhc dominikabredova@thesohocenter.com (929) 400-7481 Specializes in relational, psychodynamic modalities In person and Virtual services 159 Bleeker Street, 2nd floor, New York, NY 10012 Accepts insurance: Aetna, Anthem BlueCross and BlueShield, Carelon Behavioral Health, CDPHP . Cign",
     "accepting_clients": false,
     "active": true,
-    "id": 9
+    "id": 10
   },
   {
     "name": "Derek A. Fenwick, PsyD",
@@ -349,6 +380,7 @@
       "Cigna",
       "HIP",
       "Oxford",
+      "Sliding Scale",
       "United HealthCare"
     ],
     "in_person": false,
@@ -382,13 +414,14 @@
     "description": "bernie@citymhg.com 347-813-8819 Virtual Services In person services in astoria Has clinicians that specialize in LGBTQ+, Substance use, CPTSD, and women\u2019s issues. DBT, psychodynamic, CBT, and IFS trained clinicians. Accepts BCBS, Aetna, United, Cigna. Will provide superbills for OON. Sliding scale $50-75. https://www.citymh.com/ added 9/26/2024 Kate Dotson\n302 5th Avenue #1104 New York, NY 10001 (212) 354-2567 cknp.com hello@cknp.com crystal@cknp.com Provides medication management and psychotherapy visits (cognitive-behavioral therapy, psychodynamic therapy, supportive therapy) Specialize in reproductive psychiatry, depression, anxiety, ADHD In-network with: Aetna, United Healthcare and Oxford insurances Offers sliding scale - typical intake fee is $350 and med management fee is $210 per visit, lowest fee would be $250 for intakes and $175 for med management Virtual only (has office, but is not being used) Updated 2/2/2024 Reed M\nRust Wellness Group Email : services@rustwellnessgroup.com Telephone Number: 732-903-5266 We specialize in providing compassionate, personalized therapy for LGBTQIA+ concerns, chronic illness, ADHD, Autism Spectrum Disorder, life transitions, school challenges, self-confidence, sex therapy, anxiety. depression and more. Our therapists are experienced in working with college students and young adults, helping you build coping skills, improve relationships, and gain confidence. We use evidence-based approaches like CBT, ACT, EMDR, IFS, EFT, and Solution-Focused Therapy. Plus, our team speaks English, Spanish, Mandarin, and Turkish, and we\u2019re licensed in NY , NJ, and FL. We strive to make therapy accessible by accepting major insurance plans, including United Healthcare, Aetna, Cigna, Oscar, Oxford, and BCBS. We also offer private pay ( $150 for Individual and $200 Couples), sliding scale and out-of-network options. At this time we provide virtual sessions in NY , NJ and FL.\nWethersfield, CT 06109, United States (305) 965-9320 email: DerekPsyD@gmail.com individual psychotherapy private practice, with an emphasis on work with the LGBTQ community Added 4/21 DS\nSoho Center for Mental Health Counseling https://www.thesohocenter.com/provider/dominika-bredova-lmhc dominikabredova@thesohocenter.com (929) 400-7481 Specializes in relational, psychodynamic modalities In person and Virtual services 159 Bleeker Street, 2nd floor, New York, NY 10012 Accepts insurance: Aetna, Anthem BlueCross and BlueShield, Carelon Behavioral Health, CDPHP . Cign",
     "accepting_clients": false,
     "active": true,
-    "id": 10
+    "id": 11
   },
   {
     "name": "Dominika Bredova, LMHC",
     "type": "Psychiatrist / Medication",
     "insurance": [
       "Healthfirst",
+      "Sliding Scale",
       "United HealthCare"
     ],
     "in_person": false,
@@ -424,7 +457,7 @@
     "description": "bernie@citymhg.com 347-813-8819 Virtual Services In person services in astoria Has clinicians that specialize in LGBTQ+, Substance use, CPTSD, and women\u2019s issues. DBT, psychodynamic, CBT, and IFS trained clinicians. Accepts BCBS, Aetna, United, Cigna. Will provide superbills for OON. Sliding scale $50-75. https://www.citymh.com/ added 9/26/2024 Kate Dotson\n302 5th Avenue #1104 New York, NY 10001 (212) 354-2567 cknp.com hello@cknp.com crystal@cknp.com Provides medication management and psychotherapy visits (cognitive-behavioral therapy, psychodynamic therapy, supportive therapy) Specialize in reproductive psychiatry, depression, anxiety, ADHD In-network with: Aetna, United Healthcare and Oxford insurances Offers sliding scale - typical intake fee is $350 and med management fee is $210 per visit, lowest fee would be $250 for intakes and $175 for med management Virtual only (has office, but is not being used) Updated 2/2/2024 Reed M\nRust Wellness Group Email : services@rustwellnessgroup.com Telephone Number: 732-903-5266 We specialize in providing compassionate, personalized therapy for LGBTQIA+ concerns, chronic illness, ADHD, Autism Spectrum Disorder, life transitions, school challenges, self-confidence, sex therapy, anxiety. depression and more. Our therapists are experienced in working with college students and young adults, helping you build coping skills, improve relationships, and gain confidence. We use evidence-based approaches like CBT, ACT, EMDR, IFS, EFT, and Solution-Focused Therapy. Plus, our team speaks English, Spanish, Mandarin, and Turkish, and we\u2019re licensed in NY , NJ, and FL. We strive to make therapy accessible by accepting major insurance plans, including United Healthcare, Aetna, Cigna, Oscar, Oxford, and BCBS. We also offer private pay ( $150 for Individual and $200 Couples), sliding scale and out-of-network options. At this time we provide virtual sessions in NY , NJ and FL.\nWethersfield, CT 06109, United States (305) 965-9320 email: DerekPsyD@gmail.com individual psychotherapy private practice, with an emphasis on work with the LGBTQ community Added 4/21 DS\nSoho Center for Mental Health Counseling https://www.thesohocenter.com/provider/dominika-bredova-lmhc dominikabredova@thesohocenter.com (929) 400-7481 Specializes in relational, psychodynamic modalities In person and Virtual services 159 Bleeker Street, 2nd floor, New York, NY 10012 Accepts insurance: Aetna, Anthem BlueCross and BlueShield, Carelon Behavioral Health, CDPHP . Cign",
     "accepting_clients": false,
     "active": true,
-    "id": 11
+    "id": 12
   },
   {
     "name": "Downtown Psychological Services",
@@ -439,6 +472,7 @@
       "HIP",
       "MagnaCare",
       "Oxford",
+      "Sliding Scale",
       "United HealthCare"
     ],
     "in_person": true,
@@ -463,7 +497,7 @@
     "description": "Soho Center for Mental Health Counseling https://www.thesohocenter.com/provider/dominika-bredova-lmhc dominikabredova@thesohocenter.com (929) 400-7481 Specializes in relational, psychodynamic modalities In person and Virtual services 159 Bleeker Street, 2nd floor, New York, NY 10012 Accepts insurance: Aetna, Anthem BlueCross and BlueShield, Carelon Behavioral Health, CDPHP . Cigna and Evernorth, EmblemHealth, Empire Blue Cross Blue Shield, Government Employees Health Association (GEHA), Group Health Incorporated (GHI), Horizon Blue Cross and Blue Shield, MagnaCare, Meritain Health, MVP Health Care, NYSHIP | NY State Empire Plan, Optum, United Medical Resources (UMR). UnitedHealthcare UHC | UBH, Wellfleet\n352 7th Avenue (between 29th & 30th), Suite 801 New York, NY 10001 (646) 397-3178 info@downtownpsychological.com http://www.downtownpsychological.com/ Aetna (including Aetna Student Health, PPO, HMO), Wellfleet (Cigna) (student health insurance for New York University), United Health Care/Student Resource for The New School, Northwell Health Specializes in college student mental health Offering in-network teletherapy and in-person now Updated 1/8/24 by JG\nNew York, NY 10065 212-838-4333 Ext 137 http://www.karenhorneyclinic.org/ TheClinic@karenhorneyclinic.org cfuller@karenhorneyclinic.org (associate executive director Craig Fuller)Karen Horney Clinic 329 Accepts Aetna, Affinity Health Plan, Amida Care, BCBS, Emblem Health, Fidelis, GHI, Healthfirst, Health Plus, Medicaid, MVP Healthcare, Medicare, MetroPlus, The Empire Plan, Wellcare, United Healthcare/Oxford There has been negative feedback regarding psychiatrist Primary orientation: psychodynamic Offer sliding scale based on income In person and virtual Updated 1/16/2024 Reed M\n(866) 686-0614 Virtual intensive outpatient care https://www.eatingrecoverycenter.com/ppc-vc-ed-ny?st-t=&vt-n=g&vt-k=eating%20disorder&gclid=CjwKCAjwoP6LBhBlEiwAvCcthEH2EimuHGlPVg5j90tBSKpS57oRILv1el43wR0IH2UPyLlg6SaK2RoCD6oQAvD_BwE Virtual three, 3-hour small group sessions a week, covering skills, nutrition/meals, and process support. One weekly individual or family session with a licensed counselor or psychologist One weekly session with a Registered Dietitian Collaboration with outpatient medical providers Recovery Record app to help you record your treatment and progress Secure, encrypted software for complete confidentiality Criteria for admission: Patient needs to be mentally and medically stable; will be screened through a",
     "accepting_clients": false,
     "active": true,
-    "id": 12
+    "id": 13
   },
   {
     "name": "Eating Recovery Center",
@@ -471,6 +505,7 @@
     "insurance": [
       "Aetna",
       "Cigna",
+      "Sliding Scale",
       "United HealthCare"
     ],
     "in_person": true,
@@ -493,7 +528,7 @@
     "description": "Soho Center for Mental Health Counseling https://www.thesohocenter.com/provider/dominika-bredova-lmhc dominikabredova@thesohocenter.com (929) 400-7481 Specializes in relational, psychodynamic modalities In person and Virtual services 159 Bleeker Street, 2nd floor, New York, NY 10012 Accepts insurance: Aetna, Anthem BlueCross and BlueShield, Carelon Behavioral Health, CDPHP . Cigna and Evernorth, EmblemHealth, Empire Blue Cross Blue Shield, Government Employees Health Association (GEHA), Group Health Incorporated (GHI), Horizon Blue Cross and Blue Shield, MagnaCare, Meritain Health, MVP Health Care, NYSHIP | NY State Empire Plan, Optum, United Medical Resources (UMR). UnitedHealthcare UHC | UBH, Wellfleet\n352 7th Avenue (between 29th & 30th), Suite 801 New York, NY 10001 (646) 397-3178 info@downtownpsychological.com http://www.downtownpsychological.com/ Aetna (including Aetna Student Health, PPO, HMO), Wellfleet (Cigna) (student health insurance for New York University), United Health Care/Student Resource for The New School, Northwell Health Specializes in college student mental health Offering in-network teletherapy and in-person now Updated 1/8/24 by JG\nNew York, NY 10065 212-838-4333 Ext 137 http://www.karenhorneyclinic.org/ TheClinic@karenhorneyclinic.org cfuller@karenhorneyclinic.org (associate executive director Craig Fuller)Karen Horney Clinic 329 Accepts Aetna, Affinity Health Plan, Amida Care, BCBS, Emblem Health, Fidelis, GHI, Healthfirst, Health Plus, Medicaid, MVP Healthcare, Medicare, MetroPlus, The Empire Plan, Wellcare, United Healthcare/Oxford There has been negative feedback regarding psychiatrist Primary orientation: psychodynamic Offer sliding scale based on income In person and virtual Updated 1/16/2024 Reed M\n(866) 686-0614 Virtual intensive outpatient care https://www.eatingrecoverycenter.com/ppc-vc-ed-ny?st-t=&vt-n=g&vt-k=eating%20disorder&gclid=CjwKCAjwoP6LBhBlEiwAvCcthEH2EimuHGlPVg5j90tBSKpS57oRILv1el43wR0IH2UPyLlg6SaK2RoCD6oQAvD_BwE Virtual three, 3-hour small group sessions a week, covering skills, nutrition/meals, and process support. One weekly individual or family session with a licensed counselor or psychologist One weekly session with a Registered Dietitian Collaboration with outpatient medical providers Recovery Record app to help you record your treatment and progress Secure, encrypted software for complete confidentiality Criteria for admission: Patient needs to be mentally and medically stable; will be screened through a",
     "accepting_clients": false,
     "active": true,
-    "id": 13
+    "id": 14
   },
   {
     "name": "EQ Therapy- Dr. Eric Gutgarts (Former Professor of Kate\u2019s at NYU)",
@@ -507,6 +542,7 @@
       "Medicaid",
       "Medicare",
       "Oxford",
+      "Sliding Scale",
       "United HealthCare"
     ],
     "in_person": true,
@@ -532,7 +568,7 @@
     "description": "Soho Center for Mental Health Counseling https://www.thesohocenter.com/provider/dominika-bredova-lmhc dominikabredova@thesohocenter.com (929) 400-7481 Specializes in relational, psychodynamic modalities In person and Virtual services 159 Bleeker Street, 2nd floor, New York, NY 10012 Accepts insurance: Aetna, Anthem BlueCross and BlueShield, Carelon Behavioral Health, CDPHP . Cigna and Evernorth, EmblemHealth, Empire Blue Cross Blue Shield, Government Employees Health Association (GEHA), Group Health Incorporated (GHI), Horizon Blue Cross and Blue Shield, MagnaCare, Meritain Health, MVP Health Care, NYSHIP | NY State Empire Plan, Optum, United Medical Resources (UMR). UnitedHealthcare UHC | UBH, Wellfleet\n352 7th Avenue (between 29th & 30th), Suite 801 New York, NY 10001 (646) 397-3178 info@downtownpsychological.com http://www.downtownpsychological.com/ Aetna (including Aetna Student Health, PPO, HMO), Wellfleet (Cigna) (student health insurance for New York University), United Health Care/Student Resource for The New School, Northwell Health Specializes in college student mental health Offering in-network teletherapy and in-person now Updated 1/8/24 by JG\nNew York, NY 10065 212-838-4333 Ext 137 http://www.karenhorneyclinic.org/ TheClinic@karenhorneyclinic.org cfuller@karenhorneyclinic.org (associate executive director Craig Fuller)Karen Horney Clinic 329 Accepts Aetna, Affinity Health Plan, Amida Care, BCBS, Emblem Health, Fidelis, GHI, Healthfirst, Health Plus, Medicaid, MVP Healthcare, Medicare, MetroPlus, The Empire Plan, Wellcare, United Healthcare/Oxford There has been negative feedback regarding psychiatrist Primary orientation: psychodynamic Offer sliding scale based on income In person and virtual Updated 1/16/2024 Reed M\n(866) 686-0614 Virtual intensive outpatient care https://www.eatingrecoverycenter.com/ppc-vc-ed-ny?st-t=&vt-n=g&vt-k=eating%20disorder&gclid=CjwKCAjwoP6LBhBlEiwAvCcthEH2EimuHGlPVg5j90tBSKpS57oRILv1el43wR0IH2UPyLlg6SaK2RoCD6oQAvD_BwE Virtual three, 3-hour small group sessions a week, covering skills, nutrition/meals, and process support. One weekly individual or family session with a licensed counselor or psychologist One weekly session with a Registered Dietitian Collaboration with outpatient medical providers Recovery Record app to help you record your treatment and progress Secure, encrypted software for complete confidentiality Criteria for admission: Patient needs to be mentally and medically stable; will be screened through a",
     "accepting_clients": false,
     "active": true,
-    "id": 14
+    "id": 15
   },
   {
     "name": "Felix Kleyman, MD",
@@ -542,6 +578,7 @@
       "Blue Cross Blue Shield",
       "Cigna",
       "Humana",
+      "Sliding Scale",
       "United HealthCare"
     ],
     "in_person": true,
@@ -569,7 +606,36 @@
     "description": "Soho Center for Mental Health Counseling https://www.thesohocenter.com/provider/dominika-bredova-lmhc dominikabredova@thesohocenter.com (929) 400-7481 Specializes in relational, psychodynamic modalities In person and Virtual services 159 Bleeker Street, 2nd floor, New York, NY 10012 Accepts insurance: Aetna, Anthem BlueCross and BlueShield, Carelon Behavioral Health, CDPHP . Cigna and Evernorth, EmblemHealth, Empire Blue Cross Blue Shield, Government Employees Health Association (GEHA), Group Health Incorporated (GHI), Horizon Blue Cross and Blue Shield, MagnaCare, Meritain Health, MVP Health Care, NYSHIP | NY State Empire Plan, Optum, United Medical Resources (UMR). UnitedHealthcare UHC | UBH, Wellfleet\n352 7th Avenue (between 29th & 30th), Suite 801 New York, NY 10001 (646) 397-3178 info@downtownpsychological.com http://www.downtownpsychological.com/ Aetna (including Aetna Student Health, PPO, HMO), Wellfleet (Cigna) (student health insurance for New York University), United Health Care/Student Resource for The New School, Northwell Health Specializes in college student mental health Offering in-network teletherapy and in-person now Updated 1/8/24 by JG\nNew York, NY 10065 212-838-4333 Ext 137 http://www.karenhorneyclinic.org/ TheClinic@karenhorneyclinic.org cfuller@karenhorneyclinic.org (associate executive director Craig Fuller)Karen Horney Clinic 329 Accepts Aetna, Affinity Health Plan, Amida Care, BCBS, Emblem Health, Fidelis, GHI, Healthfirst, Health Plus, Medicaid, MVP Healthcare, Medicare, MetroPlus, The Empire Plan, Wellcare, United Healthcare/Oxford There has been negative feedback regarding psychiatrist Primary orientation: psychodynamic Offer sliding scale based on income In person and virtual Updated 1/16/2024 Reed M\n(866) 686-0614 Virtual intensive outpatient care https://www.eatingrecoverycenter.com/ppc-vc-ed-ny?st-t=&vt-n=g&vt-k=eating%20disorder&gclid=CjwKCAjwoP6LBhBlEiwAvCcthEH2EimuHGlPVg5j90tBSKpS57oRILv1el43wR0IH2UPyLlg6SaK2RoCD6oQAvD_BwE Virtual three, 3-hour small group sessions a week, covering skills, nutrition/meals, and process support. One weekly individual or family session with a licensed counselor or psychologist One weekly session with a Registered Dietitian Collaboration with outpatient medical providers Recovery Record app to help you record your treatment and progress Secure, encrypted software for complete confidentiality Criteria for admission: Patient needs to be mentally and medically stable; will be screened through a",
     "accepting_clients": false,
     "active": true,
-    "id": 15
+    "id": 16
+  },
+  {
+    "name": "Hillary Lewin Tuvia, PhD",
+    "type": "Psychologist",
+    "insurance": [
+      "Blue Cross Blue Shield",
+      "Cigna",
+      "GHI",
+      "Sliding Scale"
+    ],
+    "session_format": "Both",
+    "address": "110 West 96th Street",
+    "email": "Hillary.lewin@gmail.com",
+    "phone": "(646) 415-1405",
+    "websites": {
+      "practice": "https://www.uwstherapygroup.com"
+    },
+    "specialties": [],
+    "modalities": [
+      "Psychodynamic"
+    ],
+    "low_cost": true,
+    "licensed_states": [
+      "NY"
+    ],
+    "description": "Interpersonal psychodynamic, emerging adults (college students, grad students). Sliding scale $45-$175. Offers online therapy and in person.",
+    "accepting_clients": true,
+    "active": true,
+    "id": 17
   },
   {
     "name": "Institute for Human Identity Therapy Center (IHI)",
@@ -579,6 +645,7 @@
       "Blue Cross Blue Shield",
       "Cigna",
       "Oxford",
+      "Sliding Scale",
       "United HealthCare"
     ],
     "in_person": false,
@@ -609,7 +676,7 @@
     "description": "Virtual eqtherapy.co drg@eqtherapy.co EQ Therapy is a Telehealth therapy practice that specializes in working with high performing professionals in NY , CT, and CO. The majority of clients who seek services at this practice are industry leaders, college students, athletes, and entrepreneurs. Clients typically aim to increase awareness on people-pleasing behaviors, distractibility, goal orientation, emotional regulation, resilience, cognitive spiraling, self-assertiveness, conflict avoidance, inauthenticity, boundary-setting, and other areas associated with emotional intelligence. Insurance: Aetna, Anthem Blue Cross and Blue Shield, Anthem EAP , Blue Cross Blue Shield of Massachusetts, Carelon Behavioral Health, Cigna, Oscar, Oxford, Quest Behavioral Health, United Healthcare\n30 east 76th street, 6th floor (corner of Madison and 76th) NY , NY Phone: 212- 472-1356 Fax: 212-472-1356 Insurance: United Health Care/Oxford, Blue Cross Blue Shield (some ppo), Cigna Prefers to have call to discuss referral before client given contact info Offers sliding scale for students on individual basis; have students call and mention they are from Fordham Rec. Dr. Gail Bach Updated 12/10/2015 Claire\nAccepts BCBS, United Healthcare, Magna Care, Beacon NYSHIP , Cigna, VMR, Aetna. Sliding scale for out of network Offering telehealth and in-person Updated 3/15/24 - JR\nInstitute for Human Identity Therapy Center (IHI) -contact us at info@ihitherapy.org or use the booking link on our website or via ZocDoc Based in New York City (26th St. & 8th Ave) -We are in-network with Aetna, Unitedhealthcare and Oxford -We offer a sliding scale and a discounted rate for clients who work with our advanced clinical interns -We work with college aged folks Private Practice Therapists\n214-543-6962 (clinician use only) jebbunting1@gmail.com (clinician email) jebbunting2@gmail.com (client email) In-network with Aetna, BCBS, UHI, Cigna, Oxford, Optum, Anthem, Empire; Private Pay Sliding scale $150 - $200 In-person in Manhattan & Remote / Telehealth Specializes in relational, psychodynamic modalities with adults struggling with anxiety, depression, interpersonal difficulties, life transitions https://www.psychologytoday.com/us/therapists/jeb-bunting-new-york-ny/1559594",
     "accepting_clients": false,
     "active": true,
-    "id": 16
+    "id": 18
   },
   {
     "name": "Jeb Bunting, LMSW (Former Fordham CPS Intern and Post-Grad)",
@@ -619,6 +686,7 @@
       "Blue Cross Blue Shield",
       "Cigna",
       "Oxford",
+      "Sliding Scale",
       "United HealthCare"
     ],
     "in_person": true,
@@ -646,7 +714,32 @@
     "description": "Virtual eqtherapy.co drg@eqtherapy.co EQ Therapy is a Telehealth therapy practice that specializes in working with high performing professionals in NY , CT, and CO. The majority of clients who seek services at this practice are industry leaders, college students, athletes, and entrepreneurs. Clients typically aim to increase awareness on people-pleasing behaviors, distractibility, goal orientation, emotional regulation, resilience, cognitive spiraling, self-assertiveness, conflict avoidance, inauthenticity, boundary-setting, and other areas associated with emotional intelligence. Insurance: Aetna, Anthem Blue Cross and Blue Shield, Anthem EAP , Blue Cross Blue Shield of Massachusetts, Carelon Behavioral Health, Cigna, Oscar, Oxford, Quest Behavioral Health, United Healthcare\n30 east 76th street, 6th floor (corner of Madison and 76th) NY , NY Phone: 212- 472-1356 Fax: 212-472-1356 Insurance: United Health Care/Oxford, Blue Cross Blue Shield (some ppo), Cigna Prefers to have call to discuss referral before client given contact info Offers sliding scale for students on individual basis; have students call and mention they are from Fordham Rec. Dr. Gail Bach Updated 12/10/2015 Claire\nAccepts BCBS, United Healthcare, Magna Care, Beacon NYSHIP , Cigna, VMR, Aetna. Sliding scale for out of network Offering telehealth and in-person Updated 3/15/24 - JR\nInstitute for Human Identity Therapy Center (IHI) -contact us at info@ihitherapy.org or use the booking link on our website or via ZocDoc Based in New York City (26th St. & 8th Ave) -We are in-network with Aetna, Unitedhealthcare and Oxford -We offer a sliding scale and a discounted rate for clients who work with our advanced clinical interns -We work with college aged folks Private Practice Therapists\n214-543-6962 (clinician use only) jebbunting1@gmail.com (clinician email) jebbunting2@gmail.com (client email) In-network with Aetna, BCBS, UHI, Cigna, Oxford, Optum, Anthem, Empire; Private Pay Sliding scale $150 - $200 In-person in Manhattan & Remote / Telehealth Specializes in relational, psychodynamic modalities with adults struggling with anxiety, depression, interpersonal difficulties, life transitions https://www.psychologytoday.com/us/therapists/jeb-bunting-new-york-ny/1559594",
     "accepting_clients": false,
     "active": true,
-    "id": 17
+    "id": 19
+  },
+  {
+    "name": "Jessica Del Vita, Ph.D.",
+    "type": "Psychologist",
+    "insurance": [
+      "Aetna",
+      "Sliding Scale"
+    ],
+    "session_format": "Unknown",
+    "address": null,
+    "email": null,
+    "phone": null,
+    "websites": {
+      "alma": "https://secure.helloalma.com/providers/jessica-vita/"
+    },
+    "specialties": [],
+    "modalities": [],
+    "low_cost": true,
+    "licensed_states": [
+      "NY"
+    ],
+    "description": "In-network with Aetna. See provider website for other insurance plans.",
+    "accepting_clients": true,
+    "active": true,
+    "id": 20
   },
   {
     "name": "Jiexuan Li, LMHC, CASAC",
@@ -658,6 +751,7 @@
       "HIP",
       "Out of Network",
       "Oxford",
+      "Sliding Scale",
       "United HealthCare"
     ],
     "in_person": false,
@@ -686,7 +780,7 @@
     "description": "Virtual eqtherapy.co drg@eqtherapy.co EQ Therapy is a Telehealth therapy practice that specializes in working with high performing professionals in NY , CT, and CO. The majority of clients who seek services at this practice are industry leaders, college students, athletes, and entrepreneurs. Clients typically aim to increase awareness on people-pleasing behaviors, distractibility, goal orientation, emotional regulation, resilience, cognitive spiraling, self-assertiveness, conflict avoidance, inauthenticity, boundary-setting, and other areas associated with emotional intelligence. Insurance: Aetna, Anthem Blue Cross and Blue Shield, Anthem EAP , Blue Cross Blue Shield of Massachusetts, Carelon Behavioral Health, Cigna, Oscar, Oxford, Quest Behavioral Health, United Healthcare\n30 east 76th street, 6th floor (corner of Madison and 76th) NY , NY Phone: 212- 472-1356 Fax: 212-472-1356 Insurance: United Health Care/Oxford, Blue Cross Blue Shield (some ppo), Cigna Prefers to have call to discuss referral before client given contact info Offers sliding scale for students on individual basis; have students call and mention they are from Fordham Rec. Dr. Gail Bach Updated 12/10/2015 Claire\nAccepts BCBS, United Healthcare, Magna Care, Beacon NYSHIP , Cigna, VMR, Aetna. Sliding scale for out of network Offering telehealth and in-person Updated 3/15/24 - JR\nInstitute for Human Identity Therapy Center (IHI) -contact us at info@ihitherapy.org or use the booking link on our website or via ZocDoc Based in New York City (26th St. & 8th Ave) -We are in-network with Aetna, Unitedhealthcare and Oxford -We offer a sliding scale and a discounted rate for clients who work with our advanced clinical interns -We work with college aged folks Private Practice Therapists\n214-543-6962 (clinician use only) jebbunting1@gmail.com (clinician email) jebbunting2@gmail.com (client email) In-network with Aetna, BCBS, UHI, Cigna, Oxford, Optum, Anthem, Empire; Private Pay Sliding scale $150 - $200 In-person in Manhattan & Remote / Telehealth Specializes in relational, psychodynamic modalities with adults struggling with anxiety, depression, interpersonal difficulties, life transitions https://www.psychologytoday.com/us/therapists/jeb-bunting-new-york-ny/1559594",
     "accepting_clients": false,
     "active": true,
-    "id": 18
+    "id": 21
   },
   {
     "name": "John Eastman, LCSW, Psychoanalyst",
@@ -694,6 +788,7 @@
     "insurance": [
       "Aetna",
       "Oxford",
+      "Sliding Scale",
       "United HealthCare"
     ],
     "in_person": false,
@@ -719,7 +814,32 @@
     "description": "214-543-6962 (clinician use only) jebbunting1@gmail.com (clinician email) jebbunting2@gmail.com (client email) In-network with Aetna, BCBS, UHI, Cigna, Oxford, Optum, Anthem, Empire; Private Pay Sliding scale $150 - $200 In-person in Manhattan & Remote / Telehealth Specializes in relational, psychodynamic modalities with adults struggling with anxiety, depression, interpersonal difficulties, life transitions https://www.psychologytoday.com/us/therapists/jeb-bunting-new-york-ny/1559594 Dominika Bredova, LMHC Soho Center for Mental Health Counseling https://www.thesohocenter.com/provider/dominika-bredova-lmhc dominikabredova@thesohocenter.com (929) 400-7481 Specializes in relational, psychodynamic modalities In person and Virtual services 159 Bleeker Street, 2nd floor, New York, NY 10012 Accepts insurance: Aetna, Anthem BlueCross and BlueShield, Carelon Behavioral Health, CDPHP . Cigna and Evernorth, EmblemHealth, Empire Blue Cross Blue Shield, Government Employees Health Association (GEHA), Group Health Incorporated (GHI), Horizon Blue Cross and Blue Shield, MagnaCare, Meritain Health, MVP Health Care, NYSHIP | NY State Empire Plan, Optum, United Medical Resources (UMR). UnitedHealthcare UHC | UBH, Wellfleet Added 3/6/2026 Kate Dotson\n646-298-2751 ext 709 xuan@mindbodygarden.com in-network with Aetna, Cigna, Empire Blue Cross Blue Shield, Oxford, United Health Care, and Oscar Health. I speak English, Mandarin, and Cantonese and have experience in providing therapy in all three languages. Brooklyn\n(646) 515 5738 eastman.j@gmail.com https://secure.helloalma.com/providers/john-eastman/ In-network with Aetna and UHC Full fee sliding scale $150 - $250 In-person and/or remote Specializes in relational, psychodynamic modalities with adults struggling with anxiety, depression, interpersonal difficulties, life transitions (formerly at CPS) updated  by E. Greene 5/20/24",
     "accepting_clients": false,
     "active": true,
-    "id": 19
+    "id": 22
+  },
+  {
+    "name": "Jung Eun Kim, Ph.D.",
+    "type": "Psychologist",
+    "insurance": [
+      "Aetna",
+      "Sliding Scale"
+    ],
+    "session_format": "Unknown",
+    "address": null,
+    "email": null,
+    "phone": null,
+    "websites": {
+      "alma": "https://secure.helloalma.com/providers/jung-eun-kim/"
+    },
+    "specialties": [],
+    "modalities": [],
+    "low_cost": true,
+    "licensed_states": [
+      "NY"
+    ],
+    "description": "In-network with Aetna. See provider website for other insurance plans.",
+    "accepting_clients": true,
+    "active": true,
+    "id": 23
   },
   {
     "name": "Karen Horney Clinic",
@@ -734,6 +854,7 @@
       "HIP",
       "MagnaCare",
       "Oxford",
+      "Sliding Scale",
       "United HealthCare"
     ],
     "in_person": true,
@@ -756,7 +877,7 @@
     "description": "214-543-6962 (clinician use only) jebbunting1@gmail.com (clinician email) jebbunting2@gmail.com (client email) In-network with Aetna, BCBS, UHI, Cigna, Oxford, Optum, Anthem, Empire; Private Pay Sliding scale $150 - $200 In-person in Manhattan & Remote / Telehealth Specializes in relational, psychodynamic modalities with adults struggling with anxiety, depression, interpersonal difficulties, life transitions https://www.psychologytoday.com/us/therapists/jeb-bunting-new-york-ny/1559594 Dominika Bredova, LMHC Soho Center for Mental Health Counseling https://www.thesohocenter.com/provider/dominika-bredova-lmhc dominikabredova@thesohocenter.com (929) 400-7481 Specializes in relational, psychodynamic modalities In person and Virtual services 159 Bleeker Street, 2nd floor, New York, NY 10012 Accepts insurance: Aetna, Anthem BlueCross and BlueShield, Carelon Behavioral Health, CDPHP . Cigna and Evernorth, EmblemHealth, Empire Blue Cross Blue Shield, Government Employees Health Association (GEHA), Group Health Incorporated (GHI), Horizon Blue Cross and Blue Shield, MagnaCare, Meritain Health, MVP Health Care, NYSHIP | NY State Empire Plan, Optum, United Medical Resources (UMR). UnitedHealthcare UHC | UBH, Wellfleet Added 3/6/2026 Kate Dotson\n646-298-2751 ext 709 xuan@mindbodygarden.com in-network with Aetna, Cigna, Empire Blue Cross Blue Shield, Oxford, United Health Care, and Oscar Health. I speak English, Mandarin, and Cantonese and have experience in providing therapy in all three languages. Brooklyn\n(646) 515 5738 eastman.j@gmail.com https://secure.helloalma.com/providers/john-eastman/ In-network with Aetna and UHC Full fee sliding scale $150 - $250 In-person and/or remote Specializes in relational, psychodynamic modalities with adults struggling with anxiety, depression, interpersonal difficulties, life transitions (formerly at CPS) updated  by E. Greene 5/20/24",
     "accepting_clients": false,
     "active": true,
-    "id": 20
+    "id": 24
   },
   {
     "name": "Kevin Rustam, PsyD",
@@ -766,6 +887,7 @@
       "Blue Cross Blue Shield",
       "Cigna",
       "Oxford",
+      "Sliding Scale",
       "United HealthCare"
     ],
     "in_person": true,
@@ -786,7 +908,7 @@
     "description": "646 515 5738 eastman.j@gmail.com In-network with Aetna and UHI Full fee sliding scale $150 - $250 In-person and/or remote Specializes in relational, psychodynamic modalities with adults struggling with anxiety, depression, interpersonal difficulties, life transitions https://secure.helloalma.com/providers/john-eastman/\n329 East 62nd Street New York, NY 10065 212-838-4333 Ext 137 http://www.karenhorneyclinic.org/ TheClinic@karenhorneyclinic.org cfuller@karenhorneyclinic.org (associate executive director Craig Fuller) Accepts Aetna, Affinity Health Plan, Amida Care, BCBS, Emblem Health, Fidelis, GHI, Healthfirst, Health Plus, Medicaid, MVP Healthcare, Medicare, MetroPlus, The Empire Plan, Wellcare, United Healthcare/Oxford There has been negative feedback regarding psychiatrist Primary orientation: psychodynamic Offer sliding scale based on income In person and virtual Updated 1/16/2024 Reed M\nkvnrustam@gmail.com 929.367.1692 (t) https://www.psychologytoday.com/profile/930489 Primary orientation is psychodynamic/psychoanalytic and specialities are relationship, personality, and anxiety and depression. Former CPS Postdoc Accepts: Aetna, AllSavers UHC, Allied Benefit Systems - AetnaBlue Cross Blue Shield of Massachusetts, Christian Brothers Services - Aetna, Harvard Pilgrim, Health Plans Inc.Health Scope - Aetna, Meritain, Nippon, Oscar, Oxford Health Plans, Surest (Formerly Bind)Trustmark Health Benefits - AetnaTrustmark Small Business Benefits - AetnaUHC Student ResourcesUMRUnited Healthcare Shared ServicesUnitedHealthcare UnitedHealthcare Global Telehealth Added 9/21/20 MH Updated 1/16/2024- FSR\nNew York, NY 10023 (215) 692-4083 lesliebeckerlcsw@gmail.com https://www.psychologytoday.com/us/therapists/leslie-b-becker-new-york-ny/112022 Adults only - only interested in working with graduate students (not undergrads) Orientation: Eclectic, Psychodynamic, Supportive, Feminist, Person-Centered Insurance through Headway: Aetna, Oscar Health, United Healthcare, Oxford. Offers sliding scale $100-200. Virtual only, but gives clients the option to meet with her in person at least once or for special circumstances. Updated 1/9/2024 - Reed M",
     "accepting_clients": false,
     "active": true,
-    "id": 21
+    "id": 25
   },
   {
     "name": "Leslie Becker, LCSW",
@@ -795,6 +917,7 @@
       "1199",
       "Aetna",
       "Oxford",
+      "Sliding Scale",
       "United HealthCare"
     ],
     "in_person": false,
@@ -817,41 +940,7 @@
     "description": "646 515 5738 eastman.j@gmail.com In-network with Aetna and UHI Full fee sliding scale $150 - $250 In-person and/or remote Specializes in relational, psychodynamic modalities with adults struggling with anxiety, depression, interpersonal difficulties, life transitions https://secure.helloalma.com/providers/john-eastman/\n329 East 62nd Street New York, NY 10065 212-838-4333 Ext 137 http://www.karenhorneyclinic.org/ TheClinic@karenhorneyclinic.org cfuller@karenhorneyclinic.org (associate executive director Craig Fuller) Accepts Aetna, Affinity Health Plan, Amida Care, BCBS, Emblem Health, Fidelis, GHI, Healthfirst, Health Plus, Medicaid, MVP Healthcare, Medicare, MetroPlus, The Empire Plan, Wellcare, United Healthcare/Oxford There has been negative feedback regarding psychiatrist Primary orientation: psychodynamic Offer sliding scale based on income In person and virtual Updated 1/16/2024 Reed M\nkvnrustam@gmail.com 929.367.1692 (t) https://www.psychologytoday.com/profile/930489 Primary orientation is psychodynamic/psychoanalytic and specialities are relationship, personality, and anxiety and depression. Former CPS Postdoc Accepts: Aetna, AllSavers UHC, Allied Benefit Systems - AetnaBlue Cross Blue Shield of Massachusetts, Christian Brothers Services - Aetna, Harvard Pilgrim, Health Plans Inc.Health Scope - Aetna, Meritain, Nippon, Oscar, Oxford Health Plans, Surest (Formerly Bind)Trustmark Health Benefits - AetnaTrustmark Small Business Benefits - AetnaUHC Student ResourcesUMRUnited Healthcare Shared ServicesUnitedHealthcare UnitedHealthcare Global Telehealth Added 9/21/20 MH Updated 1/16/2024- FSR\nNew York, NY 10023 (215) 692-4083 lesliebeckerlcsw@gmail.com https://www.psychologytoday.com/us/therapists/leslie-b-becker-new-york-ny/112022 Adults only - only interested in working with graduate students (not undergrads) Orientation: Eclectic, Psychodynamic, Supportive, Feminist, Person-Centered Insurance through Headway: Aetna, Oscar Health, United Healthcare, Oxford. Offers sliding scale $100-200. Virtual only, but gives clients the option to meet with her in person at least once or for special circumstances. Updated 1/9/2024 - Reed M",
     "accepting_clients": false,
     "active": true,
-    "id": 22
-  },
-  {
-    "name": "Phronetic Psychotherapy",
-    "type": "Psychiatrist / Medication",
-    "insurance": [
-      "Aetna",
-      "Blue Cross Blue Shield",
-      "Emblem",
-      "GHI",
-      "Healthfirst",
-      "Medicaid",
-      "Medicare",
-      "Oxford",
-      "United HealthCare"
-    ],
-    "in_person": true,
-    "session_format": "Virtual",
-    "address": "329 East 62nd Street New York, NY",
-    "email": "kvnrustam@gmail.com",
-    "phone": "929.367.1692",
-    "websites": {
-      "practice": "https://www.modernintegrativepsychiatry.com/"
-    },
-    "specialties": [],
-    "modalities": [],
-    "low_cost": true,
-    "licensed_states": [
-      "MA",
-      "NY"
-    ],
-    "description": "646 515 5738 eastman.j@gmail.com In-network with Aetna and UHI Full fee sliding scale $150 - $250 In-person and/or remote Specializes in relational, psychodynamic modalities with adults struggling with anxiety, depression, interpersonal difficulties, life transitions https://secure.helloalma.com/providers/john-eastman/\n329 East 62nd Street New York, NY 10065 212-838-4333 Ext 137 http://www.karenhorneyclinic.org/ TheClinic@karenhorneyclinic.org cfuller@karenhorneyclinic.org (associate executive director Craig Fuller) Accepts Aetna, Affinity Health Plan, Amida Care, BCBS, Emblem Health, Fidelis, GHI, Healthfirst, Health Plus, Medicaid, MVP Healthcare, Medicare, MetroPlus, The Empire Plan, Wellcare, United Healthcare/Oxford There has been negative feedback regarding psychiatrist Primary orientation: psychodynamic Offer sliding scale based on income In person and virtual Updated 1/16/2024 Reed M\nkvnrustam@gmail.com 929.367.1692 (t) https://www.psychologytoday.com/profile/930489 Primary orientation is psychodynamic/psychoanalytic and specialities are relationship, personality, and anxiety and depression. Former CPS Postdoc Accepts: Aetna, AllSavers UHC, Allied Benefit Systems - AetnaBlue Cross Blue Shield of Massachusetts, Christian Brothers Services - Aetna, Harvard Pilgrim, Health Plans Inc.Health Scope - Aetna, Meritain, Nippon, Oscar, Oxford Health Plans, Surest (Formerly Bind)Trustmark Health Benefits - AetnaTrustmark Small Business Benefits - AetnaUHC Student ResourcesUMRUnited Healthcare Shared ServicesUnitedHealthcare UnitedHealthcare Global Telehealth Added 9/21/20 MH Updated 1/16/2024- FSR\nNew York, NY 10023 (215) 692-4083 lesliebeckerlcsw@gmail.com https://www.psychologytoday.com/us/therapists/leslie-b-becker-new-york-ny/112022 Adults only - only interested in working with graduate students (not undergrads) Orientation: Eclectic, Psychodynamic, Supportive, Feminist, Person-Centered Insurance through Headway: Aetna, Oscar Health, United Healthcare, Oxford. Offers sliding scale $100-200. Virtual only, but gives clients the option to meet with her in person at least once or for special circumstances. Updated 1/9/2024 - Reed M",
-    "accepting_clients": false,
-    "active": true,
-    "id": 23
+    "id": 26
   },
   {
     "name": "MCM Collaborative",
@@ -863,6 +952,7 @@
       "HIP",
       "Medicare",
       "Oxford",
+      "Sliding Scale",
       "United HealthCare"
     ],
     "in_person": false,
@@ -886,7 +976,7 @@
     "description": "646 515 5738 eastman.j@gmail.com In-network with Aetna and UHI Full fee sliding scale $150 - $250 In-person and/or remote Specializes in relational, psychodynamic modalities with adults struggling with anxiety, depression, interpersonal difficulties, life transitions https://secure.helloalma.com/providers/john-eastman/\n329 East 62nd Street New York, NY 10065 212-838-4333 Ext 137 http://www.karenhorneyclinic.org/ TheClinic@karenhorneyclinic.org cfuller@karenhorneyclinic.org (associate executive director Craig Fuller) Accepts Aetna, Affinity Health Plan, Amida Care, BCBS, Emblem Health, Fidelis, GHI, Healthfirst, Health Plus, Medicaid, MVP Healthcare, Medicare, MetroPlus, The Empire Plan, Wellcare, United Healthcare/Oxford There has been negative feedback regarding psychiatrist Primary orientation: psychodynamic Offer sliding scale based on income In person and virtual Updated 1/16/2024 Reed M\nkvnrustam@gmail.com 929.367.1692 (t) https://www.psychologytoday.com/profile/930489 Primary orientation is psychodynamic/psychoanalytic and specialities are relationship, personality, and anxiety and depression. Former CPS Postdoc Accepts: Aetna, AllSavers UHC, Allied Benefit Systems - AetnaBlue Cross Blue Shield of Massachusetts, Christian Brothers Services - Aetna, Harvard Pilgrim, Health Plans Inc.Health Scope - Aetna, Meritain, Nippon, Oscar, Oxford Health Plans, Surest (Formerly Bind)Trustmark Health Benefits - AetnaTrustmark Small Business Benefits - AetnaUHC Student ResourcesUMRUnited Healthcare Shared ServicesUnitedHealthcare UnitedHealthcare Global Telehealth Added 9/21/20 MH Updated 1/16/2024- FSR\nNew York, NY 10023 (215) 692-4083 lesliebeckerlcsw@gmail.com https://www.psychologytoday.com/us/therapists/leslie-b-becker-new-york-ny/112022 Adults only - only interested in working with graduate students (not undergrads) Orientation: Eclectic, Psychodynamic, Supportive, Feminist, Person-Centered Insurance through Headway: Aetna, Oscar Health, United Healthcare, Oxford. Offers sliding scale $100-200. Virtual only, but gives clients the option to meet with her in person at least once or for special circumstances. Updated 1/9/2024 - Reed M",
     "accepting_clients": false,
     "active": true,
-    "id": 24
+    "id": 27
   },
   {
     "name": "Meghan Miller, PsyD",
@@ -894,6 +984,7 @@
     "insurance": [
       "Aetna",
       "Oxford",
+      "Sliding Scale",
       "United HealthCare"
     ],
     "in_person": true,
@@ -923,7 +1014,7 @@
     "description": "New York, NY 10023 (215) 692-4083 lesliebeckerlcsw@gmail.com https://www.psychologytoday.com/us/therapists/leslie-b-becker-new-york-ny/112022 Adults only - only interested in working with graduate students (not undergrads) Orientation: Eclectic, Psychodynamic, Supportive, Feminist, Person-Centered Insurance through Headway: Aenta, Oscar Health, United Healthcare, Oxford. Offers sliding scale $100-200. Virtual only, but gives clients the option to meet with her in person at least once or for special circumstances. Updated 1/9/2024 - Reed M\nJoyce Gu, MHC-LP Virtual Only ygu@phronetic-psychotherapy.org/ jg4574@tc.columbia.edu Tel: 347-725-1458 https://www.psychologytoday.com/us/therapists/joyce-gu-new-york-ny/1375876 Former post-grad at LC In network Insurance: Aetna, Wellfleet, Cigna, United Healthcare, Oxford, Oscar Health, Empire Blue Cross Blue Shield, and Carelon Behavioral Health, for residents of New York.\n116 W 23 Street, 5 FL, NY NY 10011 332-333-5090 https://mcmcollab.com/ info@mcmcollab.com intake@mcmcollab.com Aetna and out-of-network if offered by insurance providers (e.g., UnitedHealth, Cigna, GHI/Emblem, Oxford) Sliding scale $80-120 Orientation: integrative relational, behavioral and somatic offering and prioritize BIPOC/Queer communities All virtual BIPOC and queer therapists Updated 1/9/2024 - R Morgan\n2024 Williamsbridge Road, Suite 3 Bronx, New York 10461 https://mjmps.nyc/ 718-822-MJMP (6567) hello@mjmps.nyc Accepts 11199, Aetna, BCBS, Cigna, Emblem, GHI, HealthFirst, HIP , Magnacare, Medicaid, Medicare, Mental Health Network, Metro Health Plus, United Healthcare and Tricare. Specializes in Harm Reduction/Substance abuse, anxiety, depression, serious mental illness, and issues related to poverty and social injustice (including HIV/AIDS).  They have 28 clinicians so they have a wide range of specialities and therapeutic modalities that are used. Each session is $75. In-Person and Telehealth/Remote Many POC therapists. Referred by Noel Hunter; updated by FSR 1/5/2024 Website, Location, Conctact Info updated by Mariaisabel Zweig, 3/1/26",
     "accepting_clients": false,
     "active": true,
-    "id": 25
+    "id": 28
   },
   {
     "name": "Meredith Hobart, PNP",
@@ -933,6 +1024,7 @@
       "Blue Cross Blue Shield",
       "Cigna",
       "Oxford",
+      "Sliding Scale",
       "United HealthCare"
     ],
     "in_person": true,
@@ -963,7 +1055,7 @@
     "description": "New York, NY 10023 (215) 692-4083 lesliebeckerlcsw@gmail.com https://www.psychologytoday.com/us/therapists/leslie-b-becker-new-york-ny/112022 Adults only - only interested in working with graduate students (not undergrads) Orientation: Eclectic, Psychodynamic, Supportive, Feminist, Person-Centered Insurance through Headway: Aenta, Oscar Health, United Healthcare, Oxford. Offers sliding scale $100-200. Virtual only, but gives clients the option to meet with her in person at least once or for special circumstances. Updated 1/9/2024 - Reed M\nJoyce Gu, MHC-LP Virtual Only ygu@phronetic-psychotherapy.org/ jg4574@tc.columbia.edu Tel: 347-725-1458 https://www.psychologytoday.com/us/therapists/joyce-gu-new-york-ny/1375876 Former post-grad at LC In network Insurance: Aetna, Wellfleet, Cigna, United Healthcare, Oxford, Oscar Health, Empire Blue Cross Blue Shield, and Carelon Behavioral Health, for residents of New York.\n116 W 23 Street, 5 FL, NY NY 10011 332-333-5090 https://mcmcollab.com/ info@mcmcollab.com intake@mcmcollab.com Aetna and out-of-network if offered by insurance providers (e.g., UnitedHealth, Cigna, GHI/Emblem, Oxford) Sliding scale $80-120 Orientation: integrative relational, behavioral and somatic offering and prioritize BIPOC/Queer communities All virtual BIPOC and queer therapists Updated 1/9/2024 - R Morgan\n2024 Williamsbridge Road, Suite 3 Bronx, New York 10461 https://mjmps.nyc/ 718-822-MJMP (6567) hello@mjmps.nyc Accepts 11199, Aetna, BCBS, Cigna, Emblem, GHI, HealthFirst, HIP , Magnacare, Medicaid, Medicare, Mental Health Network, Metro Health Plus, United Healthcare and Tricare. Specializes in Harm Reduction/Substance abuse, anxiety, depression, serious mental illness, and issues related to poverty and social injustice (including HIV/AIDS).  They have 28 clinicians so they have a wide range of specialities and therapeutic modalities that are used. Each session is $75. In-Person and Telehealth/Remote Many POC therapists. Referred by Noel Hunter; updated by FSR 1/5/2024 Website, Location, Conctact Info updated by Mariaisabel Zweig, 3/1/26",
     "accepting_clients": false,
     "active": true,
-    "id": 26
+    "id": 29
   },
   {
     "name": "Meredith Mahoney, Ms.Ed., PsyD, PCIT, CPMT",
@@ -974,6 +1066,7 @@
       "Emblem",
       "GHI",
       "Oxford",
+      "Sliding Scale",
       "United HealthCare"
     ],
     "in_person": true,
@@ -1004,7 +1097,7 @@
     "description": "2024 Williamsbridge Road, Suite 3 Bronx, New York 10461 https://mjmps.nyc/ 718-822-MJMP (6567) hello@mjmps.nyc Accepts 11199, Aetna, BCBS, Cigna, Emblem, GHI, HealthFirst, HIP , Magnacare, Medicaid, Medicare, Mental Health Network, Metro Health Plus, United Healthcare and Tricare. Specializes in Harm Reduction/Substance abuse, anxiety, depression, serious mental illness, and issues related to poverty and social injustice (including HIV/AIDS).  They have 28 clinicians so they have a wide range of specialities and therapeutic modalities that are used. Each session is $75. In-Person and Telehealth/Remote Many POC therapists. Referred by Noel Hunter; updated by FSR 1/5/2024 Website, Location,  Conctact Info updated by Mariaisabel Zweig, 3/1/26\n300 Mercer Street Suite 11F New York, NY 10003 staff@meredith-hobart.hush.com (646) 576-7364 scheduling appointments 212-518-1915 direct line Medication evaluation and management Aetna, United Healthcare All initial sessions and followup sessions will be done by Telehealth only Added 3/25/19 - MH Updated 12/16/21 - A Feng\n105 West 86 Street, #249 New York, NY 10024 (646) 580-0313 www.drmeredithmahoney.com http://therapists.psychologytoday.com/rms/203822 Specializes in adults that are college age. Also treats children and teens Accepts Aetna, BCBS, Cigna, Oxford, UHC, Out-of-Network Offers sliding scale She emailed CPS; Sarika recommends her Offering only telehealth only Currently taking new clients Updated 1/20/22 - A Feng\nMultiple locations in New York, New Jersey and Connecticut 516-505-7200 Telepsychiatry only To schedule an appointment online for new patients:  https://account.mindful.care/registration For existing patients email:  support@mindful.care Appointments within 48-72 hours Sunday-Friday 8am-6pm Psychiatry/Med management Accepts 1199 SEIU, Aetna, Cigna, GHI, HealthFirst, HIP , Humana, Medicare, Optum, Oscar, Oxford Health Plan, United Behavioral Health, UMR, United Healthcare, Medicaid Added 10/4/21 by E. Greene Updated 1/4/24 by Jaz Garcia",
     "accepting_clients": false,
     "active": true,
-    "id": 27
+    "id": 30
   },
   {
     "name": "Mindful Care",
@@ -1016,12 +1109,13 @@
       "Cigna",
       "Emblem",
       "GHI",
-      "HIP",
       "Healthfirst",
+      "HIP",
       "MagnaCare",
       "Medicaid",
       "Medicare",
       "Oxford",
+      "Sliding Scale",
       "TriCare",
       "United HealthCare"
     ],
@@ -1045,7 +1139,7 @@
     "description": "2024 Williamsbridge Road, Suite 3 Bronx, New York 10461 https://mjmps.nyc/ 718-822-MJMP (6567) hello@mjmps.nyc Accepts 11199, Aetna, BCBS, Cigna, Emblem, GHI, HealthFirst, HIP , Magnacare, Medicaid, Medicare, Mental Health Network, Metro Health Plus, United Healthcare and Tricare. Specializes in Harm Reduction/Substance abuse, anxiety, depression, serious mental illness, and issues related to poverty and social injustice (including HIV/AIDS).  They have 28 clinicians so they have a wide range of specialities and therapeutic modalities that are used. Each session is $75. In-Person and Telehealth/Remote Many POC therapists. Referred by Noel Hunter; updated by FSR 1/5/2024 Website, Location,  Conctact Info updated by Mariaisabel Zweig, 3/1/26\n300 Mercer Street Suite 11F New York, NY 10003 staff@meredith-hobart.hush.com (646) 576-7364 scheduling appointments 212-518-1915 direct line Medication evaluation and management Aetna, United Healthcare All initial sessions and followup sessions will be done by Telehealth only Added 3/25/19 - MH Updated 12/16/21 - A Feng\n105 West 86 Street, #249 New York, NY 10024 (646) 580-0313 www.drmeredithmahoney.com http://therapists.psychologytoday.com/rms/203822 Specializes in adults that are college age. Also treats children and teens Accepts Aetna, BCBS, Cigna, Oxford, UHC, Out-of-Network Offers sliding scale She emailed CPS; Sarika recommends her Offering only telehealth only Currently taking new clients Updated 1/20/22 - A Feng\nMultiple locations in New York, New Jersey and Connecticut 516-505-7200 Telepsychiatry only To schedule an appointment online for new patients:  https://account.mindful.care/registration For existing patients email:  support@mindful.care Appointments within 48-72 hours Sunday-Friday 8am-6pm Psychiatry/Med management Accepts 1199 SEIU, Aetna, Cigna, GHI, HealthFirst, HIP , Humana, Medicare, Optum, Oscar, Oxford Health Plan, United Behavioral Health, UMR, United Healthcare, Medicaid Added 10/4/21 by E. Greene Updated 1/4/24 by Jaz Garcia",
     "accepting_clients": false,
     "active": true,
-    "id": 28
+    "id": 31
   },
   {
     "name": "Mindful Urgent Care (same day)",
@@ -1075,7 +1169,7 @@
     "description": "25 W 45th St, 10th Floor, New York, NY , 10036 Monday - Friday: 8am - 6pm (516) 505-7200 support@mindful.care https://www.mindful.care/ Urgent appointments by video or in-person usually within 48 hours. Mindful Care provides emergency psychiatrists and therapists for anxiety, depression, insomnia, bipolar manic depression, PTSD, and more. Our team of trained mental health professionals are here to help you with your mental health conditions. With regular assessments, video/phone appointments, and medication management. Offers Psychiatry, Individual and Group Therapy, and Addiction Treatment/ MAT",
     "accepting_clients": false,
     "active": true,
-    "id": 29
+    "id": 32
   },
   {
     "name": "Modern Integrative Psychiatry",
@@ -1086,6 +1180,7 @@
       "Cigna",
       "Healthfirst",
       "Oxford",
+      "Sliding Scale",
       "United HealthCare"
     ],
     "in_person": true,
@@ -1110,7 +1205,32 @@
     "description": "2024 Williamsbridge Road, Suite 3 Bronx, New York 10461 https://mjmps.nyc/ 718-822-MJMP (6567) hello@mjmps.nyc Accepts 11199, Aetna, BCBS, Cigna, Emblem, GHI, HealthFirst, HIP , Magnacare, Medicaid, Medicare, Mental Health Network, Metro Health Plus, United Healthcare and Tricare. Specializes in Harm Reduction/Substance abuse, anxiety, depression, serious mental illness, and issues related to poverty and social injustice (including HIV/AIDS).  They have 28 clinicians so they have a wide range of specialities and therapeutic modalities that are used. Each session is $75. In-Person and Telehealth/Remote Many POC therapists. Referred by Noel Hunter; updated by FSR 1/5/2024 Website, Location,  Conctact Info updated by Mariaisabel Zweig, 3/1/26\n300 Mercer Street Suite 11F New York, NY 10003 staff@meredith-hobart.hush.com (646) 576-7364 scheduling appointments 212-518-1915 direct line Medication evaluation and management Aetna, United Healthcare All initial sessions and followup sessions will be done by Telehealth only Added 3/25/19 - MH Updated 12/16/21 - A Feng\n105 West 86 Street, #249 New York, NY 10024 (646) 580-0313 www.drmeredithmahoney.com http://therapists.psychologytoday.com/rms/203822 Specializes in adults that are college age. Also treats children and teens Accepts Aetna, BCBS, Cigna, Oxford, UHC, Out-of-Network Offers sliding scale She emailed CPS; Sarika recommends her Offering only telehealth only Currently taking new clients Updated 1/20/22 - A Feng\nMultiple locations in New York, New Jersey and Connecticut 516-505-7200 Telepsychiatry only To schedule an appointment online for new patients:  https://account.mindful.care/registration For existing patients email:  support@mindful.care Appointments within 48-72 hours Sunday-Friday 8am-6pm Psychiatry/Med management Accepts 1199 SEIU, Aetna, Cigna, GHI, HealthFirst, HIP , Humana, Medicare, Optum, Oscar, Oxford Health Plan, United Behavioral Health, UMR, United Healthcare, Medicaid Added 10/4/21 by E. Greene Updated 1/4/24 by Jaz Garcia",
     "accepting_clients": false,
     "active": true,
-    "id": 30
+    "id": 33
+  },
+  {
+    "name": "Narolyn Mendez, Ph.D.",
+    "type": "Psychologist",
+    "insurance": [
+      "Aetna",
+      "Sliding Scale"
+    ],
+    "session_format": "Unknown",
+    "address": null,
+    "email": null,
+    "phone": null,
+    "websites": {
+      "headway": "https://care.headway.co/providers/narolyn-mendez"
+    },
+    "specialties": [],
+    "modalities": [],
+    "low_cost": true,
+    "licensed_states": [
+      "NY"
+    ],
+    "description": "In-network with Aetna. See provider website for other insurance plans.",
+    "accepting_clients": true,
+    "active": true,
+    "id": 34
   },
   {
     "name": "National Institute for Psychotherapies (NIP)",
@@ -1120,12 +1240,13 @@
       "Aetna",
       "Cigna",
       "GHI",
-      "HIP",
       "Healthfirst",
+      "HIP",
       "Humana",
       "Medicaid",
       "Medicare",
       "Oxford",
+      "Sliding Scale",
       "United HealthCare"
     ],
     "in_person": true,
@@ -1150,7 +1271,7 @@
     "description": "19 West 34th St. Suite 301 NY , NY 10001 347-470-8870 http://www.nyccognitivetherapy.com/noah-clyman-lcsw-r-act.html noahclyman@gmail.com https://www.nyccognitivetherapy.com/noah-clymanlcsw-r-a-cbt-bicbt-cc-psychotherapist-beck-institute-cbt-certified-clinician-bicbt-cc.html Cognitive Behavioral Therapy; individual, group, couples; all general concerns In Network Magnacare, offers sliding scale 2/20/19 - MH\nReferred by Noel Hunter; updated by A Feng 10/18/21\nResilience Lab 928 Broadway New York, NY 10128 (347) 757-4615 Psychology Today profile paige.kessler@resiliencelab.us in network with Allied, Trustmark, Aetna, Aetna International, Aetna Student Health Insurance, All Savers Insurance Company, AllWays Health Partners | MGBHP , Golden Rule Insurance Company, Harvard Pilgrim, Humana, Meritain Health, Optum, Oxford, UHC Shared Services, UHC Student Resources, UMR and UnitedHealthcare UHC | UBH. Sliding scale as low as $50/session depending on need Orientation: EMDR, parts work, and psychodynamic Works mostly with women struggling with anxiety, depression, histories of trauma and eating disorders Has experience working with young adults coping with a variety of psychosocial stressors Virtual only Updated 1/16/24 Reed M\nManhattan: 211 Central Park West Suite 1K (212)362-4818 - practice (718) 465-1321 - personal cell Takes Aetna, BCBS, Oxford, GHI, Cigna, united healthcare and other major insurances (no Medicaid or Healthplus) Speak French, Creole, and some Spanish Med management Individual counseling Does more telehealth than in person $200/session if no insurance; open to sliding scale Rec. by Jessica Del Vita Updated 1/11/2024 Reed M\nwdaniel@drkeenanpsychmd.com Updated 1/18/2024- FSR\nTel: 833-775-6252 https://www.resiliencelab.us/ https://www.resiliencelab.us/referring-a-client/ 928 Broadway, New York, NY 10010 Insurances they take: Aetna, United Healthcare, Harvard Pilgrim Health Care, United Healthcare Oxford, Oscar, UMR, Humana, United Healthcare Student Resources Minimum of 3 consultation calls Offers Pay What You Can: $25-$50 starting rate Starting rate $150, but can go as low as $75 Personality/Eating Disorders, Gender Dysphoria Meet mostly via Google Meet (students who need in person can be accommodated) Group therapy is offered\nhttps://riviamind.com/ Accepts Aetna, AvMed BCBS Anthem (BCBS Empire), Blue Cross Blue Shield-MA, Carelon CT, Centivo, Cigna, Cigna, EAP , Clover Health, Compsych, Deloitte\u2019s IMHS, ESI Employee Assistance Group, First Health",
     "accepting_clients": false,
     "active": true,
-    "id": 31
+    "id": 35
   },
   {
     "name": "Noah Clyman, LCSW, ACT",
@@ -1163,6 +1284,7 @@
       "Healthfirst",
       "Medicare",
       "Oxford",
+      "Sliding Scale",
       "United HealthCare"
     ],
     "in_person": false,
@@ -1192,7 +1314,7 @@
     "description": "6 East 39th Street, Suites 503 and 902 New York, NY 10016 (646) 592-0869 modernintegrativepsychiatry@gmail.com https://www.modernintegrativepsychiatry.com/ Specializations: All psychiatric disorders, including depression, bipolar disorder, other mood disorders, anxiety, panic disorder, insomnia, psychotic disorders, ADHD (Adult ADD/ADHD), PTSD, and personality disorders Aetna (Including Meritain), Cigna/Evernorth (Including Wellfleet, Daniel Cook and Allied Benefit Systems), Homestead, JRN Consulting Local 810, Magellan,  Northwell Direct, Optum, Oscar, Oxford, Surest and United Behavioral Health (except the Community Plan) and UMR. If you do not have one of these insurance plans, the out of pocket cost is 275 dollars for an initial evaluation, and 135 dollars for a follow up visit Telemedicine and in-person Accepting new clients Updated: 1/8/24 by JG\nSaturday: 9:00am - 5:00pm Individual Intake Appointment: $90 Accepts 1199 Benefits Fund, AARP , Aetna, Affinity Health Plans, Amida Care, Beacon, Emblem Health. Empire BCBS, Fidelis Care, GHI, Health First, Magnacare, Metro Plus, NYS Medicaid, Optum, Oscar, Oxford Health Plans, Student Resources, UBH, UMR, United Healthcare, Wellcare Hybrid counseling and training center, offering telehealth and in-person sessions. Currently a waitlist for new clients. Updated RCirillo 2/2023\n71 West 23rd Street, Suite 1400 212-582-1566; ext. 7724 , 212-586-1272 fax https://niptherapy.org/treatment NIP provides psychoanalytically oriented individual psychotherapy. Our orientation is Contemporary Relational Psychoanalysis which emphasizes that we all live and develop within social relationships. Our version of effective therapy is that in order to help people with their problems, we need to focus on helping people build connections and relationships. Accept Aetna, value option GHI, Health First, Emblem, NYS Empire no Medicaid/Medicare Currently taking new clients - assigning of therapist typically takes 2-4 weeks Email: intake@nipinst.org To sign up for a consultation, visit: https://niptherapy.org/consult NIP offers both in-person and remote psychotherapy. Rule Outs: 1- We do not provide emergency or crisis services. 2- No hospitalization for over 24 hours within the last 6 months. 3- Anorexia or other Eating Disorder which requires the active involvement of a medical team. Disordered eating, including bulimia would not be a definite rule out. 4- Substance Abuse which would affect their ability to effectively participate in w",
     "accepting_clients": false,
     "active": true,
-    "id": 32
+    "id": 36
   },
   {
     "name": "Paige Kessler",
@@ -1203,6 +1325,7 @@
       "GHI",
       "Homestead",
       "Oxford",
+      "Sliding Scale",
       "United HealthCare"
     ],
     "in_person": true,
@@ -1230,7 +1353,7 @@
     "description": "6 East 39th Street, Suites 503 and 902 New York, NY 10016 (646) 592-0869 modernintegrativepsychiatry@gmail.com https://www.modernintegrativepsychiatry.com/ Specializations: All psychiatric disorders, including depression, bipolar disorder, other mood disorders, anxiety, panic disorder, insomnia, psychotic disorders, ADHD (Adult ADD/ADHD), PTSD, and personality disorders Aetna (Including Meritain), Cigna/Evernorth (Including Wellfleet, Daniel Cook and Allied Benefit Systems), Homestead, JRN Consulting Local 810, Magellan,  Northwell Direct, Optum, Oscar, Oxford, Surest and United Behavioral Health (except the Community Plan) and UMR. If you do not have one of these insurance plans, the out of pocket cost is 275 dollars for an initial evaluation, and 135 dollars for a follow up visit Telemedicine and in-person Accepting new clients Updated: 1/8/24 by JG\nSaturday: 9:00am - 5:00pm Individual Intake Appointment: $90 Accepts 1199 Benefits Fund, AARP , Aetna, Affinity Health Plans, Amida Care, Beacon, Emblem Health. Empire BCBS, Fidelis Care, GHI, Health First, Magnacare, Metro Plus, NYS Medicaid, Optum, Oscar, Oxford Health Plans, Student Resources, UBH, UMR, United Healthcare, Wellcare Hybrid counseling and training center, offering telehealth and in-person sessions. Currently a waitlist for new clients. Updated RCirillo 2/2023\n71 West 23rd Street, Suite 1400 212-582-1566; ext. 7724 , 212-586-1272 fax https://niptherapy.org/treatment NIP provides psychoanalytically oriented individual psychotherapy. Our orientation is Contemporary Relational Psychoanalysis which emphasizes that we all live and develop within social relationships. Our version of effective therapy is that in order to help people with their problems, we need to focus on helping people build connections and relationships. Accept Aetna, value option GHI, Health First, Emblem, NYS Empire no Medicaid/Medicare Currently taking new clients - assigning of therapist typically takes 2-4 weeks Email: intake@nipinst.org To sign up for a consultation, visit: https://niptherapy.org/consult NIP offers both in-person and remote psychotherapy. Rule Outs: 1- We do not provide emergency or crisis services. 2- No hospitalization for over 24 hours within the last 6 months. 3- Anorexia or other Eating Disorder which requires the active involvement of a medical team. Disordered eating, including bulimia would not be a definite rule out. 4- Substance Abuse which would affect their ability to effectively participate in w",
     "accepting_clients": false,
     "active": true,
-    "id": 33
+    "id": 37
   },
   {
     "name": "Paul Sanon, MD",
@@ -1244,6 +1367,7 @@
       "MagnaCare",
       "Medicaid",
       "Oxford",
+      "Sliding Scale",
       "United HealthCare"
     ],
     "in_person": true,
@@ -1269,7 +1393,42 @@
     "description": "71 West 23rd Street, Suite 1400 212-582-1566; ext. 7724 , 212-586-1272 fax https://niptherapy.org/treatment NIP provides psychoanalytically oriented individual psychotherapy. Our orientation is Contemporary Relational Psychoanalysis which emphasizes that we all live and develop within social relationships. Our version of effective therapy is that in order to help people with their problems, we need to focus on helping people build connections and relationships. Accept Aetna, value option GHI, Health First, Emblem, NYS Empire no Medicaid/Medicare Currently taking new clients - assigning of therapist typically takes 2-4 weeks Email: intake@nipinst.org To sign up for a consultation, visit: https://niptherapy.org/consult NIP offers both in-person and remote psychotherapy. Rule Outs: 1- We do not provide emergency or crisis services. 2- No hospitalization for over 24 hours within the last 6 months. 3- Anorexia or other Eating Disorder which requires the active involvement of a medical team. Disordered eating, including bulimia would not be a definite rule out. 4- Substance Abuse which would affect their ability to effectively participate in weekly psychotherapy, e.g. blackouts Insurances Accepted: Aetna, Healthfirst, Carelon, NY State Empire, commercial Medicaid plans Sliding Scale Fee: $55.00 to $125.00. Special student rate is $40.00 (if no other source of income) Updated 1/25/24 -FSR\n19 West 34th St. Suite 301 NY , NY 10001 347-470-8870 http://www.nyccognitivetherapy.com/noah-clyman-lcsw-r-act.html noahclyman@gmail.com https://www.nyccognitivetherapy.com/ Cognitive Behavioral Therapy; individual, group, couples; all general concerns In Network Magnacare, offers sliding scale 2/20/19 - MH SOL Mental Health Columbus Circle 33 W 60th Street, Suite 205 Union Square 39 West 14th Street, Suite 406 Long Island City 31-00 47th Avenue, Suite 3100 Brooklyn Heights 300 Cadman Plaza West, Suite 12131 Williamsburg 195 Broadway, Suite 403 Scheduling: 929-777-0173 (Option 1) Referrals: (929) 577-3307 Appt request form: https://solmentalhealth.com/appointment-request-co/ Referral submission form: https://solmentalhealth.com/patient-referral/ info@solmentalhealth.com Full-service therapy and psychiatric service provider Takes Aetna, Empire BCBS, Cigna, Oxford Health Plans, United Healthcare, Multiplan, Magnacare, Oscar Telemedicine and in-person Added by 10/18/21 - A Feng Updated 1/9/2024 - R Morgan",
     "accepting_clients": false,
     "active": true,
-    "id": 34
+    "id": 38
+  },
+  {
+    "name": "Phronetic Psychotherapy",
+    "type": "Psychiatrist / Medication",
+    "insurance": [
+      "Aetna",
+      "Blue Cross Blue Shield",
+      "Emblem",
+      "GHI",
+      "Healthfirst",
+      "Medicaid",
+      "Medicare",
+      "Oxford",
+      "Sliding Scale",
+      "United HealthCare"
+    ],
+    "in_person": true,
+    "session_format": "Virtual",
+    "address": "329 East 62nd Street New York, NY",
+    "email": "kvnrustam@gmail.com",
+    "phone": "929.367.1692",
+    "websites": {
+      "practice": "https://www.modernintegrativepsychiatry.com/"
+    },
+    "specialties": [],
+    "modalities": [],
+    "low_cost": true,
+    "licensed_states": [
+      "MA",
+      "NY"
+    ],
+    "description": "646 515 5738 eastman.j@gmail.com In-network with Aetna and UHI Full fee sliding scale $150 - $250 In-person and/or remote Specializes in relational, psychodynamic modalities with adults struggling with anxiety, depression, interpersonal difficulties, life transitions https://secure.helloalma.com/providers/john-eastman/\n329 East 62nd Street New York, NY 10065 212-838-4333 Ext 137 http://www.karenhorneyclinic.org/ TheClinic@karenhorneyclinic.org cfuller@karenhorneyclinic.org (associate executive director Craig Fuller) Accepts Aetna, Affinity Health Plan, Amida Care, BCBS, Emblem Health, Fidelis, GHI, Healthfirst, Health Plus, Medicaid, MVP Healthcare, Medicare, MetroPlus, The Empire Plan, Wellcare, United Healthcare/Oxford There has been negative feedback regarding psychiatrist Primary orientation: psychodynamic Offer sliding scale based on income In person and virtual Updated 1/16/2024 Reed M\nkvnrustam@gmail.com 929.367.1692 (t) https://www.psychologytoday.com/profile/930489 Primary orientation is psychodynamic/psychoanalytic and specialities are relationship, personality, and anxiety and depression. Former CPS Postdoc Accepts: Aetna, AllSavers UHC, Allied Benefit Systems - AetnaBlue Cross Blue Shield of Massachusetts, Christian Brothers Services - Aetna, Harvard Pilgrim, Health Plans Inc.Health Scope - Aetna, Meritain, Nippon, Oscar, Oxford Health Plans, Surest (Formerly Bind)Trustmark Health Benefits - AetnaTrustmark Small Business Benefits - AetnaUHC Student ResourcesUMRUnited Healthcare Shared ServicesUnitedHealthcare UnitedHealthcare Global Telehealth Added 9/21/20 MH Updated 1/16/2024- FSR\nNew York, NY 10023 (215) 692-4083 lesliebeckerlcsw@gmail.com https://www.psychologytoday.com/us/therapists/leslie-b-becker-new-york-ny/112022 Adults only - only interested in working with graduate students (not undergrads) Orientation: Eclectic, Psychodynamic, Supportive, Feminist, Person-Centered Insurance through Headway: Aetna, Oscar Health, United Healthcare, Oxford. Offers sliding scale $100-200. Virtual only, but gives clients the option to meet with her in person at least once or for special circumstances. Updated 1/9/2024 - Reed M",
+    "accepting_clients": false,
+    "active": true,
+    "id": 39
   },
   {
     "name": "Resilience Lab",
@@ -1280,12 +1439,13 @@
       "Blue Cross Blue Shield",
       "Emblem",
       "GHI",
-      "HIP",
       "Healthfirst",
+      "HIP",
       "MagnaCare",
       "Medicaid",
       "Medicare",
       "Oxford",
+      "Sliding Scale",
       "United HealthCare"
     ],
     "in_person": true,
@@ -1313,7 +1473,7 @@
     "description": "19 West 34th St. Suite 301 NY , NY 10001 347-470-8870 http://www.nyccognitivetherapy.com/noah-clyman-lcsw-r-act.html noahclyman@gmail.com https://www.nyccognitivetherapy.com/noah-clymanlcsw-r-a-cbt-bicbt-cc-psychotherapist-beck-institute-cbt-certified-clinician-bicbt-cc.html Cognitive Behavioral Therapy; individual, group, couples; all general concerns In Network Magnacare, offers sliding scale 2/20/19 - MH\nReferred by Noel Hunter; updated by A Feng 10/18/21\nResilience Lab 928 Broadway New York, NY 10128 (347) 757-4615 Psychology Today profile paige.kessler@resiliencelab.us in network with Allied, Trustmark, Aetna, Aetna International, Aetna Student Health Insurance, All Savers Insurance Company, AllWays Health Partners | MGBHP , Golden Rule Insurance Company, Harvard Pilgrim, Humana, Meritain Health, Optum, Oxford, UHC Shared Services, UHC Student Resources, UMR and UnitedHealthcare UHC | UBH. Sliding scale as low as $50/session depending on need Orientation: EMDR, parts work, and psychodynamic Works mostly with women struggling with anxiety, depression, histories of trauma and eating disorders Has experience working with young adults coping with a variety of psychosocial stressors Virtual only Updated 1/16/24 Reed M\nManhattan: 211 Central Park West Suite 1K (212)362-4818 - practice (718) 465-1321 - personal cell Takes Aetna, BCBS, Oxford, GHI, Cigna, united healthcare and other major insurances (no Medicaid or Healthplus) Speak French, Creole, and some Spanish Med management Individual counseling Does more telehealth than in person $200/session if no insurance; open to sliding scale Rec. by Jessica Del Vita Updated 1/11/2024 Reed M\nwdaniel@drkeenanpsychmd.com Updated 1/18/2024- FSR\nTel: 833-775-6252 https://www.resiliencelab.us/ https://www.resiliencelab.us/referring-a-client/ 928 Broadway, New York, NY 10010 Insurances they take: Aetna, United Healthcare, Harvard Pilgrim Health Care, United Healthcare Oxford, Oscar, UMR, Humana, United Healthcare Student Resources Minimum of 3 consultation calls Offers Pay What You Can: $25-$50 starting rate Starting rate $150, but can go as low as $75 Personality/Eating Disorders, Gender Dysphoria Meet mostly via Google Meet (students who need in person can be accommodated) Group therapy is offered\nhttps://riviamind.com/ Accepts Aetna, AvMed BCBS Anthem (BCBS Empire), Blue Cross Blue Shield-MA, Carelon CT, Centivo, Cigna, Cigna, EAP , Clover Health, Compsych, Deloitte\u2019s IMHS, ESI Employee Assistance Group, First Health",
     "accepting_clients": false,
     "active": true,
-    "id": 35
+    "id": 40
   },
   {
     "name": "Rivia Mind",
@@ -1324,6 +1484,7 @@
       "Cigna",
       "MagnaCare",
       "Oxford",
+      "Sliding Scale",
       "United HealthCare"
     ],
     "in_person": true,
@@ -1350,7 +1511,64 @@
     "description": "19 West 34th St. Suite 301 NY , NY 10001 347-470-8870 http://www.nyccognitivetherapy.com/noah-clyman-lcsw-r-act.html noahclyman@gmail.com https://www.nyccognitivetherapy.com/noah-clymanlcsw-r-a-cbt-bicbt-cc-psychotherapist-beck-institute-cbt-certified-clinician-bicbt-cc.html Cognitive Behavioral Therapy; individual, group, couples; all general concerns In Network Magnacare, offers sliding scale 2/20/19 - MH\nReferred by Noel Hunter; updated by A Feng 10/18/21\nResilience Lab 928 Broadway New York, NY 10128 (347) 757-4615 Psychology Today profile paige.kessler@resiliencelab.us in network with Allied, Trustmark, Aetna, Aetna International, Aetna Student Health Insurance, All Savers Insurance Company, AllWays Health Partners | MGBHP , Golden Rule Insurance Company, Harvard Pilgrim, Humana, Meritain Health, Optum, Oxford, UHC Shared Services, UHC Student Resources, UMR and UnitedHealthcare UHC | UBH. Sliding scale as low as $50/session depending on need Orientation: EMDR, parts work, and psychodynamic Works mostly with women struggling with anxiety, depression, histories of trauma and eating disorders Has experience working with young adults coping with a variety of psychosocial stressors Virtual only Updated 1/16/24 Reed M\nManhattan: 211 Central Park West Suite 1K (212)362-4818 - practice (718) 465-1321 - personal cell Takes Aetna, BCBS, Oxford, GHI, Cigna, united healthcare and other major insurances (no Medicaid or Healthplus) Speak French, Creole, and some Spanish Med management Individual counseling Does more telehealth than in person $200/session if no insurance; open to sliding scale Rec. by Jessica Del Vita Updated 1/11/2024 Reed M\nwdaniel@drkeenanpsychmd.com Updated 1/18/2024- FSR\nTel: 833-775-6252 https://www.resiliencelab.us/ https://www.resiliencelab.us/referring-a-client/ 928 Broadway, New York, NY 10010 Insurances they take: Aetna, United Healthcare, Harvard Pilgrim Health Care, United Healthcare Oxford, Oscar, UMR, Humana, United Healthcare Student Resources Minimum of 3 consultation calls Offers Pay What You Can: $25-$50 starting rate Starting rate $150, but can go as low as $75 Personality/Eating Disorders, Gender Dysphoria Meet mostly via Google Meet (students who need in person can be accommodated) Group therapy is offered\nhttps://riviamind.com/ Accepts Aetna, AvMed BCBS Anthem (BCBS Empire), Blue Cross Blue Shield-MA, Carelon CT, Centivo, Cigna, Cigna, EAP , Clover Health, Compsych, Deloitte\u2019s IMHS, ESI Employee Assistance Group, First Health",
     "accepting_clients": false,
     "active": true,
-    "id": 36
+    "id": 41
+  },
+  {
+    "name": "Robert (Bobby) Cox, Jr., Ph.D.",
+    "type": "Psychologist",
+    "insurance": [
+      "Aetna",
+      "Sliding Scale"
+    ],
+    "session_format": "Unknown",
+    "address": null,
+    "email": null,
+    "phone": null,
+    "websites": {
+      "alma": "https://secure.helloalma.com/providers/robert-cox/"
+    },
+    "specialties": [],
+    "modalities": [],
+    "low_cost": true,
+    "licensed_states": [
+      "NY"
+    ],
+    "description": "In-network with Aetna. See provider website for other insurance plans.",
+    "accepting_clients": true,
+    "active": true,
+    "id": 42
+  },
+  {
+    "name": "Rose Hill Psychological Services",
+    "type": "Group Practice",
+    "insurance": [
+      "Aetna",
+      "Blue Cross Blue Shield",
+      "Cigna",
+      "GHI",
+      "Out of Network",
+      "Oxford",
+      "Sliding Scale",
+      "UMR",
+      "United HealthCare"
+    ],
+    "session_format": "Both",
+    "address": "330 West 58th Street, Suite #409, New York, NY 10019; 696 East 187th Street, Suite #205, Bronx, NY 10458; 80 Central Park West, Suite #1A&B, New York, NY 10023",
+    "email": null,
+    "phone": null,
+    "websites": {
+      "practice": "http://www.rosehillpsychological.com/"
+    },
+    "specialties": [],
+    "modalities": [],
+    "low_cost": true,
+    "licensed_states": [
+      "NY"
+    ],
+    "description": "Manhattan & Bronx locations. $100 deductible for Fordham insurance, coinsurance $40. Wiggle room with fees for out of network. Offering video and phone sessions.",
+    "accepting_clients": true,
+    "active": true,
+    "id": 43
   },
   {
     "name": "Rosemarie Livingston, LCSW",
@@ -1362,11 +1580,12 @@
       "Cigna",
       "Emblem",
       "GHI",
-      "HIP",
       "Healthfirst",
+      "HIP",
       "MagnaCare",
       "Medicaid",
       "Medicare",
+      "Sliding Scale",
       "TriCare",
       "United HealthCare"
     ],
@@ -1400,7 +1619,7 @@
     "description": "19 West 34th St. Suite 301 NY , NY 10001 347-470-8870 http://www.nyccognitivetherapy.com/noah-clyman-lcsw-r-act.html noahclyman@gmail.com https://www.nyccognitivetherapy.com/noah-clymanlcsw-r-a-cbt-bicbt-cc-psychotherapist-beck-institute-cbt-certified-clinician-bicbt-cc.html Cognitive Behavioral Therapy; individual, group, couples; all general concerns In Network Magnacare, offers sliding scale 2/20/19 - MH\nReferred by Noel Hunter; updated by A Feng 10/18/21\nResilience Lab 928 Broadway New York, NY 10128 (347) 757-4615 Psychology Today profile paige.kessler@resiliencelab.us in network with Allied, Trustmark, Aetna, Aetna International, Aetna Student Health Insurance, All Savers Insurance Company, AllWays Health Partners | MGBHP , Golden Rule Insurance Company, Harvard Pilgrim, Humana, Meritain Health, Optum, Oxford, UHC Shared Services, UHC Student Resources, UMR and UnitedHealthcare UHC | UBH. Sliding scale as low as $50/session depending on need Orientation: EMDR, parts work, and psychodynamic Works mostly with women struggling with anxiety, depression, histories of trauma and eating disorders Has experience working with young adults coping with a variety of psychosocial stressors Virtual only Updated 1/16/24 Reed M\nManhattan: 211 Central Park West Suite 1K (212)362-4818 - practice (718) 465-1321 - personal cell Takes Aetna, BCBS, Oxford, GHI, Cigna, united healthcare and other major insurances (no Medicaid or Healthplus) Speak French, Creole, and some Spanish Med management Individual counseling Does more telehealth than in person $200/session if no insurance; open to sliding scale Rec. by Jessica Del Vita Updated 1/11/2024 Reed M\nwdaniel@drkeenanpsychmd.com Updated 1/18/2024- FSR\nTel: 833-775-6252 https://www.resiliencelab.us/ https://www.resiliencelab.us/referring-a-client/ 928 Broadway, New York, NY 10010 Insurances they take: Aetna, United Healthcare, Harvard Pilgrim Health Care, United Healthcare Oxford, Oscar, UMR, Humana, United Healthcare Student Resources Minimum of 3 consultation calls Offers Pay What You Can: $25-$50 starting rate Starting rate $150, but can go as low as $75 Personality/Eating Disorders, Gender Dysphoria Meet mostly via Google Meet (students who need in person can be accommodated) Group therapy is offered\nhttps://riviamind.com/ Accepts Aetna, AvMed BCBS Anthem (BCBS Empire), Blue Cross Blue Shield-MA, Carelon CT, Centivo, Cigna, Cigna, EAP , Clover Health, Compsych, Deloitte\u2019s IMHS, ESI Employee Assistance Group, First Health",
     "accepting_clients": false,
     "active": true,
-    "id": 37
+    "id": 44
   },
   {
     "name": "Scott Altabet, LCSW",
@@ -1409,6 +1628,7 @@
       "Aetna",
       "Humana",
       "Oxford",
+      "Sliding Scale",
       "United HealthCare"
     ],
     "in_person": true,
@@ -1437,7 +1657,7 @@
     "description": "19 West 34th St. Suite 301 NY , NY 10001 347-470-8870 http://www.nyccognitivetherapy.com/noah-clyman-lcsw-r-act.html noahclyman@gmail.com https://www.nyccognitivetherapy.com/noah-clymanlcsw-r-a-cbt-bicbt-cc-psychotherapist-beck-institute-cbt-certified-clinician-bicbt-cc.html Cognitive Behavioral Therapy; individual, group, couples; all general concerns In Network Magnacare, offers sliding scale 2/20/19 - MH\nReferred by Noel Hunter; updated by A Feng 10/18/21\nResilience Lab 928 Broadway New York, NY 10128 (347) 757-4615 Psychology Today profile paige.kessler@resiliencelab.us in network with Allied, Trustmark, Aetna, Aetna International, Aetna Student Health Insurance, All Savers Insurance Company, AllWays Health Partners | MGBHP , Golden Rule Insurance Company, Harvard Pilgrim, Humana, Meritain Health, Optum, Oxford, UHC Shared Services, UHC Student Resources, UMR and UnitedHealthcare UHC | UBH. Sliding scale as low as $50/session depending on need Orientation: EMDR, parts work, and psychodynamic Works mostly with women struggling with anxiety, depression, histories of trauma and eating disorders Has experience working with young adults coping with a variety of psychosocial stressors Virtual only Updated 1/16/24 Reed M\nManhattan: 211 Central Park West Suite 1K (212)362-4818 - practice (718) 465-1321 - personal cell Takes Aetna, BCBS, Oxford, GHI, Cigna, united healthcare and other major insurances (no Medicaid or Healthplus) Speak French, Creole, and some Spanish Med management Individual counseling Does more telehealth than in person $200/session if no insurance; open to sliding scale Rec. by Jessica Del Vita Updated 1/11/2024 Reed M\nwdaniel@drkeenanpsychmd.com Updated 1/18/2024- FSR\nTel: 833-775-6252 https://www.resiliencelab.us/ https://www.resiliencelab.us/referring-a-client/ 928 Broadway, New York, NY 10010 Insurances they take: Aetna, United Healthcare, Harvard Pilgrim Health Care, United Healthcare Oxford, Oscar, UMR, Humana, United Healthcare Student Resources Minimum of 3 consultation calls Offers Pay What You Can: $25-$50 starting rate Starting rate $150, but can go as low as $75 Personality/Eating Disorders, Gender Dysphoria Meet mostly via Google Meet (students who need in person can be accommodated) Group therapy is offered\nhttps://riviamind.com/ Accepts Aetna, AvMed BCBS Anthem (BCBS Empire), Blue Cross Blue Shield-MA, Carelon CT, Centivo, Cigna, Cigna, EAP , Clover Health, Compsych, Deloitte\u2019s IMHS, ESI Employee Assistance Group, First Health",
     "accepting_clients": false,
     "active": true,
-    "id": 38
+    "id": 45
   },
   {
     "name": "Sheri Spirt, MD",
@@ -1449,6 +1669,7 @@
       "GHI",
       "Medicaid",
       "Oxford",
+      "Sliding Scale",
       "United HealthCare"
     ],
     "in_person": true,
@@ -1472,7 +1693,7 @@
     "description": "2436 Eastchester Rd Bronx, NY 10469 (917) 208 4273 (Accessible on the #12 bus line) Accepts: 1199SEIU, Aetna, Anthem, BlueCross BlueShield, Cigna, Magellan, Medicare, MultiPlan, Optum, Oxford, UnitedHealthcare Only providing telehealth at this time Rec by Debbie Lawrence: added 5/7/21\n16 E 96th street, unit 1A NY , NY 10128 212-595-6901 http://www.drsherispirt.com/ ssdr18@aol.com Areas of expertise are in treating anxiety, depression, and ADD. Accepts Cigna, United Behavioral Health, Oxford, and Aetna, sliding scale. Limited  limited psychotherapy, mainly medication management Please review the website for administrative charges information.  There are fees to complete paperwork.   Both in person and virtual visits, although for an initial consultation prefer in person. There is an office dog. Rec Dr. Bach Updated 1/4/2023 FSR\n169 Wythe Ave, Ste 104, Brooklyn, NY 11249 844-384-2779 https://skypiatrist.com help@skypiatrist.com drbuch@skypiatrist.com (founder\u2019s email) Practice of 12 psychiatrists and 5 therapists. Does medication management primarily but they do have 5 therapists as well who do talk therapy. In network with Aetna, Cigna, Empire BCBS, Oscar, Oxford and United insurance. Otherwise, new appointments are $450 and follow ups are $250. Virtual service only. *Former Fordham psychiatry resident Annie Chen works here. Dr. Chen\u2019s specialities are depression, anxiety, and bipolar disorder in adults and college-age patients. She has a particular interest in first- and second-generation Americans. Updated 1/14/2024 Reed M\n110 Lafayette Street New York, NY 10013 Phone: 212-369-6757 Fax: 212-369-3941 callcenterreferrals@sohomd.com https://www.sohomd.com/ Provides virtual sessions Most commercial insurance plans accepted including Aetna, Optum (Oscar, Oxford health plans, United Healthcare), Cigna, Humana, Meritain Health, and Wellfleet. Does not offer sliding scale. Orientations/specialties: EMDR, Motivational Interviewing, CBT, DBT, EFT Tapping, Supportive therapy, Trauma and Grief, Interpersonal Behavior, Couples Therapy, Psychodynamic therapy, Integrative, and holistic. Two Psychiatrists oversee several Psychiatric Nurse Practitioners.  Evening and weekend hours. Updated 1/9/2024 - Reed M\nColumbus Circle 33 W 60th Street, Suite 205 Union Square 39 West 14th Street, Suite 406 Long Island City 31-00 47th Avenue, Suite 3100 Brooklyn Heights 300 Cadman Plaza West, Suite 12131 Williamsburg 195 Broadway, Suite 403 Scheduling: 929-777-0173 (Option 1) Referrals",
     "accepting_clients": false,
     "active": true,
-    "id": 39
+    "id": 46
   },
   {
     "name": "Skypiatrist",
@@ -1482,6 +1703,7 @@
       "Blue Cross Blue Shield",
       "HIP",
       "Oxford",
+      "Sliding Scale",
       "United HealthCare"
     ],
     "in_person": false,
@@ -1508,7 +1730,7 @@
     "description": "19 West 34th St. Suite 301 NY , NY 10001 347-470-8870 http://www.nyccognitivetherapy.com/noah-clyman-lcsw-r-act.html noahclyman@gmail.com https://www.nyccognitivetherapy.com/noah-clymanlcsw-r-a-cbt-bicbt-cc-psychotherapist-beck-institute-cbt-certified-clinician-bicbt-cc.html Cognitive Behavioral Therapy; individual, group, couples; all general concerns In Network Magnacare, offers sliding scale 2/20/19 - MH\nReferred by Noel Hunter; updated by A Feng 10/18/21\nResilience Lab 928 Broadway New York, NY 10128 (347) 757-4615 Psychology Today profile paige.kessler@resiliencelab.us in network with Allied, Trustmark, Aetna, Aetna International, Aetna Student Health Insurance, All Savers Insurance Company, AllWays Health Partners | MGBHP , Golden Rule Insurance Company, Harvard Pilgrim, Humana, Meritain Health, Optum, Oxford, UHC Shared Services, UHC Student Resources, UMR and UnitedHealthcare UHC | UBH. Sliding scale as low as $50/session depending on need Orientation: EMDR, parts work, and psychodynamic Works mostly with women struggling with anxiety, depression, histories of trauma and eating disorders Has experience working with young adults coping with a variety of psychosocial stressors Virtual only Updated 1/16/24 Reed M\nManhattan: 211 Central Park West Suite 1K (212)362-4818 - practice (718) 465-1321 - personal cell Takes Aetna, BCBS, Oxford, GHI, Cigna, united healthcare and other major insurances (no Medicaid or Healthplus) Speak French, Creole, and some Spanish Med management Individual counseling Does more telehealth than in person $200/session if no insurance; open to sliding scale Rec. by Jessica Del Vita Updated 1/11/2024 Reed M\nwdaniel@drkeenanpsychmd.com Updated 1/18/2024- FSR\nTel: 833-775-6252 https://www.resiliencelab.us/ https://www.resiliencelab.us/referring-a-client/ 928 Broadway, New York, NY 10010 Insurances they take: Aetna, United Healthcare, Harvard Pilgrim Health Care, United Healthcare Oxford, Oscar, UMR, Humana, United Healthcare Student Resources Minimum of 3 consultation calls Offers Pay What You Can: $25-$50 starting rate Starting rate $150, but can go as low as $75 Personality/Eating Disorders, Gender Dysphoria Meet mostly via Google Meet (students who need in person can be accommodated) Group therapy is offered\nhttps://riviamind.com/ Accepts Aetna, AvMed BCBS Anthem (BCBS Empire), Blue Cross Blue Shield-MA, Carelon CT, Centivo, Cigna, Cigna, EAP , Clover Health, Compsych, Deloitte\u2019s IMHS, ESI Employee Assistance Group, First Health",
     "accepting_clients": false,
     "active": true,
-    "id": 40
+    "id": 47
   },
   {
     "name": "SohoMD",
@@ -1517,6 +1739,7 @@
       "Aetna",
       "Humana",
       "Oxford",
+      "Sliding Scale",
       "United HealthCare"
     ],
     "in_person": true,
@@ -1538,7 +1761,7 @@
     "description": "andrew@baristtherapy.com Remote/ In-Person Harrison, Westchester Psychodynamic, accepts Oxford and United, out of pocket fees: $200 per session, sliding scale down to $125 https://www.baristtherapy.com/ 929-445-3306 Added by R. Cirillo 3/3/20 Updated 1/3/24- Jaz",
     "accepting_clients": false,
     "active": true,
-    "id": 41
+    "id": 48
   },
   {
     "name": "SOL Mental Health",
@@ -1549,6 +1772,7 @@
       "Cigna",
       "Humana",
       "Medicare",
+      "Sliding Scale",
       "TriCare",
       "United HealthCare"
     ],
@@ -1576,7 +1800,7 @@
     "description": "2436 Eastchester Rd Bronx, NY 10469 (917) 208 4273 (Accessible on the #12 bus line) Accepts: 1199SEIU, Aetna, Anthem, BlueCross BlueShield, Cigna, Magellan, Medicare, MultiPlan, Optum, Oxford, UnitedHealthcare Only providing telehealth at this time Rec by Debbie Lawrence: added 5/7/21\n16 E 96th street, unit 1A NY , NY 10128 212-595-6901 http://www.drsherispirt.com/ ssdr18@aol.com Areas of expertise are in treating anxiety, depression, and ADD. Accepts Cigna, United Behavioral Health, Oxford, and Aetna, sliding scale. Limited  limited psychotherapy, mainly medication management Please review the website for administrative charges information.  There are fees to complete paperwork.   Both in person and virtual visits, although for an initial consultation prefer in person. There is an office dog. Rec Dr. Bach Updated 1/4/2023 FSR\n169 Wythe Ave, Ste 104, Brooklyn, NY 11249 844-384-2779 https://skypiatrist.com help@skypiatrist.com drbuch@skypiatrist.com (founder\u2019s email) Practice of 12 psychiatrists and 5 therapists. Does medication management primarily but they do have 5 therapists as well who do talk therapy. In network with Aetna, Cigna, Empire BCBS, Oscar, Oxford and United insurance. Otherwise, new appointments are $450 and follow ups are $250. Virtual service only. *Former Fordham psychiatry resident Annie Chen works here. Dr. Chen\u2019s specialities are depression, anxiety, and bipolar disorder in adults and college-age patients. She has a particular interest in first- and second-generation Americans. Updated 1/14/2024 Reed M\n110 Lafayette Street New York, NY 10013 Phone: 212-369-6757 Fax: 212-369-3941 callcenterreferrals@sohomd.com https://www.sohomd.com/ Provides virtual sessions Most commercial insurance plans accepted including Aetna, Optum (Oscar, Oxford health plans, United Healthcare), Cigna, Humana, Meritain Health, and Wellfleet. Does not offer sliding scale. Orientations/specialties: EMDR, Motivational Interviewing, CBT, DBT, EFT Tapping, Supportive therapy, Trauma and Grief, Interpersonal Behavior, Couples Therapy, Psychodynamic therapy, Integrative, and holistic. Two Psychiatrists oversee several Psychiatric Nurse Practitioners.  Evening and weekend hours. Updated 1/9/2024 - Reed M\nColumbus Circle 33 W 60th Street, Suite 205 Union Square 39 West 14th Street, Suite 406 Long Island City 31-00 47th Avenue, Suite 3100 Brooklyn Heights 300 Cadman Plaza West, Suite 12131 Williamsburg 195 Broadway, Suite 403 Scheduling: 929-777-0173 (Option 1) Referrals",
     "accepting_clients": false,
     "active": true,
-    "id": 42
+    "id": 49
   },
   {
     "name": "Talkiatry",
@@ -1586,6 +1810,7 @@
       "Blue Cross Blue Shield",
       "Cigna",
       "Oxford",
+      "Sliding Scale",
       "United HealthCare"
     ],
     "in_person": true,
@@ -1612,51 +1837,67 @@
     "description": "2436 Eastchester Rd Bronx, NY 10469 (917) 208 4273 (Accessible on the #12 bus line) Accepts: 1199SEIU, Aetna, Anthem, BlueCross BlueShield, Cigna, Magellan, Medicare, MultiPlan, Optum, Oxford, UnitedHealthcare Only providing telehealth at this time Rec by Debbie Lawrence: added 5/7/21\n16 E 96th street, unit 1A NY , NY 10128 212-595-6901 http://www.drsherispirt.com/ ssdr18@aol.com Areas of expertise are in treating anxiety, depression, and ADD. Accepts Cigna, United Behavioral Health, Oxford, and Aetna, sliding scale. Limited  limited psychotherapy, mainly medication management Please review the website for administrative charges information.  There are fees to complete paperwork.   Both in person and virtual visits, although for an initial consultation prefer in person. There is an office dog. Rec Dr. Bach Updated 1/4/2023 FSR\n169 Wythe Ave, Ste 104, Brooklyn, NY 11249 844-384-2779 https://skypiatrist.com help@skypiatrist.com drbuch@skypiatrist.com (founder\u2019s email) Practice of 12 psychiatrists and 5 therapists. Does medication management primarily but they do have 5 therapists as well who do talk therapy. In network with Aetna, Cigna, Empire BCBS, Oscar, Oxford and United insurance. Otherwise, new appointments are $450 and follow ups are $250. Virtual service only. *Former Fordham psychiatry resident Annie Chen works here. Dr. Chen\u2019s specialities are depression, anxiety, and bipolar disorder in adults and college-age patients. She has a particular interest in first- and second-generation Americans. Updated 1/14/2024 Reed M\n110 Lafayette Street New York, NY 10013 Phone: 212-369-6757 Fax: 212-369-3941 callcenterreferrals@sohomd.com https://www.sohomd.com/ Provides virtual sessions Most commercial insurance plans accepted including Aetna, Optum (Oscar, Oxford health plans, United Healthcare), Cigna, Humana, Meritain Health, and Wellfleet. Does not offer sliding scale. Orientations/specialties: EMDR, Motivational Interviewing, CBT, DBT, EFT Tapping, Supportive therapy, Trauma and Grief, Interpersonal Behavior, Couples Therapy, Psychodynamic therapy, Integrative, and holistic. Two Psychiatrists oversee several Psychiatric Nurse Practitioners.  Evening and weekend hours. Updated 1/9/2024 - Reed M\nColumbus Circle 33 W 60th Street, Suite 205 Union Square 39 West 14th Street, Suite 406 Long Island City 31-00 47th Avenue, Suite 3100 Brooklyn Heights 300 Cadman Plaza West, Suite 12131 Williamsburg 195 Broadway, Suite 403 Scheduling: 929-777-0173 (Option 1) Referrals",
     "accepting_clients": false,
     "active": true,
-    "id": 43
+    "id": 50
   },
   {
     "name": "The Blanton-Peale Counseling Center",
-    "type": "Therapist",
+    "type": "Group Practice",
     "insurance": [
       "1199",
       "Aetna",
-      "Cigna",
+      "Blue Cross Blue Shield",
+      "Emblem",
       "GHI",
-      "MagnaCare",
+      "Medicaid",
       "Medicare",
       "Oxford",
+      "Sliding Scale",
       "United HealthCare"
     ],
     "in_person": true,
     "session_format": "Both",
-    "address": "2436 Eastchester Rd Bronx, NY",
-    "email": "callcenterreferrals@sohomd.com",
-    "phone": "212-369-6757",
+    "address": "7 West 30th Street, 9th and 10th Fls, New York, NY 10001",
+    "email": "intake@blantonpeale.org",
+    "phone": "212-725-7850",
     "websites": {
-      "practice": "https://www.citymh.com/"
+      "practice": "https://www.blantonpeale.org/"
     },
-    "specialties": [
-      "CBT",
-      "DBT",
-      "Grief/Bereavement",
-      "Trauma"
-    ],
+    "specialties": [],
     "modalities": [
-      "CBT",
-      "DBT",
-      "Psychodynamic",
-      "IFS"
+      "Psychodynamic"
     ],
     "low_cost": true,
     "licensed_states": [
-      "CO",
-      "MA",
       "NY"
     ],
-    "description": "2436 Eastchester Rd Bronx, NY 10469 (917) 208 4273 (Accessible on the #12 bus line) Accepts: 1199SEIU, Aetna, Anthem, BlueCross BlueShield, Cigna, Magellan, Medicare, MultiPlan, Optum, Oxford, UnitedHealthcare Only providing telehealth at this time Rec by Debbie Lawrence: added 5/7/21\n16 E 96th street, unit 1A NY , NY 10128 212-595-6901 http://www.drsherispirt.com/ ssdr18@aol.com Areas of expertise are in treating anxiety, depression, and ADD. Accepts Cigna, United Behavioral Health, Oxford, and Aetna, sliding scale. Limited  limited psychotherapy, mainly medication management Please review the website for administrative charges information.  There are fees to complete paperwork.   Both in person and virtual visits, although for an initial consultation prefer in person. There is an office dog. Rec Dr. Bach Updated 1/4/2023 FSR\n169 Wythe Ave, Ste 104, Brooklyn, NY 11249 844-384-2779 https://skypiatrist.com help@skypiatrist.com drbuch@skypiatrist.com (founder\u2019s email) Practice of 12 psychiatrists and 5 therapists. Does medication management primarily but they do have 5 therapists as well who do talk therapy. In network with Aetna, Cigna, Empire BCBS, Oscar, Oxford and United insurance. Otherwise, new appointments are $450 and follow ups are $250. Virtual service only. *Former Fordham psychiatry resident Annie Chen works here. Dr. Chen\u2019s specialities are depression, anxiety, and bipolar disorder in adults and college-age patients. She has a particular interest in first- and second-generation Americans. Updated 1/14/2024 Reed M\n110 Lafayette Street New York, NY 10013 Phone: 212-369-6757 Fax: 212-369-3941 callcenterreferrals@sohomd.com https://www.sohomd.com/ Provides virtual sessions Most commercial insurance plans accepted including Aetna, Optum (Oscar, Oxford health plans, United Healthcare), Cigna, Humana, Meritain Health, and Wellfleet. Does not offer sliding scale. Orientations/specialties: EMDR, Motivational Interviewing, CBT, DBT, EFT Tapping, Supportive therapy, Trauma and Grief, Interpersonal Behavior, Couples Therapy, Psychodynamic therapy, Integrative, and holistic. Two Psychiatrists oversee several Psychiatric Nurse Practitioners.  Evening and weekend hours. Updated 1/9/2024 - Reed M\nColumbus Circle 33 W 60th Street, Suite 205 Union Square 39 West 14th Street, Suite 406 Long Island City 31-00 47th Avenue, Suite 3100 Brooklyn Heights 300 Cadman Plaza West, Suite 12131 Williamsburg 195 Broadway, Suite 403 Scheduling: 929-777-0173 (Option 1) Referrals",
-    "accepting_clients": false,
+    "description": "To make an appointment contact Client Coordinator at 1-212-725-7850 ext. 119 or Email: intake@blantonpeale.org (email preferred & faster). Individual Appointment w/o insurance: $90. Sliding scale: $60-105 depending on income. Accepts most insurances including 1199 Benefits Fund, AARP, Aetna, Affinity Health Plans, Amida Care, Beacon, Emblem Health, Empire BCBS, Fidelis Care, GHI, Health First, Magnacare, Metro Plus, NYS Medicaid, Optum, Oscar, Oxford Health Plans, Student Resources, UBH, UMR, United Healthcare, Wellcare.",
+    "accepting_clients": true,
     "active": true,
-    "id": 44
+    "id": 51
+  },
+  {
+    "name": "The Dean Hope Center for Educational and Psychological Services (DHCEPS)",
+    "type": "Group Practice",
+    "insurance": [
+      "Sliding Scale"
+    ],
+    "session_format": "Both",
+    "address": "525 West 120th Street, Thorndike Hall 6th Floor, New York, NY 10027",
+    "email": "dhceps@tc.columbia.edu",
+    "phone": "212-678-3262",
+    "websites": {
+      "practice": "https://www.tc.columbia.edu/deanhope/services/"
+    },
+    "specialties": [],
+    "modalities": [],
+    "low_cost": true,
+    "licensed_states": [
+      "NY"
+    ],
+    "description": "Individual, group, couples therapy, learning disabilities and testing. Practicum site for TC doctoral students. Sliding scale $7-40/session (full), $100-1000 for assessments. Testing Library: 212-678-3881.",
+    "accepting_clients": true,
+    "active": true,
+    "id": 52
   },
   {
     "name": "The Renfrew Center of New York",
@@ -1665,6 +1906,7 @@
       "Aetna",
       "Cigna",
       "Oxford",
+      "Sliding Scale",
       "United HealthCare"
     ],
     "in_person": true,
@@ -1694,7 +1936,7 @@
     "description": "2436 Eastchester Rd Bronx, NY 10469 (917) 208 4273 (Accessible on the #12 bus line) Accepts: 1199SEIU, Aetna, Anthem, BlueCross BlueShield, Cigna, Magellan, Medicare, MultiPlan, Optum, Oxford, UnitedHealthcare Only providing telehealth at this time Rec by Debbie Lawrence: added 5/7/21\n16 E 96th street, unit 1A NY , NY 10128 212-595-6901 http://www.drsherispirt.com/ ssdr18@aol.com Areas of expertise are in treating anxiety, depression, and ADD. Accepts Cigna, United Behavioral Health, Oxford, and Aetna, sliding scale. Limited  limited psychotherapy, mainly medication management Please review the website for administrative charges information.  There are fees to complete paperwork.   Both in person and virtual visits, although for an initial consultation prefer in person. There is an office dog. Rec Dr. Bach Updated 1/4/2023 FSR\n169 Wythe Ave, Ste 104, Brooklyn, NY 11249 844-384-2779 https://skypiatrist.com help@skypiatrist.com drbuch@skypiatrist.com (founder\u2019s email) Practice of 12 psychiatrists and 5 therapists. Does medication management primarily but they do have 5 therapists as well who do talk therapy. In network with Aetna, Cigna, Empire BCBS, Oscar, Oxford and United insurance. Otherwise, new appointments are $450 and follow ups are $250. Virtual service only. *Former Fordham psychiatry resident Annie Chen works here. Dr. Chen\u2019s specialities are depression, anxiety, and bipolar disorder in adults and college-age patients. She has a particular interest in first- and second-generation Americans. Updated 1/14/2024 Reed M\n110 Lafayette Street New York, NY 10013 Phone: 212-369-6757 Fax: 212-369-3941 callcenterreferrals@sohomd.com https://www.sohomd.com/ Provides virtual sessions Most commercial insurance plans accepted including Aetna, Optum (Oscar, Oxford health plans, United Healthcare), Cigna, Humana, Meritain Health, and Wellfleet. Does not offer sliding scale. Orientations/specialties: EMDR, Motivational Interviewing, CBT, DBT, EFT Tapping, Supportive therapy, Trauma and Grief, Interpersonal Behavior, Couples Therapy, Psychodynamic therapy, Integrative, and holistic. Two Psychiatrists oversee several Psychiatric Nurse Practitioners.  Evening and weekend hours. Updated 1/9/2024 - Reed M\nColumbus Circle 33 W 60th Street, Suite 205 Union Square 39 West 14th Street, Suite 406 Long Island City 31-00 47th Avenue, Suite 3100 Brooklyn Heights 300 Cadman Plaza West, Suite 12131 Williamsburg 195 Broadway, Suite 403 Scheduling: 929-777-0173 (Option 1) Referrals",
     "accepting_clients": false,
     "active": true,
-    "id": 45
+    "id": 53
   },
   {
     "name": "The Soho Center for Mental Health Counseling",
@@ -1704,6 +1946,7 @@
       "Blue Cross Blue Shield",
       "Cigna",
       "Oxford",
+      "Sliding Scale",
       "United HealthCare"
     ],
     "in_person": true,
@@ -1731,7 +1974,7 @@
     "description": "bernie@citymhg.com 347-813-8819 Virtual Services In person services in astoria Has clinicians that specialize in LGBTQ+, Substance use, CPTSD, and women\u2019s issues. DBT, psychodynamic, CBT, and IFS trained clinicians. Accepts BCBS, Aetna, United, Cigna. Will provide superbills for OON. Sliding scale $50-75. https://www.citymh.com/ added 9/26/2024 Kate Dotson\n302 5th Avenue #1104 New York, NY 10001 (212) 354-2567 cknp.com hello@cknp.com crystal@cknp.com Provides medication management and psychotherapy visits (cognitive-behavioral therapy, psychodynamic therapy, supportive therapy) Specialize in reproductive psychiatry, depression, anxiety, ADHD In-network with: Aetna, United Healthcare and Oxford insurances Offers sliding scale - typical intake fee is $350 and med management fee is $210 per visit, lowest fee would be $250 for intakes and $175 for med management Virtual only (has office, but is not being used) Updated 2/2/2024 Reed M\nRust Wellness Group Email : services@rustwellnessgroup.com Telephone Number: 732-903-5266 We specialize in providing compassionate, personalized therapy for LGBTQIA+ concerns, chronic illness, ADHD, Autism Spectrum Disorder, life transitions, school challenges, self-confidence, sex therapy, anxiety. depression and more. Our therapists are experienced in working with college students and young adults, helping you build coping skills, improve relationships, and gain confidence. We use evidence-based approaches like CBT, ACT, EMDR, IFS, EFT, and Solution-Focused Therapy. Plus, our team speaks English, Spanish, Mandarin, and Turkish, and we\u2019re licensed in NY , NJ, and FL. We strive to make therapy accessible by accepting major insurance plans, including United Healthcare, Aetna, Cigna, Oscar, Oxford, and BCBS. We also offer private pay ( $150 for Individual and $200 Couples), sliding scale and out-of-network options. At this time we provide virtual sessions in NY , NJ and FL.\nWethersfield, CT 06109, United States (305) 965-9320 email: DerekPsyD@gmail.com individual psychotherapy private practice, with an emphasis on work with the LGBTQ community Added 4/21 DS\nSoho Center for Mental Health Counseling https://www.thesohocenter.com/provider/dominika-bredova-lmhc dominikabredova@thesohocenter.com (929) 400-7481 Specializes in relational, psychodynamic modalities In person and Virtual services 159 Bleeker Street, 2nd floor, New York, NY 10012 Accepts insurance: Aetna, Anthem BlueCross and BlueShield, Carelon Behavioral Health, CDPHP . Cign",
     "accepting_clients": false,
     "active": true,
-    "id": 46
+    "id": 54
   },
   {
     "name": "Valera Health",
@@ -1764,7 +2007,7 @@
     "description": "Columbus Circle 33 W 60th Street, Suite 205 Union Square 39 West 14th Street, Suite 406 Long Island City 31-00 47th Avenue, Suite 3100 Brooklyn Heights 300 Cadman Plaza West, Suite 12131 Williamsburg 195 Broadway, Suite 403 Scheduling: 929-777-0173 (Option 1) Referrals: (929) 577-3307 Appt request form: https://solmentalhealth.com/appointment-request-co/ Referral submission form: https://solmentalhealth.com/patient-referral/ info@solmentalhealth.com Full-service therapy and psychiatric service provider Takes Aetna, Empire BCBS, Cigna, Oxford Health Plans, United Healthcare, Multiplan, Magnacare, Oscar Telemedicine and in-person Added by 10/18/21 - A Feng Updated 1/9/2024 - R Morgan\nTherapy (also offers groups and peer groups) & Psychiatry (both virtual only) Located in NY , Texas, NM, OK, IL, FL, GA Updated 1/27/2025\nOnline medication management services with the ability to schedule an appointment online (https://skypiatrist.com/new-patient-login) *Former Fordham psychiatry resident Annie Chen works here. Dr. Chen\u2019s specialities are depression, anxiety, and bipolar disorder in adults and college-age patients. She has a particular interest in first- and second-generation Americans. Updated 2/14/22 - A Feng\n109 W 27 Street, Suite 5S New York, NY 10001 332-330-0869 https://talkiatry.com/ email: hello@talkiatry.com or  derek.wilson@talkiatry.com Here is the link to the referral form providers, therapists, coordinators, social workers, etc. can use: https://app.talkiatry.com/referral Takes Aetna, BCBS, Cigna, UnitedHealthcare, Humana, Oscar, TriCare, Medicare , they don't accept Medicaid. Telemedicine only, Our average wait time for an appointment is 5 days. Psychiatry is the entry point to our practice.  We employ MD and DO level psychiatrists.  We offer therapy, but only in conjunction with psychiatry, for our psychiatric patients who would benefit from weekly talk therapy sessions. In order to provide high quality, and differentiated care, we pod our therapists and doctors together so they can coordinate on care plan and share progress notes where appropriate. Updated 1/16/2024 - FSR",
     "accepting_clients": false,
     "active": true,
-    "id": 47
+    "id": 55
   },
   {
     "name": "Walker Keenan, MD",
@@ -1776,6 +2019,7 @@
       "MagnaCare",
       "Medicaid",
       "Oxford",
+      "Sliding Scale",
       "United HealthCare"
     ],
     "in_person": true,
@@ -1801,6 +2045,6 @@
     "description": "6 East 39th Street, Suites 503 and 902 New York, NY 10016 (646) 592-0869 modernintegrativepsychiatry@gmail.com https://www.modernintegrativepsychiatry.com/ Specializations: All psychiatric disorders, including depression, bipolar disorder, other mood disorders, anxiety, panic disorder, insomnia, psychotic disorders, ADHD (Adult ADD/ADHD), PTSD, and personality disorders Aetna (Including Meritain), Cigna/Evernorth (Including Wellfleet, Daniel Cook and Allied Benefit Systems), Homestead, JRN Consulting Local 810, Magellan,  Northwell Direct, Optum, Oscar, Oxford, Surest and United Behavioral Health (except the Community Plan) and UMR. If you do not have one of these insurance plans, the out of pocket cost is 275 dollars for an initial evaluation, and 135 dollars for a follow up visit Telemedicine and in-person Accepting new clients Updated: 1/8/24 by JG\nSaturday: 9:00am - 5:00pm Individual Intake Appointment: $90 Accepts 1199 Benefits Fund, AARP , Aetna, Affinity Health Plans, Amida Care, Beacon, Emblem Health. Empire BCBS, Fidelis Care, GHI, Health First, Magnacare, Metro Plus, NYS Medicaid, Optum, Oscar, Oxford Health Plans, Student Resources, UBH, UMR, United Healthcare, Wellcare Hybrid counseling and training center, offering telehealth and in-person sessions. Currently a waitlist for new clients. Updated RCirillo 2/2023\n71 West 23rd Street, Suite 1400 212-582-1566; ext. 7724 , 212-586-1272 fax https://niptherapy.org/treatment NIP provides psychoanalytically oriented individual psychotherapy. Our orientation is Contemporary Relational Psychoanalysis which emphasizes that we all live and develop within social relationships. Our version of effective therapy is that in order to help people with their problems, we need to focus on helping people build connections and relationships. Accept Aetna, value option GHI, Health First, Emblem, NYS Empire no Medicaid/Medicare Currently taking new clients - assigning of therapist typically takes 2-4 weeks Email: intake@nipinst.org To sign up for a consultation, visit: https://niptherapy.org/consult NIP offers both in-person and remote psychotherapy. Rule Outs: 1- We do not provide emergency or crisis services. 2- No hospitalization for over 24 hours within the last 6 months. 3- Anorexia or other Eating Disorder which requires the active involvement of a medical team. Disordered eating, including bulimia would not be a definite rule out. 4- Substance Abuse which would affect their ability to effectively participate in w",
     "accepting_clients": false,
     "active": true,
-    "id": 48
+    "id": 56
   }
 ]

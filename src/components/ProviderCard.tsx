@@ -35,8 +35,6 @@ export function ProviderCard({
           <p className="mt-0.5 text-sm text-[var(--muted)]">{provider.type}</p>
         </div>
         <div className="flex shrink-0 flex-wrap justify-end gap-1">
-          {provider.accepting_clients && <Badge variant="green">Accepting</Badge>}
-          {provider.low_cost && <Badge variant="amber">Low-cost</Badge>}
           {provider.session_format !== "Unknown" && (
             <Badge variant="blue">{provider.session_format}</Badge>
           )}
