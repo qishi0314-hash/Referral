@@ -58,7 +58,8 @@
 
 ### 第 4 步：连接到网站
 
-编辑 GitHub 仓库中的 `docs/assets/config.js`：
+**重要：** 线上网站是从 **`gh-pages` 分支** 发布的，不是 `main`。  
+请编辑 **`gh-pages` 分支** 里的 `assets/config.js`（路径与 `docs/assets/config.js` 相同内容）：
 
 ```javascript
 window.APP_CONFIG = {
@@ -67,7 +68,9 @@ window.APP_CONFIG = {
 };
 ```
 
-保存并推送到 GitHub。等待 1–2 分钟 Pages 更新后生效。
+在 GitHub 网页上：切换到 **`gh-pages` 分支** → 打开 `assets/config.js` → 编辑 → Commit。
+
+保存后等待 1–2 分钟，然后 **强制刷新** 网页（Ctrl+Shift+R 或 Cmd+Shift+R）。
 
 ---
 
