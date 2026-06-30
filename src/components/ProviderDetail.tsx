@@ -20,9 +20,9 @@ function LinkButton({ href, label }: { href: string; label: string }) {
 
 function Section({ title, children }: { title: string; children: React.ReactNode }) {
   return (
-    <section>
-      <h4 className="mb-2 text-sm font-semibold uppercase tracking-wide text-slate-500">{title}</h4>
-      <div className="text-sm text-slate-700">{children}</div>
+    <section className="text-sm text-slate-700">
+      <h4 className="mb-1 text-sm font-semibold uppercase tracking-wide text-slate-500">{title}</h4>
+      {children}
     </section>
   );
 }
@@ -156,7 +156,10 @@ export function ProviderDetail({
           </div>
 
           {provider.insurance.length > 0 && (
-            <Section title="Insurance accepted">
+            <section className="text-sm text-slate-700">
+              <h4 className="mb-1 text-sm font-semibold uppercase tracking-wide text-slate-500">
+                Insurance accepted
+              </h4>
               <div className="flex flex-wrap gap-1.5">
                 {provider.insurance.map((ins) => (
                   <span key={ins} className="rounded-md bg-slate-100 px-2 py-1 text-xs">
@@ -164,7 +167,7 @@ export function ProviderDetail({
                   </span>
                 ))}
               </div>
-            </Section>
+            </section>
           )}
 
           {(provider.specialties.length > 0 || provider.modalities.length > 0) && (
