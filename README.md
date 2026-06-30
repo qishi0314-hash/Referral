@@ -2,13 +2,19 @@
 
 Fordham 大学心理咨询中心（CPS）校外转介资源搜索网站 — **可直接通过网址访问，无需本地运行。**
 
-## 在线访问
+## 在线访问（一步开启）
 
-合并到 `main` 分支后，网站将自动发布到：
+代码已全部准备好。您只需在 GitHub 上**开启一次 Pages**（约 30 秒）：
 
-**https://qishi0314-hash.github.io/Fordham_Referral/**
+1. 打开 **[仓库 Settings → Pages](https://github.com/qishi0314-hash/Fordham_Referral/settings/pages)**
+2. **Build and deployment → Source** 选择 **Deploy from a branch**
+3. **Branch** 选 `gh-pages`，文件夹选 `/ (root)`，点击 **Save**
 
-（需在 GitHub 仓库 Settings → Pages 中确认 Source 为 **GitHub Actions**）
+完成后网站地址为：
+
+### **https://qishi0314-hash.github.io/Fordham_Referral/**
+
+无需安装任何软件，员工用浏览器直接打开即可。
 
 ### 功能
 
