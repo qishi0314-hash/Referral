@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 
-import { isStaffAuthenticated } from "@/lib/auth";
+import { isEditorAuthenticated } from "@/lib/auth";
 import { getProvider, updateProvider } from "@/lib/db";
 
 export async function GET(
@@ -19,8 +19,8 @@ export async function PATCH(
   request: NextRequest,
   { params }: { params: Promise<{ id: string }> }
 ) {
-  if (!(await isStaffAuthenticated())) {
-    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  if (!(await isEditorAuthenticated())) {
+    return NextResponse.json({ error: "Editor access required" }, { status: 403 });
   }
 
   const { id } = await params;

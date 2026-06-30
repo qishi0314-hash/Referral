@@ -22,6 +22,7 @@ Fordham 大学心理咨询中心（CPS）校外转介资源搜索网站 — **�
 - 每个 provider 一条记录（已去重）
 - 查看联系方式、网站、地址、治疗方式等
 - 员工登录后可添加备注（静态页为浏览器本地保存；完整版为团队共享）
+- **编辑码**可修改 provider 描述并保存到数据库（需部署 Vercel 完整版）
 
 ---
 
@@ -44,7 +45,8 @@ turso db tokens create fordham-referral
 1. 打开 [vercel.com](https://vercel.com)，用 GitHub 登录
 2. **Import** 本仓库 `Fordham_Referral`
 3. 在 Environment Variables 中添加：
-   - `STAFF_PASSWORD` — 员工登录密码
+   - `STAFF_PASSWORD` — 员工码（仅添加备注）
+   - `EDITOR_PASSWORD` — 编辑码（修改描述并保存到数据库）
    - `TURSO_DATABASE_URL` — 上一步的数据库 URL
    - `TURSO_AUTH_TOKEN` — 上一步的 token
 4. 点击 **Deploy**
@@ -94,4 +96,4 @@ npm run db:reset   # 仅本地 SQLite
 
 1. 打开网站，用左侧筛选器按学生保险和需求搜索
 2. 点击 provider 卡片查看详情和网站链接
-3. **Staff login** 登录后可添加备注，格式如：「一名学生反馈体验良好。— Sally S. 06/30/2026」
+3. **Staff login** 输入员工码添加备注；输入编辑码可修改描述并保存

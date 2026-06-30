@@ -5,7 +5,7 @@ import { useCallback, useEffect, useState } from "react";
 import { FilterPanel, type SearchFilters } from "@/components/FilterPanel";
 import { ProviderCard } from "@/components/ProviderCard";
 import { ProviderDetail } from "@/components/ProviderDetail";
-import { StaffLogin } from "@/components/StaffLogin";
+import { GUEST_AUTH, StaffLogin, type AuthState } from "@/components/StaffLogin";
 import type { Provider, ProviderWithComments } from "@/lib/types";
 
 const DEFAULT_FILTERS: SearchFilters = {
@@ -26,14 +26,21 @@ export default function HomePage() {
   });
   const [selectedId, setSelectedId] = useState<number | null>(null);
   const [selectedProvider, setSelectedProvider] = useState<ProviderWithComments | null>(null);
-  const [isStaff, setIsStaff] = useState(false);
+  const [auth, setAuth] = useState<AuthState>(GUEST_AUTH);
   const [loading, setLoading] = useState(true);
   const [staffName, setStaffName] = useState("");
 
   useEffect(() => {
     fetch("/api/auth")
       .then((r) => r.json())
-      .then((d) => setIsStaff(d.authenticated));
+      .then((d) =>
+        setAuth({
+          authenticated: d.authenticated,
+          role: d.role ?? null,
+          canEdit: d.canEdit ?? false,
+          canComment: d.canComment ?? false,
+        })
+      );
     fetch("/api/providers?meta=true")
       .then((r) => r.json())
       .then(setFilterOptions);
@@ -87,7 +94,7 @@ export default function HomePage() {
               Search off-campus mental health providers for student referrals
             </p>
           </div>
-          <StaffLogin isAuthenticated={isStaff} onAuthChange={setIsStaff} />
+          <StaffLogin auth={auth} onAuthChange={setAuth} />
         </div>
       </header>
 
@@ -99,7 +106,7 @@ export default function HomePage() {
             <p className="text-sm text-slate-600">
               {loading ? "Searching..." : `${providers.length} provider${providers.length !== 1 ? "s" : ""} found`}
             </p>
-            {isStaff && (
+            {auth.canComment && (
               <input
                 type="text"
                 placeholder="Your name for comments"
@@ -138,7 +145,8 @@ export default function HomePage() {
       {selectedProvider && (
         <ProviderDetail
           provider={selectedProvider}
-          isStaff={isStaff}
+          canComment={auth.canComment}
+          canEdit={auth.canEdit}
           staffName={staffName}
           onClose={() => {
             setSelectedProvider(null);

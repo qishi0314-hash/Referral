@@ -2,12 +2,28 @@
 
 import { useState } from "react";
 
+import type { AuthRole } from "@/lib/types";
+
+export interface AuthState {
+  authenticated: boolean;
+  role: AuthRole | null;
+  canEdit: boolean;
+  canComment: boolean;
+}
+
+const GUEST: AuthState = {
+  authenticated: false,
+  role: null,
+  canEdit: false,
+  canComment: false,
+};
+
 export function StaffLogin({
-  isAuthenticated,
+  auth,
   onAuthChange,
 }: {
-  isAuthenticated: boolean;
-  onAuthChange: (authed: boolean) => void;
+  auth: AuthState;
+  onAuthChange: (auth: AuthState) => void;
 }) {
   const [open, setOpen] = useState(false);
   const [password, setPassword] = useState("");
@@ -24,23 +40,31 @@ export function StaffLogin({
     });
     setLoading(false);
     if (res.ok) {
-      onAuthChange(true);
+      const data = await res.json();
+      onAuthChange({
+        authenticated: true,
+        role: data.role,
+        canEdit: data.canEdit,
+        canComment: data.canComment,
+      });
       setOpen(false);
       setPassword("");
     } else {
-      setError("Invalid staff password");
+      setError("Invalid access code");
     }
   };
 
   const logout = async () => {
     await fetch("/api/auth", { method: "DELETE" });
-    onAuthChange(false);
+    onAuthChange(GUEST);
   };
 
-  if (isAuthenticated) {
+  if (auth.authenticated) {
     return (
       <div className="flex items-center gap-3">
-        <span className="hidden text-sm text-emerald-700 sm:inline">Staff mode</span>
+        <span className="hidden text-sm text-emerald-700 sm:inline">
+          {auth.canEdit ? "Editor mode" : "Staff mode"}
+        </span>
         <button
           type="button"
           onClick={logout}
@@ -67,11 +91,12 @@ export function StaffLogin({
           <div className="w-full max-w-sm rounded-xl bg-white p-6 shadow-xl">
             <h3 className="text-lg font-semibold text-slate-900">Staff access</h3>
             <p className="mt-1 text-sm text-slate-500">
-              Sign in to add comments and update provider listings.
+              Enter your access code. Staff codes allow adding notes; editor codes allow
+              editing descriptions and saving to the database.
             </p>
             <input
               type="password"
-              placeholder="Staff password"
+              placeholder="Access code"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               onKeyDown={(e) => e.key === "Enter" && login()}
@@ -101,3 +126,5 @@ export function StaffLogin({
     </>
   );
 }
+
+export { GUEST as GUEST_AUTH };

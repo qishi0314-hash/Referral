@@ -1,3 +1,5 @@
+export type AuthRole = "staff" | "editor";
+
 export interface ProviderWebsites {
   practice?: string;
   psychology_today?: string;

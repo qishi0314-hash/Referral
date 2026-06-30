@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import type { ProviderWithComments } from "@/lib/types";
 
@@ -29,13 +29,15 @@ function Section({ title, children }: { title: string; children: React.ReactNode
 
 export function ProviderDetail({
   provider,
-  isStaff,
+  canComment,
+  canEdit,
   staffName,
   onClose,
   onUpdated,
 }: {
   provider: ProviderWithComments;
-  isStaff: boolean;
+  canComment: boolean;
+  canEdit: boolean;
   staffName: string;
   onClose: () => void;
   onUpdated: () => void;
@@ -43,13 +45,23 @@ export function ProviderDetail({
   const [comment, setComment] = useState("");
   const [author, setAuthor] = useState(staffName);
   const [saving, setSaving] = useState(false);
-  const [editing, setEditing] = useState(false);
+  const [editingListing, setEditingListing] = useState(false);
+  const [editingDescription, setEditingDescription] = useState(false);
   const [editForm, setEditForm] = useState({
     accepting_clients: provider.accepting_clients,
     active: provider.active,
     description: provider.description,
     session_format: provider.session_format,
   });
+
+  useEffect(() => {
+    setEditForm({
+      accepting_clients: provider.accepting_clients,
+      active: provider.active,
+      description: provider.description,
+      session_format: provider.session_format,
+    });
+  }, [provider]);
 
   const submitComment = async () => {
     if (!comment.trim() || !author.trim()) return;
@@ -64,16 +76,19 @@ export function ProviderDetail({
     onUpdated();
   };
 
-  const saveEdits = async () => {
+  const saveEdits = async (fields: Partial<typeof editForm>) => {
     setSaving(true);
-    await fetch(`/api/providers/${provider.id}`, {
+    const res = await fetch(`/api/providers/${provider.id}`, {
       method: "PATCH",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(editForm),
+      body: JSON.stringify(fields),
     });
     setSaving(false);
-    setEditing(false);
-    onUpdated();
+    if (res.ok) {
+      setEditingListing(false);
+      setEditingDescription(false);
+      onUpdated();
+    }
   };
 
   const formatDate = (iso: string) => {
@@ -184,11 +199,61 @@ export function ProviderDetail({
             </Section>
           )}
 
-          {provider.description && (
-            <Section title="Description">
-              <p className="whitespace-pre-wrap leading-relaxed">{provider.description}</p>
-            </Section>
-          )}
+          <section>
+            <div className="mb-2 flex items-center justify-between">
+              <h4 className="text-sm font-semibold uppercase tracking-wide text-slate-500">
+                Description
+              </h4>
+              {canEdit && !editingDescription && (
+                <button
+                  type="button"
+                  onClick={() => setEditingDescription(true)}
+                  className="text-sm text-[var(--primary)] hover:underline"
+                >
+                  Edit
+                </button>
+              )}
+            </div>
+            {editingDescription ? (
+              <div className="space-y-3">
+                <textarea
+                  value={editForm.description}
+                  onChange={(e) => setEditForm({ ...editForm, description: e.target.value })}
+                  rows={8}
+                  className="w-full rounded-lg border border-slate-200 px-3 py-2 text-sm leading-relaxed"
+                />
+                <div className="flex gap-2">
+                  <button
+                    type="button"
+                    disabled={saving}
+                    onClick={() => saveEdits({ description: editForm.description })}
+                    className="rounded-lg bg-[var(--accent)] px-4 py-2 text-sm font-medium text-white hover:opacity-90 disabled:opacity-50"
+                  >
+                    {saving ? "Saving..." : "Save description"}
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setEditingDescription(false);
+                      setEditForm((f) => ({ ...f, description: provider.description }));
+                    }}
+                    className="rounded-lg border border-slate-200 px-4 py-2 text-sm text-slate-600 hover:bg-slate-50"
+                  >
+                    Cancel
+                  </button>
+                </div>
+              </div>
+            ) : provider.description ? (
+              <p className="whitespace-pre-wrap text-sm leading-relaxed text-slate-700">
+                {provider.description}
+              </p>
+            ) : (
+              <p className="text-sm text-slate-500">
+                No description yet.
+                {canEdit && " Click Edit to add one."}
+              </p>
+            )}
+          </section>
 
           <section className="rounded-xl border border-slate-100 bg-slate-50/80 p-4">
             <h4 className="mb-3 text-sm font-semibold text-slate-700">Staff notes</h4>
@@ -210,7 +275,7 @@ export function ProviderDetail({
               </ul>
             )}
 
-            {isStaff && (
+            {canComment && (
               <div className="mt-4 space-y-3 border-t border-slate-200 pt-4">
                 <input
                   type="text"
@@ -238,19 +303,19 @@ export function ProviderDetail({
             )}
           </section>
 
-          {isStaff && (
+          {canEdit && (
             <section className="rounded-xl border border-dashed border-slate-200 p-4">
               <div className="flex items-center justify-between">
-                <h4 className="text-sm font-semibold text-slate-700">Staff: update listing</h4>
+                <h4 className="text-sm font-semibold text-slate-700">Editor: update listing</h4>
                 <button
                   type="button"
-                  onClick={() => setEditing(!editing)}
+                  onClick={() => setEditingListing(!editingListing)}
                   className="text-sm text-[var(--primary)] hover:underline"
                 >
-                  {editing ? "Cancel" : "Edit"}
+                  {editingListing ? "Cancel" : "Edit status"}
                 </button>
               </div>
-              {editing && (
+              {editingListing && (
                 <div className="mt-3 space-y-3">
                   <label className="flex items-center gap-2 text-sm">
                     <input
@@ -280,19 +345,19 @@ export function ProviderDetail({
                     <option>Both</option>
                     <option>Unknown</option>
                   </select>
-                  <textarea
-                    value={editForm.description}
-                    onChange={(e) => setEditForm({ ...editForm, description: e.target.value })}
-                    rows={5}
-                    className="w-full rounded-lg border border-slate-200 px-3 py-2 text-sm"
-                  />
                   <button
                     type="button"
                     disabled={saving}
-                    onClick={saveEdits}
+                    onClick={() =>
+                      saveEdits({
+                        accepting_clients: editForm.accepting_clients,
+                        active: editForm.active,
+                        session_format: editForm.session_format,
+                      })
+                    }
                     className="rounded-lg bg-[var(--accent)] px-4 py-2 text-sm font-medium text-white hover:opacity-90 disabled:opacity-50"
                   >
-                    Save changes
+                    Save listing changes
                   </button>
                 </div>
               )}
