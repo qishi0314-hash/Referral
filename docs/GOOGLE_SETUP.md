@@ -1,130 +1,133 @@
-# 团队共享备注和编辑 — Google 表格方案（无需 Vercel）
+# Team Shared Notes & Editing — Google Sheets (No Vercel)
 
-**员工不需要任何编程或技术操作。** 只需打开网站、输入访问码即可。  
-**只需一个人（管理员）做一次约 15 分钟的设置。**
-
----
-
-## 原理
-
-- 网站仍放在 GitHub Pages（现在的链接）
-- 备注、provider 修改、新建/删除保存在 **Google 表格**（云端）
-- 所有员工、所有浏览器看到的都是同一份数据
-- 管理员还可以直接在 Google 表格里查看所有备注
+**Staff need zero technical setup.** They only open the website and enter an access code.  
+**One administrator** does a one-time ~15 minute setup.
 
 ---
 
-## 管理员一次性设置（约 15 分钟）
+## How it works
 
-### 第 1 步：创建 Google 表格
+- The website stays on GitHub Pages (current link)
+- Notes, provider edits, and new/deleted providers are stored in **Google Sheets** (cloud)
+- All staff see the same data in every browser
+- Administrators can also view all notes directly in the spreadsheet
 
-1. 打开 [Google Sheets](https://sheets.google.com)，新建空白表格
-2. 命名为：`CPS Referral Staff Notes`
-3. 创建两个工作表（底部标签页），分别命名为：
+---
+
+## One-time admin setup (~15 minutes)
+
+### Step 1: Create a Google Sheet
+
+1. Open [Google Sheets](https://sheets.google.com) and create a blank spreadsheet
+2. Name it: `CPS Referral Staff Notes`
+3. Create two tabs at the bottom:
    - `Comments`
    - `Providers`
 
-4. 在 **Comments** 第一行输入表头：
+4. In **Comments**, row 1 headers:
 
    | created_at | provider_id | author_name | body | comment_id |
    |------------|-------------|-------------|------|------------|
 
-5. 在 **Providers** 第一行输入表头：
+5. In **Providers**, row 1 headers:
 
    | id | active | data | updated_at | updated_by |
    |----|--------|------|------------|------------|
 
-   （`data` 列存完整 provider 信息的 JSON，由网站自动写入，无需手填。）
+   (The `data` column stores full provider JSON — the website writes this automatically.)
 
-### 第 2 步：添加 Apps Script
+### Step 2: Add Apps Script
 
-1. 在表格中点击 **扩展程序 → Apps Script**
-2. 删除默认代码，打开本仓库文件 `scripts/google-apps-script.gs`，**全部复制粘贴**进去
-3. 修改文件顶部的两个密码（发给员工用）：
+1. In the sheet, click **Extensions → Apps Script**
+2. Delete the default code and paste the full contents of `scripts/google-apps-script.gs` from this repo
+3. Change the two passwords at the top (share these with staff):
    ```javascript
-   const STAFF_PASSWORD = "你们自己的员工码";
-   const EDITOR_PASSWORD = "你们自己的编辑码";
+   const STAFF_PASSWORD = "your-staff-code";
+   const EDITOR_PASSWORD = "your-editor-code";
    ```
-4. 点击 **保存**（项目可命名为 `CPS Referral API`）
+4. Click **Save** (name the project `CPS Referral API`)
 
-### 第 3 步：部署为 Web 应用
+### Step 3: Deploy as a web app
 
-1. 点击右上角 **部署 → 新建部署**
-2. 类型选择 **Web 应用**
-3. 设置：
-   - 说明：CPS Referral API
-   - 执行身份：**我**
-   - 访问权限：**任何人**（这样网站才能连接，员工仍需要访问码才能写入）
-4. 点击 **部署**，按提示授权 Google 账号
-5. **复制 Web 应用 URL**（形如 `https://script.google.com/macros/s/...../exec`）
+1. Click **Deploy → New deployment**
+2. Type: **Web app**
+3. Settings:
+   - Description: CPS Referral API
+   - Execute as: **Me**
+   - Who has access: **Anyone** (the site needs to connect; staff still need access codes to write)
+4. Click **Deploy** and authorize your Google account
+5. **Copy the Web app URL** (looks like `https://script.google.com/macros/s/...../exec`)
 
-> **更新代码后**：必须点 **部署 → 管理部署 → 编辑 → 版本选「新版本」→ 部署**，否则网站仍运行旧脚本。
+> **After updating code:** You must click **Deploy → Manage deployments → Edit → Version: New version → Deploy**. Saving alone is not enough.
 
-### 第 4 步：连接到网站
+### Step 4: Connect to the website
 
-**重要：** 线上网站是从 **`gh-pages` 分支** 发布的，不是 `main`。  
-请编辑 **`gh-pages` 分支** 里的 `assets/config.js`：
+**Important:** The live site is published from the **`gh-pages` branch**, not `main`.  
+Edit `assets/config.js` on the **`gh-pages` branch**:
 
 ```javascript
 window.APP_CONFIG = {
-  googleScriptUrl: "粘贴上一步复制的 URL",
+  googleScriptUrl: "paste-your-web-app-url-here",
   apiBase: "",
 };
 ```
 
-在 GitHub 网页上：切换到 **`gh-pages` 分支** → 打开 `assets/config.js` → 编辑 → Commit。
+On GitHub: switch to the **`gh-pages` branch** → open `assets/config.js` → Edit → Commit.
 
-保存后等待 1–2 分钟，然后 **强制刷新** 网页（Ctrl+Shift+R 或 Cmd+Shift+R）。
-
----
-
-## 员工日常使用（零技术）
-
-1. 打开：**https://qishi0314-hash.github.io/Referral/**
-2. 点击 **Staff login**，输入管理员发给他们的访问码
-3. 搜索 provider → 点击卡片
-4. **员工码**：可添加备注（所有人可见）
-5. **编辑码** 还可：
-   - 点击 **+ Add provider** 新建条目
-   - 在 provider 详情里 **Edit provider** 修改所有字段（电话、邮箱、保险、专长等）
-   - **Delete provider** 删除（有确认提示）
-   - **Delete** 删除 staff 备注
-
-换电脑、换浏览器、同事之间都会看到相同内容。
+Wait 1–2 minutes, then **hard refresh** the page (Ctrl+Shift+R or Cmd+Shift+R).
 
 ---
 
-## 访问码说明
+## Daily use for staff (zero technical)
 
-| 访问码 | 谁能拿到 | 能做什么 |
-|--------|----------|----------|
-| 员工码 | 所有 CPS staff | 添加 staff 备注 |
-| 编辑码 | 负责人 / 少数管理员 | 新建/编辑/删除 provider、删除备注、添加备注 |
+1. Open: **https://qishi0314-hash.github.io/Referral/**
+2. Click **Staff login** and enter the access code from your admin
+3. Search for a provider → click the card
+4. **Staff code:** add notes (visible to everyone)
+5. **Editor code** can also:
+   - Click **+ Add provider** to create a new entry
+   - **Edit provider** to change all fields (phone, email, insurance, specialties, etc.)
+   - **Delete provider** (with confirmation)
+   - **Delete** staff notes
 
-密码只保存在 Google Apps Script 里（不在公开网页代码中）。
-
----
-
-## 在 Google 表格里查看数据
-
-- **Comments** 标签页：所有 staff 备注
-- **Providers** 标签页：editor 新建或修改的 provider 记录
+Changes sync across computers, browsers, and colleagues.
 
 ---
 
-## 常见问题
+## Access codes
 
-**Q: 员工需要 Google 账号吗？**  
-A: 不需要。只有设置表格的管理员需要 Google 账号。
+| Code | Who gets it | What they can do |
+|------|-------------|------------------|
+| Staff code | All CPS staff | Add staff notes |
+| Editor code | Leads / few admins | Create/edit/delete providers, delete notes, add notes |
 
-**Q: 还需要 Vercel 吗？**  
-A: 不需要。Google 表格就是云端数据库。
+Passwords should live only in Google Apps Script (not in public website code).
 
-**Q: 修改 config.js 后没生效？**  
-A: 确认改的是 **`gh-pages` 分支** 的 `assets/config.js`。等 1–2 分钟后强制刷新（Ctrl+Shift+R）。
+---
 
-**Q: 登录了但还是不能编辑？**  
-A: 必须用 **编辑码** 登录。登录后右上角应显示 **Editor mode**。需要已配置 `googleScriptUrl` 才能保存 provider 修改。
+## Viewing data in Google Sheets
 
-**Q: 更新了 Apps Script 但没新功能？**  
-A: 在 Apps Script 里 **重新部署新版本**（见第 3 步说明）。
+- **Comments** tab: all staff notes
+- **Providers** tab: providers created or edited by editors
+
+---
+
+## FAQ
+
+**Q: Do staff need a Google account?**  
+A: No. Only the admin who sets up the sheet needs one.
+
+**Q: Do we still need Vercel?**  
+A: No. Google Sheets is the cloud database.
+
+**Q: I changed config.js but nothing updated?**  
+A: Make sure you edited **`gh-pages` branch** `assets/config.js`. Wait 1–2 minutes and hard refresh (Ctrl+Shift+R).
+
+**Q: I'm logged in but can't edit?**  
+A: You must use the **editor code** (not the staff code). The header should show **Editor mode**. `googleScriptUrl` must be configured to save changes.
+
+**Q: I updated Apps Script but new features don't work?**  
+A: Redeploy a **new version** (see Step 3).
+
+**Q: Delete comment does nothing?**  
+A: Make sure Apps Script includes the latest `deleteComment` code and is redeployed. If you see an error in the confirm dialog, follow that message.

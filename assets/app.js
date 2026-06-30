@@ -291,18 +291,31 @@ function showConfirm(message, onConfirm) {
     <div class="modal-header"><h2 style="margin:0;font-size:1.05rem">Please confirm</h2></div>
     <div class="modal-body">
       <p>${escapeHtml(message)}</p>
+      <p id="confirm-error" class="hidden" style="color:#b91c1c;font-size:0.85rem;margin:0.75rem 0 0"></p>
       <div class="form-actions" style="border:0;padding-top:1.25rem;margin-top:0">
-        <button class="btn btn-ghost" id="confirm-cancel">Cancel</button>
-        <button class="btn btn-danger" id="confirm-ok">Confirm</button>
+        <button type="button" class="btn btn-ghost" id="confirm-cancel">Cancel</button>
+        <button type="button" class="btn btn-danger" id="confirm-ok">Confirm</button>
       </div>
     </div>
   </div>`;
+  const okBtn = document.getElementById("confirm-ok");
+  const errEl = document.getElementById("confirm-error");
   document.getElementById("confirm-cancel").onclick = () => {
     if (selectedProvider) openProvider(selectedProvider.id);
     else closeModal();
   };
-  document.getElementById("confirm-ok").onclick = async () => {
-    await onConfirm();
+  okBtn.onclick = async () => {
+    okBtn.disabled = true;
+    okBtn.textContent = "Working…";
+    errEl.classList.add("hidden");
+    try {
+      await onConfirm();
+    } catch (e) {
+      okBtn.disabled = false;
+      okBtn.textContent = "Confirm";
+      errEl.textContent = e.message || "Something went wrong. Try signing in again.";
+      errEl.classList.remove("hidden");
+    }
   };
 }
 
@@ -488,7 +501,7 @@ async function openProvider(id) {
   document.querySelectorAll("[data-delete-comment]").forEach((btn) => {
     btn.onclick = (e) => {
       e.stopPropagation();
-      confirmDeleteComment(id, btn.dataset.deleteComment);
+      confirmDeleteComment(id, btn.dataset.deleteComment, btn.dataset.commentRow);
     };
   });
 }
@@ -682,22 +695,25 @@ function renderComments(list, providerId) {
   return list.map((c) => `<div class="comment-item">
     <div class="comment-item-header">
       <p style="margin:0;flex:1">${escapeHtml(c.body)}</p>
-      ${canDelete ? `<button class="btn btn-ghost btn-sm" data-delete-comment="${escapeHtml(c.id)}" title="Delete comment">Delete</button>` : ""}
+      ${canDelete ? `<button type="button" class="btn btn-ghost btn-sm" data-delete-comment="${escapeHtml(c.id)}" data-comment-row="${c.row || ""}" title="Delete comment">Delete</button>` : ""}
     </div>
     <p class="comment-meta">— ${escapeHtml(c.author_name)} · ${formatDate(c.created_at)}</p>
   </div>`).join("");
 }
 
-function confirmDeleteComment(providerId, commentId) {
+function confirmDeleteComment(providerId, commentId, commentRow) {
   showConfirm("Delete this staff comment? This cannot be undone.", async () => {
     if (useGoogleSync()) {
       await googlePost({
         action: "deleteComment",
         password: sessionPassword,
         comment_id: commentId,
+        comment_row: commentRow ? Number(commentRow) : undefined,
       });
+    } else {
+      throw new Error("Cloud sync is required to delete comments.");
     }
-    openProvider(providerId);
+    await openProvider(providerId);
   });
 }
 

@@ -51,8 +51,9 @@ function doPost(e) {
 
     if (action === "deleteComment") {
       if (role !== "editor") return json_({ error: "Editor access required" });
-      if (!data.comment_id) return json_({ error: "Missing comment_id" });
-      deleteComment_(data.comment_id);
+      if (!data.comment_id && !data.comment_row) return json_({ error: "Missing comment identifier" });
+      const deleted = deleteComment_(data.comment_id, data.comment_row);
+      if (!deleted) return json_({ error: "Comment not found" });
       return json_({ success: true });
     }
 
@@ -134,18 +135,34 @@ function addComment_(providerId, authorName, body) {
   ]);
 }
 
-function deleteComment_(commentId) {
+function deleteComment_(commentId, commentRow) {
   const sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName(COMMENTS_SHEET);
-  if (!sheet) return;
+  if (!sheet) return false;
 
   const rows = sheet.getDataRange().getValues();
-  for (let i = 1; i < rows.length; i++) {
-    const rowId = rows[i][4] || "row-" + (i + 1);
-    if (String(rowId) === String(commentId)) {
-      sheet.deleteRow(i + 1);
-      return;
+
+  if (commentRow) {
+    const rowNum = Number(commentRow);
+    if (rowNum > 1 && rowNum <= rows.length) {
+      sheet.deleteRow(rowNum);
+      return true;
     }
   }
+
+  for (let i = 1; i < rows.length; i++) {
+    const rowId = rows[i][4] || "row-" + (i + 1);
+    const sheetRow = i + 1;
+    if (
+      String(rowId) === String(commentId) ||
+      String(i) === String(commentId) ||
+      String(sheetRow) === String(commentId)
+    ) {
+      sheet.deleteRow(sheetRow);
+      return true;
+    }
+  }
+
+  return false;
 }
 
 function getProviders_() {
