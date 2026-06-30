@@ -1,9 +1,5 @@
-// Cloud sync via Google Sheets (recommended — see docs/GOOGLE_SETUP.md)
-// Leave googleScriptUrl empty until admin completes one-time Google setup.
+// Cloud sync via Google Sheets (see GOOGLE_SETUP.md)
 window.APP_CONFIG = {
-  googleScriptUrl: "",
+  googleScriptUrl: "https://script.google.com/macros/s/AKfycbylYn2g8isnHqAkNz9iSrczrBsypnJP-QjqtkOpysh6Bar7b2WsEK0gbGuYFb_Bng/exec",
   apiBase: "",
-  // Only used for local/offline mode when googleScriptUrl is empty:
-  staffPassword: "fordham-cps-staff",
-  editorPassword: "fordham-cps-editor",
 };
