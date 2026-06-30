@@ -1,6 +1,6 @@
-# Fordham CPS Referral Directory
+# CPS Referral Directory
 
-Fordham 大学心理咨询中心（CPS）校外转介资源搜索网站 — **可直接通过网址访问，无需本地运行。**
+大学心理咨询中心（CPS）校外转介资源搜索网站 — **可直接通过网址访问，无需本地运行。**
 
 ## 在线访问（一步开启）
 
