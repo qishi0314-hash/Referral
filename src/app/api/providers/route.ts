@@ -15,10 +15,10 @@ export async function GET(request: NextRequest) {
   const meta = searchParams.get("meta") === "true";
 
   if (meta) {
-    return NextResponse.json(getFilterOptions());
+    return NextResponse.json(await getFilterOptions());
   }
 
-  const providers = listProviders({
+  const providers = await listProviders({
     q,
     insurance: insurance.length ? insurance : undefined,
     type: type.length ? type : undefined,

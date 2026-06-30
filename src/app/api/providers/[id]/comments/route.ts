@@ -18,7 +18,7 @@ export async function POST(
     return NextResponse.json({ error: "Author name and comment are required" }, { status: 400 });
   }
 
-  const comment = addComment(parseInt(id, 10), author_name, body);
+  const comment = await addComment(parseInt(id, 10), author_name, body);
   if (!comment) {
     return NextResponse.json({ error: "Provider not found" }, { status: 404 });
   }
@@ -39,7 +39,7 @@ export async function DELETE(
     return NextResponse.json({ error: "commentId required" }, { status: 400 });
   }
 
-  const ok = deleteComment(commentId);
+  const ok = await deleteComment(commentId);
   if (!ok) {
     return NextResponse.json({ error: "Comment not found" }, { status: 404 });
   }

@@ -11,8 +11,8 @@
     "db:reset": "rm -f data/referral.db && echo 'Database reset — restart dev server to re-seed'"
   },
   "dependencies": {
+    "@libsql/client": "^0.17.4",
     "bcryptjs": "^3.0.2",
-    "better-sqlite3": "^11.9.1",
     "next": "^15.3.2",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
@@ -21,7 +21,6 @@
   "devDependencies": {
     "@tailwindcss/postcss": "^4.1.7",
     "@types/bcryptjs": "^2.4.6",
-    "@types/better-sqlite3": "^7.6.13",
     "@types/node": "^22.15.21",
     "@types/react": "^19.1.4",
     "@types/react-dom": "^19.1.5",

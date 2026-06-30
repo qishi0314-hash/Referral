@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CPS Referral Directory | Fordham University</title>
+  <meta name="description" content="Search off-campus mental health providers for student referrals" />
+  <link rel="stylesheet" href="assets/style.css" />
+</head>
+<body>
+  <header class="header">
+    <div class="header-inner">
+      <div>
+        <p class="eyebrow">Fordham University</p>
+        <h1>CPS Referral Directory</h1>
+        <p class="subtitle">Search off-campus mental health providers for student referrals</p>
+      </div>
+      <div id="staff-controls"></div>
+    </div>
+  </header>
+
+  <main class="layout">
+    <aside id="filters" class="filters"></aside>
+    <section class="results">
+      <div class="results-bar">
+        <p id="result-count" class="result-count"></p>
+        <input id="staff-name" type="text" placeholder="Your name for comments" class="staff-name hidden" />
+      </div>
+      <div id="provider-grid" class="provider-grid"></div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    Counseling &amp; Psychological Services · For staff use when making off-campus referrals
+  </footer>
+
+  <div id="modal-root" class="modal-root hidden"></div>
+
+  <script src="assets/config.js"></script>
+  <script src="assets/app.js" type="module"></script>
+</body>
+</html>

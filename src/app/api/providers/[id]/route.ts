@@ -8,7 +8,7 @@ export async function GET(
   { params }: { params: Promise<{ id: string }> }
 ) {
   const { id } = await params;
-  const provider = getProvider(parseInt(id, 10));
+  const provider = await getProvider(parseInt(id, 10));
   if (!provider) {
     return NextResponse.json({ error: "Provider not found" }, { status: 404 });
   }
@@ -25,7 +25,7 @@ export async function PATCH(
 
   const { id } = await params;
   const body = await request.json();
-  const updated = updateProvider(parseInt(id, 10), body);
+  const updated = await updateProvider(parseInt(id, 10), body);
   if (!updated) {
     return NextResponse.json({ error: "Provider not found" }, { status: 404 });
   }

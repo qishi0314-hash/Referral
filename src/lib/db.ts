@@ -1,4 +1,4 @@
-import Database from "better-sqlite3";
+import { createClient, type Client } from "@libsql/client";
 import fs from "fs";
 import path from "path";
 
@@ -7,23 +7,34 @@ import type { Provider, ProviderWebsites, StaffComment } from "./types";
 
 const DB_PATH = path.join(process.cwd(), "data", "referral.db");
 
-let db: Database.Database | null = null;
+let client: Client | null = null;
+let initPromise: Promise<void> | null = null;
 
-function getDb(): Database.Database {
-  if (!db) {
-    const dir = path.dirname(DB_PATH);
+function createDbClient(): Client {
+  const url = process.env.TURSO_DATABASE_URL || `file:${DB_PATH}`;
+
+  if (url.startsWith("file:")) {
+    const filePath = url.replace("file:", "");
+    const dir = path.dirname(filePath);
     if (!fs.existsSync(dir)) fs.mkdirSync(dir, { recursive: true });
-    db = new Database(DB_PATH);
-    db.pragma("journal_mode = WAL");
-    initSchema(db);
-    seedIfEmpty(db);
   }
-  return db;
+
+  return createClient({
+    url,
+    authToken: process.env.TURSO_AUTH_TOKEN,
+  });
 }
 
-function initSchema(database: Database.Database) {
-  database.exec(`
-    CREATE TABLE IF NOT EXISTS providers (
+async function ensureReady(): Promise<Client> {
+  if (!client) client = createDbClient();
+  if (!initPromise) initPromise = initialize(client);
+  await initPromise;
+  return client;
+}
+
+async function initialize(db: Client) {
+  await db.batch([
+    `CREATE TABLE IF NOT EXISTS providers (
       id INTEGER PRIMARY KEY AUTOINCREMENT,
       name TEXT NOT NULL,
       type TEXT NOT NULL DEFAULT 'Therapist',
@@ -42,60 +53,48 @@ function initSchema(database: Database.Database) {
       active INTEGER NOT NULL DEFAULT 1,
       created_at TEXT NOT NULL DEFAULT (datetime('now')),
       updated_at TEXT NOT NULL DEFAULT (datetime('now'))
-    );
-
-    CREATE TABLE IF NOT EXISTS staff_comments (
+    )`,
+    `CREATE TABLE IF NOT EXISTS staff_comments (
       id INTEGER PRIMARY KEY AUTOINCREMENT,
       provider_id INTEGER NOT NULL REFERENCES providers(id) ON DELETE CASCADE,
       author_name TEXT NOT NULL,
       body TEXT NOT NULL,
       created_at TEXT NOT NULL DEFAULT (datetime('now'))
-    );
+    )`,
+    `CREATE INDEX IF NOT EXISTS idx_providers_name ON providers(name)`,
+    `CREATE INDEX IF NOT EXISTS idx_comments_provider ON staff_comments(provider_id)`,
+  ]);
 
-    CREATE INDEX IF NOT EXISTS idx_providers_name ON providers(name);
-    CREATE INDEX IF NOT EXISTS idx_comments_provider ON staff_comments(provider_id);
-  `);
-}
+  const count = await db.execute("SELECT COUNT(*) as c FROM providers");
+  const rowCount = Number(count.rows[0]?.c ?? 0);
+  if (rowCount > 0) return;
 
-function seedIfEmpty(database: Database.Database) {
-  const count = database.prepare("SELECT COUNT(*) as c FROM providers").get() as { c: number };
-  if (count.c > 0) return;
-
-  const insert = database.prepare(`
-    INSERT INTO providers (
-      name, type, insurance, session_format, address, email, phone, websites,
-      specialties, modalities, low_cost, licensed_states, description,
-      accepting_clients, active
-    ) VALUES (
-      @name, @type, @insurance, @session_format, @address, @email, @phone, @websites,
-      @specialties, @modalities, @low_cost, @licensed_states, @description,
-      @accepting_clients, @active
-    )
-  `);
-
-  const tx = database.transaction((rows: typeof seedData) => {
-    for (const row of rows) {
-      insert.run({
-        name: row.name,
-        type: row.type,
-        insurance: JSON.stringify(row.insurance),
-        session_format: row.session_format,
-        address: row.address,
-        email: row.email,
-        phone: row.phone,
-        websites: JSON.stringify(row.websites || {}),
-        specialties: JSON.stringify(row.specialties || []),
-        modalities: JSON.stringify(row.modalities || []),
-        low_cost: row.low_cost ? 1 : 0,
-        licensed_states: JSON.stringify(row.licensed_states || ["NY"]),
-        description: row.description || "",
-        accepting_clients: row.accepting_clients ? 1 : 0,
-        active: row.active !== false ? 1 : 0,
-      });
-    }
-  });
-
-  tx(seedData as typeof seedData);
+  for (const row of seedData) {
+    await db.execute({
+      sql: `INSERT INTO providers (
+        name, type, insurance, session_format, address, email, phone, websites,
+        specialties, modalities, low_cost, licensed_states, description,
+        accepting_clients, active
+      ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+      args: [
+        row.name,
+        row.type,
+        JSON.stringify(row.insurance),
+        row.session_format,
+        row.address,
+        row.email,
+        row.phone,
+        JSON.stringify(row.websites || {}),
+        JSON.stringify(row.specialties || []),
+        JSON.stringify(row.modalities || []),
+        row.low_cost ? 1 : 0,
+        JSON.stringify(row.licensed_states || ["NY"]),
+        row.description || "",
+        row.accepting_clients ? 1 : 0,
+        row.active !== false ? 1 : 0,
+      ],
+    });
+  }
 }
 
 type ProviderRow = {
@@ -142,6 +141,10 @@ function rowToProvider(row: ProviderRow): Provider {
   };
 }
 
+function asProviderRows(result: { rows: unknown[] }): ProviderRow[] {
+  return result.rows as unknown as ProviderRow[];
+}
+
 export interface ProviderFilters {
   q?: string;
   insurance?: string[];
@@ -153,10 +156,10 @@ export interface ProviderFilters {
   active_only?: boolean;
 }
 
-export function listProviders(filters: ProviderFilters = {}): Provider[] {
-  const database = getDb();
+export async function listProviders(filters: ProviderFilters = {}): Promise<Provider[]> {
+  const db = await ensureReady();
   let sql = "SELECT * FROM providers WHERE 1=1";
-  const params: Record<string, string | number> = {};
+  const args: (string | number)[] = [];
 
   if (filters.active_only !== false) {
     sql += " AND active = 1";
@@ -164,10 +167,11 @@ export function listProviders(filters: ProviderFilters = {}): Provider[] {
 
   if (filters.q) {
     sql += ` AND (
-      name LIKE @q OR description LIKE @q OR email LIKE @q
-      OR address LIKE @q OR phone LIKE @q
+      name LIKE ? OR description LIKE ? OR email LIKE ?
+      OR address LIKE ? OR phone LIKE ?
     )`;
-    params.q = `%${filters.q}%`;
+    const q = `%${filters.q}%`;
+    args.push(q, q, q, q, q);
   }
 
   if (filters.low_cost) {
@@ -180,8 +184,8 @@ export function listProviders(filters: ProviderFilters = {}): Provider[] {
 
   sql += " ORDER BY name COLLATE NOCASE ASC";
 
-  const rows = database.prepare(sql).all(params) as ProviderRow[];
-  let providers = rows.map(rowToProvider);
+  const result = await db.execute({ sql, args });
+  let providers = asProviderRows(result).map(rowToProvider);
 
   if (filters.insurance?.length) {
     providers = providers.filter((p) =>
@@ -215,28 +219,28 @@ export function listProviders(filters: ProviderFilters = {}): Provider[] {
   return providers;
 }
 
-export function getProvider(id: number) {
-  const database = getDb();
-  const row = database.prepare("SELECT * FROM providers WHERE id = ?").get(id) as ProviderRow | undefined;
-  if (!row) return null;
+export async function getProvider(id: number) {
+  const db = await ensureReady();
+  const result = await db.execute({ sql: "SELECT * FROM providers WHERE id = ?", args: [id] });
+  const rows = asProviderRows(result);
+  if (rows.length === 0) return null;
 
-  const comments = database
-    .prepare("SELECT * FROM staff_comments WHERE provider_id = ? ORDER BY created_at DESC")
-    .all(id) as StaffComment[];
+  const commentsResult = await db.execute({
+    sql: "SELECT * FROM staff_comments WHERE provider_id = ? ORDER BY created_at DESC",
+    args: [id],
+  });
 
-  return { ...rowToProvider(row), comments };
+  const comments = commentsResult.rows as unknown as StaffComment[];
+  return { ...rowToProvider(rows[0]), comments };
 }
 
-export function updateProvider(
+export async function updateProvider(
   id: number,
   data: Partial<Omit<Provider, "id" | "created_at" | "updated_at">>
 ) {
-  const database = getDb();
-  const existing = database.prepare("SELECT id FROM providers WHERE id = ?").get(id);
-  if (!existing) return null;
-
-  const fields: string[] = [];
-  const params: Record<string, string | number | null> = { id };
+  const db = await ensureReady();
+  const existing = await db.execute({ sql: "SELECT id FROM providers WHERE id = ?", args: [id] });
+  if (existing.rows.length === 0) return null;
 
   const map: Record<string, (v: unknown) => string | number | null> = {
     name: (v) => v as string,
@@ -256,44 +260,66 @@ export function updateProvider(
     active: (v) => ((v as boolean) ? 1 : 0),
   };
 
+  const fields: string[] = [];
+  const args: (string | number | null)[] = [];
+
   for (const [key, transform] of Object.entries(map)) {
     if (key in data) {
-      fields.push(`${key} = @${key}`);
-      params[key] = transform(data[key as keyof typeof data]);
+      fields.push(`${key} = ?`);
+      args.push(transform(data[key as keyof typeof data]));
     }
   }
 
   if (fields.length === 0) return getProvider(id);
 
   fields.push("updated_at = datetime('now')");
-  database.prepare(`UPDATE providers SET ${fields.join(", ")} WHERE id = @id`).run(params);
+  args.push(id);
+
+  await db.execute({
+    sql: `UPDATE providers SET ${fields.join(", ")} WHERE id = ?`,
+    args,
+  });
+
   return getProvider(id);
 }
 
-export function addComment(providerId: number, authorName: string, body: string): StaffComment | null {
-  const database = getDb();
-  const provider = database.prepare("SELECT id FROM providers WHERE id = ?").get(providerId);
-  if (!provider) return null;
+export async function addComment(
+  providerId: number,
+  authorName: string,
+  body: string
+): Promise<StaffComment | null> {
+  const db = await ensureReady();
+  const provider = await db.execute({
+    sql: "SELECT id FROM providers WHERE id = ?",
+    args: [providerId],
+  });
+  if (provider.rows.length === 0) return null;
 
-  const result = database
-    .prepare(
-      "INSERT INTO staff_comments (provider_id, author_name, body) VALUES (?, ?, ?)"
-    )
-    .run(providerId, authorName.trim(), body.trim());
+  const result = await db.execute({
+    sql: "INSERT INTO staff_comments (provider_id, author_name, body) VALUES (?, ?, ?)",
+    args: [providerId, authorName.trim(), body.trim()],
+  });
 
-  return database
-    .prepare("SELECT * FROM staff_comments WHERE id = ?")
-    .get(result.lastInsertRowid) as StaffComment;
+  const commentId = Number(result.lastInsertRowid);
+  const commentResult = await db.execute({
+    sql: "SELECT * FROM staff_comments WHERE id = ?",
+    args: [commentId],
+  });
+
+  return commentResult.rows[0] as unknown as StaffComment;
 }
 
-export function deleteComment(commentId: number): boolean {
-  const database = getDb();
-  const result = database.prepare("DELETE FROM staff_comments WHERE id = ?").run(commentId);
-  return result.changes > 0;
+export async function deleteComment(commentId: number): Promise<boolean> {
+  const db = await ensureReady();
+  const result = await db.execute({
+    sql: "DELETE FROM staff_comments WHERE id = ?",
+    args: [commentId],
+  });
+  return result.rowsAffected > 0;
 }
 
-export function getFilterOptions() {
-  const providers = listProviders({ active_only: false });
+export async function getFilterOptions() {
+  const providers = await listProviders({ active_only: false });
   const insurance = new Set<string>();
   const specialties = new Set<string>();
   const types = new Set<string>();
