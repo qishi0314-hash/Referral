@@ -17,6 +17,7 @@ const SPECIALTY_OPTIONS = [
 ];
 
 const config = window.APP_CONFIG || {
+  googleScriptUrl: "",
   apiBase: "",
   staffPassword: "fordham-cps-staff",
   editorPassword: "fordham-cps-editor",
@@ -25,6 +26,7 @@ const config = window.APP_CONFIG || {
 let providers = [];
 let comments = loadLocalComments();
 let auth = { authenticated: false, canComment: false, canEdit: false, role: null };
+let sessionPassword = "";
 let selectedProvider = null;
 
 const filters = {
@@ -56,8 +58,44 @@ function loadStaffSession() {
 }
 
 function setStaffSession(state) {
-  if (state) sessionStorage.setItem("cps_auth", JSON.stringify(state));
-  else sessionStorage.removeItem("cps_auth");
+  if (state) {
+    sessionStorage.setItem("cps_auth", JSON.stringify(state));
+    if (state.password) sessionPassword = state.password;
+  } else {
+    sessionStorage.removeItem("cps_auth");
+    sessionPassword = "";
+  }
+}
+
+function useGoogleSync() {
+  return !!config.googleScriptUrl;
+}
+
+function useVercelSync() {
+  return !!config.apiBase;
+}
+
+function hasCloudSync() {
+  return useGoogleSync() || useVercelSync();
+}
+
+async function googleGet(params) {
+  const q = new URLSearchParams(params);
+  const res = await fetch(`${config.googleScriptUrl}?${q}`);
+  if (!res.ok) throw new Error("Google sync failed");
+  return res.json();
+}
+
+async function googlePost(payload) {
+  const res = await fetch(config.googleScriptUrl, {
+    method: "POST",
+    headers: { "Content-Type": "text/plain;charset=utf-8" },
+    body: JSON.stringify(payload),
+  });
+  if (!res.ok) throw new Error("Google sync failed");
+  const data = await res.json();
+  if (data.error) throw new Error(data.error);
+  return data;
 }
 
 async function api(path, options = {}) {
@@ -75,7 +113,17 @@ async function init() {
   const res = await fetch("data/providers.json");
   providers = await res.json();
   auth = loadStaffSession() || { authenticated: false, canComment: false, canEdit: false, role: null };
-  if (config.apiBase) {
+
+  if (useGoogleSync()) {
+    try {
+      const data = await googleGet({ action: "descriptions" });
+      const overrides = data?.descriptions || {};
+      for (const [id, text] of Object.entries(overrides)) {
+        const p = providers.find((x) => String(x.id) === String(id));
+        if (p && text) p.description = text;
+      }
+    } catch (_) {}
+  } else if (useVercelSync()) {
     try {
       const data = await api("/api/auth");
       if (data?.authenticated) {
@@ -88,7 +136,12 @@ async function init() {
         setStaffSession(auth);
       }
     } catch { /* static fallback */ }
+    try {
+      const list = await api("/api/providers");
+      if (list) providers = list;
+    } catch (_) {}
   }
+
   renderStaffControls();
   renderFilters();
   renderProviders();
@@ -104,7 +157,7 @@ function renderStaffControls() {
       <button class="btn btn-ghost" id="logout-btn">Sign out</button>
     </div>`;
     document.getElementById("logout-btn").onclick = async () => {
-      if (config.apiBase) await api("/api/auth", { method: "DELETE" }).catch(() => {});
+      if (useVercelSync()) await api("/api/auth", { method: "DELETE" }).catch(() => {});
       setStaffSession(null);
       auth = { authenticated: false, canComment: false, canEdit: false, role: null };
       nameInput.classList.add("hidden");
@@ -124,7 +177,7 @@ function showLoginModal() {
   root.innerHTML = `<div class="modal-panel" style="max-width:24rem;margin:4rem auto">
     <div class="modal-header"><h2 style="margin:0;font-size:1.1rem">Staff access</h2></div>
     <div class="modal-body">
-      <p style="font-size:0.875rem;color:#64748b;margin:0 0 1rem">Enter your access code. Staff codes add notes; editor codes edit descriptions and save to the database.</p>
+      <p style="font-size:0.875rem;color:#64748b;margin:0 0 1rem">Enter your access code. Staff codes add notes; editor codes can edit descriptions. All changes sync for the whole team.</p>
       <input type="password" id="login-password" placeholder="Access code" />
       <p id="login-error" class="hidden" style="color:#dc2626;font-size:0.85rem;margin:0.5rem 0 0"></p>
       <div style="display:flex;justify-content:flex-end;gap:0.5rem;margin-top:1rem">
@@ -138,7 +191,16 @@ function showLoginModal() {
     const password = document.getElementById("login-password").value;
     const err = document.getElementById("login-error");
     try {
-      if (config.apiBase) {
+      if (useGoogleSync()) {
+        const data = await googlePost({ action: "login", password });
+        auth = {
+          authenticated: true,
+          canComment: data.canComment,
+          canEdit: data.canEdit,
+          role: data.role,
+          password,
+        };
+      } else if (useVercelSync()) {
         const res = await fetch(`${config.apiBase}/api/auth`, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
@@ -154,9 +216,9 @@ function showLoginModal() {
           role: data.role,
         };
       } else if (password === config.editorPassword) {
-        auth = { authenticated: true, canComment: true, canEdit: false, role: "editor" };
+        auth = { authenticated: true, canComment: true, canEdit: true, role: "editor", password };
       } else if (password === config.staffPassword) {
-        auth = { authenticated: true, canComment: true, canEdit: false, role: "staff" };
+        auth = { authenticated: true, canComment: true, canEdit: false, role: "staff", password };
       } else {
         throw new Error("bad password");
       }
@@ -268,12 +330,17 @@ async function openProvider(id) {
   let provider = providers.find((p) => p.id === id);
   let providerComments = comments[id] || [];
 
-  if (config.apiBase) {
+  if (useVercelSync()) {
     try {
       const data = await api(`/api/providers/${id}`);
       provider = data;
       providerComments = data.comments || [];
-    } catch { /* fallback to local */ }
+    } catch { /* fallback */ }
+  } else if (useGoogleSync()) {
+    try {
+      const data = await googleGet({ action: "comments", providerId: id });
+      providerComments = data.comments || [];
+    } catch { /* fallback */ }
   }
 
   selectedProvider = provider;
@@ -312,7 +379,7 @@ async function openProvider(id) {
       <div class="modal-section" id="description-section">
         <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:0.35rem">
           <h4 style="margin:0">Description</h4>
-          ${auth.canEdit && config.apiBase ? `<button class="btn btn-ghost" id="edit-desc-btn" style="padding:0.25rem 0.5rem;font-size:0.8rem">Edit</button>` : ""}
+          ${auth.canEdit && hasCloudSync() ? `<button class="btn btn-ghost" id="edit-desc-btn" style="padding:0.25rem 0.5rem;font-size:0.8rem">Edit</button>` : ""}
         </div>
         <div id="description-content">
           ${provider.description ? `<p style="white-space:pre-wrap;margin:0">${escapeHtml(provider.description)}</p>` : `<p style="color:#64748b;margin:0">No description yet.</p>`}
@@ -326,7 +393,7 @@ async function openProvider(id) {
           <textarea id="comment-body" rows="3" placeholder="Add a staff note about this provider..."></textarea>
           <button class="btn btn-primary" id="add-comment" style="margin-top:0.5rem">Add comment</button>
         </div>` : ""}
-        ${!config.apiBase ? `<p class="notice">Comments are saved in your browser only. To edit descriptions and save for all staff, connect this page to the Vercel app (set apiBase in config.js).</p>` : ""}
+        ${!hasCloudSync() ? `<p class="notice">Notes are saved in this browser only. Ask your admin to set up Google Sheets sync (see GOOGLE_SETUP.md) so all staff see the same notes.</p>` : `<p class="notice" style="background:#ecfdf5;color:#065f46">Team sync is on — notes and edits are shared with all staff.</p>`}
       </div>
     </div>
   </div>`;
@@ -337,7 +404,7 @@ async function openProvider(id) {
     if (staffName?.value) document.getElementById("comment-author").value = staffName.value;
     document.getElementById("add-comment").onclick = () => addComment(id);
   }
-  if (auth.canEdit && config.apiBase) {
+  if (auth.canEdit && hasCloudSync()) {
     document.getElementById("edit-desc-btn").onclick = () => showDescriptionEditor(id, provider.description || "");
   }
 }
@@ -355,10 +422,21 @@ function showDescriptionEditor(providerId, current) {
   document.getElementById("cancel-desc-btn").onclick = () => openProvider(providerId);
   document.getElementById("save-desc-btn").onclick = async () => {
     const description = document.getElementById("desc-editor").value;
-    await api(`/api/providers/${providerId}`, {
-      method: "PATCH",
-      body: JSON.stringify({ description }),
-    });
+    const updatedBy = document.getElementById("staff-name")?.value || auth.role || "Editor";
+    if (useGoogleSync()) {
+      await googlePost({
+        action: "updateDescription",
+        password: sessionPassword,
+        provider_id: providerId,
+        description,
+        updated_by: updatedBy,
+      });
+    } else if (useVercelSync()) {
+      await api(`/api/providers/${providerId}`, {
+        method: "PATCH",
+        body: JSON.stringify({ description }),
+      });
+    }
     const idx = providers.findIndex((p) => p.id === providerId);
     if (idx >= 0) providers[idx].description = description;
     openProvider(providerId);
@@ -375,7 +453,15 @@ async function addComment(providerId) {
   const body = document.getElementById("comment-body").value.trim();
   if (!author || !body) return;
 
-  if (config.apiBase) {
+  if (useGoogleSync()) {
+    await googlePost({
+      action: "addComment",
+      password: sessionPassword,
+      provider_id: providerId,
+      author_name: author,
+      body,
+    });
+  } else if (useVercelSync()) {
     await api(`/api/providers/${providerId}/comments`, {
       method: "POST",
       body: JSON.stringify({ author_name: author, body }),

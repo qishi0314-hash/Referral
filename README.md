@@ -21,14 +21,38 @@
 - 按保险、专长、面对面/远程、低费用等条件搜索
 - 每个 provider 一条记录（已去重）
 - 查看联系方式、网站、地址、治疗方式等
-- 员工登录后可添加备注（静态页为浏览器本地保存；完整版为团队共享）
-- **编辑码**可修改 provider 描述并保存到数据库（需部署 Vercel 完整版）
+- 员工登录后可添加备注；设置 Google 表格同步后**全团队、所有浏览器共享**
+- **编辑码**可修改 provider 描述（需开启云端同步，见下方）
 
 ---
 
-## 完整版（员工共享备注 + 在线编辑）
+## 团队共享备注（推荐：Google 表格，无需 Vercel）
 
-如需**所有员工共享同一份备注**、在线更新 provider 状态，请部署到 Vercel（约 5 分钟）：
+**员工零技术操作** — 只需打开网站、输入访问码。  
+**管理员一次性设置约 15 分钟** — 不需要 Vercel、不需要写代码。
+
+详细步骤见 **[docs/GOOGLE_SETUP.md](docs/GOOGLE_SETUP.md)**（中文图文说明）。
+
+简要流程：
+
+1. 管理员创建 Google 表格，粘贴 `scripts/google-apps-script.gs` 并部署为 Web 应用
+2. 把 Web 应用 URL 填入 `docs/assets/config.js` 的 `googleScriptUrl`
+3. 推送到 GitHub，等 Pages 更新
+
+之后所有 staff 在不同电脑、不同浏览器里看到的备注和描述修改都是同一份。
+
+| 访问码 | 权限 |
+|--------|------|
+| 员工码 | 添加 staff 备注 |
+| 编辑码 | 修改描述 + 添加备注 |
+
+密码建议只写在 Google Apps Script 里（不要公开在网页代码中）。
+
+---
+
+## 备选：Vercel 完整版（需一定技术操作）
+
+如需使用 Turso 数据库而非 Google 表格，可部署 Next.js 完整版（约 5 分钟，需会操作 Vercel）：
 
 ### 1. 创建 Turso 数据库（免费）
 
@@ -53,16 +77,18 @@ turso db tokens create fordham-referral
 
 部署完成后会得到类似 `https://fordham-referral.vercel.app` 的网址。
 
-### 3. 更新静态页 API 地址（可选）
+### 3. 连接静态页（可选）
 
-若希望 GitHub Pages 静态页也使用云端备注，编辑 `docs/assets/config.js`：
+若希望 GitHub Pages 静态页使用 Vercel 后端，编辑 `docs/assets/config.js`：
 
 ```js
 window.APP_CONFIG = {
+  googleScriptUrl: "",
   apiBase: "https://your-app.vercel.app",
-  staffPassword: "fordham-cps-staff",
 };
 ```
+
+**大多数团队更推荐上方的 Google 表格方案**，无需 Vercel。
 
 ---
 
@@ -89,7 +115,9 @@ npm run db:reset   # 仅本地 SQLite
 | 路径 | 说明 |
 |------|------|
 | `docs/` | GitHub Pages 静态网站（公开访问） |
-| `src/` | Next.js 完整应用（Vercel 部署） |
+| `docs/GOOGLE_SETUP.md` | Google 表格团队同步设置指南（推荐） |
+| `scripts/google-apps-script.gs` | Google Apps Script 后端代码 |
+| `src/` | Next.js 完整应用（可选 Vercel 部署） |
 | `data/providers.seed.json` | 去重后的 provider 数据 |
 
 ## 员工使用说明
