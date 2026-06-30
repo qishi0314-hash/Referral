@@ -2,6 +2,7 @@ const INSURANCE_OPTIONS = [
   "1199", "Aetna", "Blue Cross Blue Shield", "Cigna", "Emblem", "GHI",
   "Healthfirst", "HIP", "Homestead", "Humana", "MagnaCare", "Medicaid",
   "Medicare", "Out of Network", "Oxford", "TriCare", "United HealthCare",
+  "Sliding Scale",
 ];
 
 const PROVIDER_TYPES = [
@@ -28,8 +29,6 @@ const filters = {
   type: [],
   session_format: [],
   specialties: [],
-  low_cost: false,
-  accepting_clients: false,
 };
 
 function loadLocalComments() {
@@ -157,12 +156,6 @@ function renderFilters() {
       <label for="search">Search</label>
       <input type="search" id="search" placeholder="Name, specialty, address..." value="${escapeHtml(filters.q)}" />
     </div>
-    <div class="filter-group">
-      <label><input type="checkbox" id="f-accepting" ${filters.accepting_clients ? "checked" : ""} /> Accepting new clients only</label>
-    </div>
-    <div class="filter-group">
-      <label><input type="checkbox" id="f-lowcost" ${filters.low_cost ? "checked" : ""} /> Low-cost / sliding scale</label>
-    </div>
     ${checkboxGroup("Insurance", "insurance", allInsurance)}
     ${checkboxGroup("Provider type", "type", allTypes)}
     ${checkboxGroup("Session format", "session_format", SESSION_FORMATS)}
@@ -171,10 +164,8 @@ function renderFilters() {
   `;
 
   document.getElementById("search").oninput = (e) => { filters.q = e.target.value; renderProviders(); };
-  document.getElementById("f-accepting").onchange = (e) => { filters.accepting_clients = e.target.checked; renderProviders(); };
-  document.getElementById("f-lowcost").onchange = (e) => { filters.low_cost = e.target.checked; renderProviders(); };
   document.getElementById("clear-filters").onclick = () => {
-    Object.assign(filters, { q: "", insurance: [], type: [], session_format: [], specialties: [], low_cost: false, accepting_clients: false });
+    Object.assign(filters, { q: "", insurance: [], type: [], session_format: [], specialties: [] });
     renderFilters();
     renderProviders();
   };
@@ -199,8 +190,6 @@ function checkboxGroup(label, key, options) {
 function filterProviders() {
   return providers.filter((p) => {
     if (p.active === false) return false;
-    if (filters.accepting_clients && !p.accepting_clients) return false;
-    if (filters.low_cost && !p.low_cost) return false;
     if (filters.q) {
       const q = filters.q.toLowerCase();
       const hay = [p.name, p.description, p.email, p.address, p.phone].join(" ").toLowerCase();
@@ -235,8 +224,6 @@ function renderProviders() {
           <p class="card-type">${escapeHtml(p.type)}</p>
         </div>
         <div class="badges">
-          ${p.accepting_clients ? '<span class="badge badge-green">Accepting</span>' : ""}
-          ${p.low_cost ? '<span class="badge badge-amber">Low-cost</span>' : ""}
           ${p.session_format !== "Unknown" ? `<span class="badge badge-blue">${escapeHtml(p.session_format)}</span>` : ""}
         </div>
       </div>
@@ -282,9 +269,7 @@ async function openProvider(id) {
     </div>
     <div class="modal-body">
       <div class="badges" style="margin-bottom:1rem">
-        <span class="badge ${provider.accepting_clients ? "badge-green" : ""}">${provider.accepting_clients ? "Accepting clients" : "Status unknown / waitlist"}</span>
-        ${provider.low_cost ? '<span class="badge badge-amber">Low-cost option</span>' : ""}
-        <span class="badge badge-blue">${escapeHtml(provider.session_format)}</span>
+        ${provider.session_format !== "Unknown" ? `<span class="badge badge-blue">${escapeHtml(provider.session_format)}</span>` : ""}
       </div>
       <div class="modal-grid">
         ${provider.phone ? `<div class="modal-section"><h4>Phone</h4><a href="tel:${provider.phone}">${escapeHtml(provider.phone)}</a></div>` : ""}
