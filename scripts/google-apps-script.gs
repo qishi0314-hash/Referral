@@ -21,6 +21,9 @@ function doGet(e) {
     if (action === "providers") {
       return json_(getProviders_());
     }
+    if (action === "allComments") {
+      return json_(getAllComments_());
+    }
     return json_({ error: "Unknown action" });
   } catch (err) {
     return json_({ error: String(err) });
@@ -115,6 +118,35 @@ function getComments_(providerId) {
 
   comments.sort((a, b) => (a.created_at < b.created_at ? 1 : -1));
   return { comments: comments };
+}
+
+function getAllComments_() {
+  const sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName(COMMENTS_SHEET);
+  if (!sheet) return { byProvider: {} };
+
+  const rows = sheet.getDataRange().getValues();
+  const byProvider = {};
+
+  for (let i = 1; i < rows.length; i++) {
+    const row = rows[i];
+    if (!row[1] && row[1] !== 0) continue;
+    const pid = String(row[1]);
+    if (!byProvider[pid]) byProvider[pid] = [];
+    byProvider[pid].push({
+      id: row[4] || "row-" + (i + 1),
+      row: i + 1,
+      provider_id: Number(row[1]),
+      author_name: String(row[2] || ""),
+      body: String(row[3] || ""),
+      created_at: formatDate_(row[0]),
+    });
+  }
+
+  for (const pid in byProvider) {
+    byProvider[pid].sort((a, b) => (a.created_at < b.created_at ? 1 : -1));
+  }
+
+  return { byProvider: byProvider };
 }
 
 function addComment_(providerId, authorName, body) {

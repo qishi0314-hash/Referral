@@ -29,9 +29,14 @@ const config = window.APP_CONFIG || {
 
 let providers = [];
 let comments = loadLocalComments();
+let cloudComments = {};
 let auth = { authenticated: false, canComment: false, canEdit: false, role: null };
 let sessionPassword = "";
 let selectedProvider = null;
+let searchDebounceTimer = null;
+
+const CACHE_TTL_MS = 5 * 60 * 1000;
+const pendingGets = new Map();
 
 const filters = {
   q: "",
@@ -88,6 +93,58 @@ async function googleGet(params) {
   const res = await fetch(`${config.googleScriptUrl}?${q}`);
   if (!res.ok) throw new Error("Google sync failed");
   return res.json();
+}
+
+function cacheGet(key) {
+  try {
+    const raw = sessionStorage.getItem(key);
+    if (!raw) return null;
+    const { at, data } = JSON.parse(raw);
+    if (Date.now() - at > CACHE_TTL_MS) return null;
+    return data;
+  } catch {
+    return null;
+  }
+}
+
+function cacheSet(key, data) {
+  try {
+    sessionStorage.setItem(key, JSON.stringify({ at: Date.now(), data }));
+  } catch { /* quota */ }
+}
+
+function invalidateCommentsCache(providerId) {
+  delete cloudComments[providerId];
+  sessionStorage.removeItem(`cps:comments:${providerId}`);
+  sessionStorage.removeItem("cps:allComments");
+}
+
+function invalidateProvidersCache() {
+  sessionStorage.removeItem("cps:providers");
+}
+
+async function googleGetCached(params, cacheKey) {
+  if (pendingGets.has(cacheKey)) return pendingGets.get(cacheKey);
+  const cached = cacheGet(cacheKey);
+  if (cached) return cached;
+  const promise = googleGet(params)
+    .then((data) => {
+      cacheSet(cacheKey, data);
+      pendingGets.delete(cacheKey);
+      return data;
+    })
+    .catch((err) => {
+      pendingGets.delete(cacheKey);
+      throw err;
+    });
+  pendingGets.set(cacheKey, promise);
+  return promise;
+}
+
+function buildSearchIndex() {
+  providers.forEach((p) => {
+    p._search = [p.name, p.description, p.email, p.address, p.phone].join(" ").toLowerCase();
+  });
 }
 
 async function googlePost(payload) {
@@ -172,18 +229,20 @@ function nextProviderId() {
 }
 
 async function init() {
-  const res = await fetch("data/providers.json");
-  const base = await res.json();
   auth = loadStaffSession() || { authenticated: false, canComment: false, canEdit: false, role: null };
   if (auth.password) sessionPassword = auth.password;
 
+  const res = await fetch("data/providers.json");
+  const base = await res.json();
+  providers = base;
+  buildSearchIndex();
+
+  renderStaffControls();
+  renderFilters();
+  renderProviders();
+
   if (useGoogleSync()) {
-    try {
-      const data = await googleGet({ action: "providers" });
-      providers = mergeCloudProviders(base, data?.providers || []);
-    } catch (_) {
-      providers = base;
-    }
+    syncCloudData(base);
   } else if (useVercelSync()) {
     try {
       const data = await api("/api/auth");
@@ -194,17 +253,37 @@ async function init() {
     } catch { /* static fallback */ }
     try {
       const list = await api("/api/providers");
-      providers = list || base;
-    } catch (_) {
-      providers = base;
-    }
-  } else {
-    providers = base;
+      if (list) {
+        providers = list;
+        buildSearchIndex();
+        renderFilters();
+        renderProviders();
+      }
+    } catch (_) {}
   }
+}
 
-  renderStaffControls();
-  renderFilters();
-  renderProviders();
+async function syncCloudData(base) {
+  try {
+    const data = await googleGetCached({ action: "providers" }, "cps:providers");
+    providers = mergeCloudProviders(base, data?.providers || []);
+    buildSearchIndex();
+    renderFilters();
+    renderProviders();
+  } catch (_) { /* keep base list */ }
+  prefetchAllComments();
+}
+
+async function prefetchAllComments() {
+  if (!useGoogleSync()) return;
+  try {
+    const data = await googleGetCached({ action: "allComments" }, "cps:allComments");
+    const byProvider = data?.byProvider || {};
+    for (const [pid, list] of Object.entries(byProvider)) {
+      cloudComments[Number(pid)] = list;
+      cloudComments[pid] = list;
+    }
+  } catch (_) { /* old script without allComments — per-provider fetch still works */ }
 }
 
 function renderStaffControls() {
@@ -345,7 +424,11 @@ function renderFilters() {
     <button class="btn btn-ghost" id="clear-filters" style="width:100%">Clear all filters</button>
   `;
 
-  document.getElementById("search").oninput = (e) => { filters.q = e.target.value; renderProviders(); };
+  document.getElementById("search").oninput = (e) => {
+    filters.q = e.target.value;
+    clearTimeout(searchDebounceTimer);
+    searchDebounceTimer = setTimeout(renderProviders, 200);
+  };
   document.getElementById("clear-filters").onclick = () => {
     Object.assign(filters, { q: "", insurance: [], type: [], session_format: [], specialties: [] });
     renderFilters();
@@ -374,8 +457,7 @@ function filterProviders() {
     if (p.active === false) return false;
     if (filters.q) {
       const q = filters.q.toLowerCase();
-      const hay = [p.name, p.description, p.email, p.address, p.phone].join(" ").toLowerCase();
-      if (!hay.includes(q)) return false;
+      if (!(p._search || "").includes(q)) return false;
     }
     if (filters.insurance.length && !filters.insurance.some((ins) => p.insurance.some((pi) => pi.toLowerCase().includes(ins.toLowerCase())))) return false;
     if (filters.type.length && !filters.type.includes(p.type)) return false;
@@ -424,22 +506,54 @@ async function openProvider(id) {
   let provider = providers.find((p) => p.id === id);
   if (!provider || provider.active === false) return;
 
-  let providerComments = comments[id] || [];
+  selectedProvider = provider;
+  let providerComments = cloudComments[id] || comments[id] || null;
+  let commentsLoading = useGoogleSync() && providerComments === null;
 
   if (useVercelSync()) {
     try {
       const data = await api(`/api/providers/${id}`);
       provider = data;
+      selectedProvider = provider;
       providerComments = data.comments || [];
     } catch { /* fallback */ }
-  } else if (useGoogleSync()) {
-    try {
-      const data = await googleGet({ action: "comments", providerId: id });
-      providerComments = data.comments || [];
-    } catch { /* fallback */ }
+    commentsLoading = false;
   }
 
-  selectedProvider = provider;
+  renderProviderModal(provider, providerComments, commentsLoading);
+
+  if (useGoogleSync() && providerComments === null) {
+    loadProviderComments(id);
+  }
+}
+
+async function loadProviderComments(id) {
+  try {
+    const data = await googleGetCached({ action: "comments", providerId: id }, `cps:comments:${id}`);
+    cloudComments[id] = data.comments || [];
+    if (selectedProvider?.id === id) {
+      const el = document.getElementById("comments-list");
+      if (el) {
+        el.innerHTML = renderComments(cloudComments[id], id);
+        bindCommentDeleteButtons(id);
+      }
+    }
+  } catch {
+    const el = document.getElementById("comments-list");
+    if (el) el.innerHTML = `<p style="font-size:0.875rem;color:#888;margin:0">Could not load notes.</p>`;
+  }
+}
+
+function bindCommentDeleteButtons(id) {
+  document.querySelectorAll("[data-delete-comment]").forEach((btn) => {
+    btn.onclick = (e) => {
+      e.stopPropagation();
+      confirmDeleteComment(id, btn.dataset.deleteComment, btn.dataset.commentRow);
+    };
+  });
+}
+
+function renderProviderModal(provider, providerComments, commentsLoading) {
   const root = document.getElementById("modal-root");
   root.classList.remove("hidden");
 
@@ -452,6 +566,9 @@ async function openProvider(id) {
   ].filter(Boolean);
 
   const canEditCloud = auth.canEdit && hasCloudSync();
+  const commentsHtml = commentsLoading
+    ? `<p style="font-size:0.875rem;color:#888;margin:0">Loading notes…</p>`
+    : renderComments(providerComments || [], provider.id);
 
   root.innerHTML = `<div class="modal-panel">
     <div class="modal-header">
@@ -484,7 +601,7 @@ async function openProvider(id) {
       </div>
       <div class="comment-box">
         <h4 style="margin:0 0 0.75rem;font-size:0.9rem">Staff notes</h4>
-        <div id="comments-list">${renderComments(providerComments, id)}</div>
+        <div id="comments-list">${commentsHtml}</div>
         ${auth.canComment ? `<div style="margin-top:1rem;border-top:1px solid var(--border);padding-top:1rem">
           <input type="text" id="comment-author" placeholder="Your name (e.g., Sally S.)" style="margin-bottom:0.5rem" />
           <textarea id="comment-body" rows="3" placeholder="Add a staff note about this provider..."></textarea>
@@ -499,18 +616,13 @@ async function openProvider(id) {
   if (auth.canComment) {
     const staffName = document.getElementById("staff-name");
     if (staffName?.value) document.getElementById("comment-author").value = staffName.value;
-    document.getElementById("add-comment").onclick = () => addComment(id);
+    document.getElementById("add-comment").onclick = () => addComment(provider.id);
   }
   if (canEditCloud) {
     document.getElementById("edit-provider-btn").onclick = () => showProviderForm(provider);
     document.getElementById("delete-provider-btn").onclick = () => confirmDeleteProvider(provider);
   }
-  document.querySelectorAll("[data-delete-comment]").forEach((btn) => {
-    btn.onclick = (e) => {
-      e.stopPropagation();
-      confirmDeleteComment(id, btn.dataset.deleteComment, btn.dataset.commentRow);
-    };
-  });
+  if (!commentsLoading) bindCommentDeleteButtons(provider.id);
 }
 
 function showProviderForm(provider) {
@@ -666,6 +778,8 @@ async function saveProviderForm(id, isNew) {
     if (idx >= 0) providers[idx] = provider;
     else providers.push(provider);
 
+    invalidateProvidersCache();
+    buildSearchIndex();
     renderFilters();
     renderProviders();
     openProvider(id);
@@ -690,6 +804,7 @@ function confirmDeleteProvider(provider) {
       }
       const idx = providers.findIndex((p) => p.id === provider.id);
       if (idx >= 0) providers[idx].active = false;
+      invalidateProvidersCache();
       closeModal();
       renderProviders();
     }
@@ -720,6 +835,7 @@ function confirmDeleteComment(providerId, commentId, commentRow) {
     } else {
       throw new Error("Cloud sync is required to delete comments.");
     }
+    invalidateCommentsCache(providerId);
     await openProvider(providerId);
   });
 }
@@ -737,6 +853,7 @@ async function addComment(providerId) {
       author_name: author,
       body,
     });
+    invalidateCommentsCache(providerId);
   } else if (useVercelSync()) {
     await api(`/api/providers/${providerId}/comments`, {
       method: "POST",
