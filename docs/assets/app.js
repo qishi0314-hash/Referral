@@ -1,3 +1,10 @@
+/**
+ * CPS Referral Directory — static site application
+ *
+ * Handles search/filters, staff login, provider detail modals, and Google Sheets sync.
+ * Config: assets/config.js | Data: data/providers.json
+ * Docs: README.md, STAFF_GUIDE.md, GOOGLE_SETUP.md, CONTRIBUTING.md
+ */
 const INSURANCE_OPTIONS = [
   "1199", "Aetna", "Blue Cross Blue Shield", "Cigna", "Emblem", "GHI",
   "Healthfirst", "HIP", "Homestead", "Humana", "MagnaCare", "Medicaid",
@@ -11,12 +18,21 @@ const PROVIDER_TYPES = [
 
 const SESSION_FORMATS = ["In-Person", "Virtual", "Both"];
 
+const LICENSED_STATE_OPTIONS = [
+  "CO", "CT", "FL", "IL", "MA", "NJ", "NY",
+];
+
 const SPECIALTY_OPTIONS = [
   "ADHD", "Autism/Asperger's", "Bilingual", "CBT", "DBT", "Eating Disorders",
   "Grief/Bereavement", "LGBTQ+", "Substance Abuse", "Trauma", "Veterans",
 ];
 
+const MODALITY_OPTIONS = [
+  "CBT", "DBT", "EMDR", "Psychodynamic", "ACT", "Mindfulness", "Family Systems",
+];
+
 const config = window.APP_CONFIG || {
+  googleScriptUrl: "",
   apiBase: "",
   staffPassword: "fordham-cps-staff",
   editorPassword: "fordham-cps-editor",
@@ -24,8 +40,14 @@ const config = window.APP_CONFIG || {
 
 let providers = [];
 let comments = loadLocalComments();
+let cloudComments = {};
 let auth = { authenticated: false, canComment: false, canEdit: false, role: null };
+let sessionPassword = "";
 let selectedProvider = null;
+let searchDebounceTimer = null;
+
+const CACHE_TTL_MS = 5 * 60 * 1000;
+const pendingGets = new Map();
 
 const filters = {
   q: "",
@@ -33,6 +55,7 @@ const filters = {
   type: [],
   session_format: [],
   specialties: [],
+  licensed_states: [],
 };
 
 function loadLocalComments() {
@@ -56,8 +79,105 @@ function loadStaffSession() {
 }
 
 function setStaffSession(state) {
-  if (state) sessionStorage.setItem("cps_auth", JSON.stringify(state));
-  else sessionStorage.removeItem("cps_auth");
+  if (state) {
+    sessionStorage.setItem("cps_auth", JSON.stringify(state));
+    if (state.password) sessionPassword = state.password;
+  } else {
+    sessionStorage.removeItem("cps_auth");
+    sessionPassword = "";
+  }
+}
+
+function useGoogleSync() {
+  return !!config.googleScriptUrl;
+}
+
+function useVercelSync() {
+  return !!config.apiBase;
+}
+
+function hasCloudSync() {
+  return useGoogleSync() || useVercelSync();
+}
+
+async function googleGet(params) {
+  const q = new URLSearchParams(params);
+  const res = await fetch(`${config.googleScriptUrl}?${q}`);
+  if (!res.ok) throw new Error("Google sync failed");
+  return res.json();
+}
+
+function cacheGet(key) {
+  try {
+    const raw = sessionStorage.getItem(key);
+    if (!raw) return null;
+    const { at, data } = JSON.parse(raw);
+    if (Date.now() - at > CACHE_TTL_MS) return null;
+    return data;
+  } catch {
+    return null;
+  }
+}
+
+function cacheSet(key, data) {
+  try {
+    sessionStorage.setItem(key, JSON.stringify({ at: Date.now(), data }));
+  } catch { /* quota */ }
+}
+
+function invalidateCommentsCache(providerId) {
+  delete cloudComments[providerId];
+  sessionStorage.removeItem(`cps:comments:${providerId}`);
+  sessionStorage.removeItem("cps:allComments");
+}
+
+function invalidateProvidersCache() {
+  sessionStorage.removeItem("cps:providers");
+}
+
+async function googleGetCached(params, cacheKey) {
+  if (pendingGets.has(cacheKey)) return pendingGets.get(cacheKey);
+  const cached = cacheGet(cacheKey);
+  if (cached) return cached;
+  const promise = googleGet(params)
+    .then((data) => {
+      cacheSet(cacheKey, data);
+      pendingGets.delete(cacheKey);
+      return data;
+    })
+    .catch((err) => {
+      pendingGets.delete(cacheKey);
+      throw err;
+    });
+  pendingGets.set(cacheKey, promise);
+  return promise;
+}
+
+function buildSearchIndex() {
+  providers.forEach((p) => {
+    p._search = [p.name, p.description, p.email, p.address, p.phone, ...(p.licensed_states || [])]
+      .join(" ")
+      .toLowerCase();
+  });
+}
+
+async function googlePost(payload) {
+  const res = await fetch(config.googleScriptUrl, {
+    method: "POST",
+    headers: { "Content-Type": "text/plain;charset=utf-8" },
+    body: JSON.stringify(payload),
+  });
+  if (!res.ok) throw new Error("Google sync failed");
+  const data = await res.json();
+  if (data.error) {
+    if (data.error === "Unknown action") {
+      throw new Error(
+        "This action is not supported by the connected Google Script URL. Hard refresh the page (Ctrl+Shift+R) to load the latest config. If it persists, redeploy the latest scripts/google-apps-script.gs as a new version in Apps Script (see GOOGLE_SETUP.md)."
+      );
+    }
+    throw new Error(data.error);
+  }
+  return data;
 }
 
 async function api(path, options = {}) {
@@ -71,48 +191,144 @@ async function api(path, options = {}) {
   return res.json();
 }
 
-async function init() {
-  const res = await fetch("data/providers.json");
-  providers = await res.json();
-  auth = loadStaffSession() || { authenticated: false, canComment: false, canEdit: false, role: null };
-  if (config.apiBase) {
-    try {
-      const data = await api("/api/auth");
-      if (data?.authenticated) {
-        auth = {
-          authenticated: true,
-          canComment: data.canComment,
-          canEdit: data.canEdit,
-          role: data.role,
-        };
-        setStaffSession(auth);
-      }
-    } catch { /* static fallback */ }
+function parseList(str) {
+  return String(str || "")
+    .split(/[,;]/)
+    .map((s) => s.trim())
+    .filter(Boolean);
+}
+
+function joinList(arr) {
+  return (arr || []).join(", ");
+}
+
+function mergeCloudProviders(base, cloudList) {
+  const map = new Map(base.map((p) => [p.id, { ...p }]));
+  for (const cp of cloudList || []) {
+    const id = Number(cp.id);
+    if (cp.active === false) {
+      if (map.has(id)) map.get(id).active = false;
+      else map.set(id, { id, active: false, name: cp.name || "Removed provider" });
+      continue;
+    }
+    const existing = map.get(id);
+    map.set(id, existing ? { ...existing, ...cp, id } : { ...emptyProvider(), ...cp, id, active: true });
   }
+  return Array.from(map.values());
+}
+
+function emptyProvider() {
+  return {
+    name: "",
+    type: "Therapist",
+    insurance: [],
+    in_person: true,
+    session_format: "Both",
+    address: "",
+    email: "",
+    phone: "",
+    websites: {},
+    specialties: [],
+    modalities: [],
+    licensed_states: [],
+    description: "",
+    accepting_clients: true,
+    active: true,
+  };
+}
+
+function nextProviderId() {
+  const ids = providers.map((p) => p.id).filter((id) => typeof id === "number");
+  return ids.length ? Math.max(...ids) + 1 : 1;
+}
+
+async function init() {
+  auth = loadStaffSession() || { authenticated: false, canComment: false, canEdit: false, role: null };
+  if (auth.password) sessionPassword = auth.password;
+
+  const res = await fetch("data/providers.json");
+  const base = await res.json();
+  providers = base;
+  buildSearchIndex();
+
   renderStaffControls();
   renderFilters();
   renderProviders();
+
+  if (useGoogleSync()) {
+    syncCloudData(base);
+  } else if (useVercelSync()) {
+    try {
+      const data = await api("/api/auth");
+      if (data?.authenticated) {
+        auth = { authenticated: true, canComment: data.canComment, canEdit: data.canEdit, role: data.role };
+        setStaffSession(auth);
+      }
+    } catch { /* static fallback */ }
+    try {
+      const list = await api("/api/providers");
+      if (list) {
+        providers = list;
+        buildSearchIndex();
+        renderFilters();
+        renderProviders();
+      }
+    } catch (_) {}
+  }
+}
+
+async function syncCloudData(base) {
+  try {
+    const data = await googleGetCached({ action: "providers" }, "cps:providers");
+    providers = mergeCloudProviders(base, data?.providers || []);
+    buildSearchIndex();
+    renderFilters();
+    renderProviders();
+  } catch (_) { /* keep base list */ }
+  prefetchAllComments();
+}
+
+async function prefetchAllComments() {
+  if (!useGoogleSync()) return;
+  try {
+    const data = await googleGetCached({ action: "allComments" }, "cps:allComments");
+    const byProvider = data?.byProvider || {};
+    for (const [pid, list] of Object.entries(byProvider)) {
+      cloudComments[Number(pid)] = list;
+      cloudComments[pid] = list;
+    }
+  } catch (_) { /* old script without allComments — per-provider fetch still works */ }
 }
 
 function renderStaffControls() {
   const el = document.getElementById("staff-controls");
   const nameInput = document.getElementById("staff-name");
+  const addBtn = document.getElementById("add-provider-btn");
+
   if (auth.authenticated) {
     nameInput.classList.remove("hidden");
-    el.innerHTML = `<div style="display:flex;align-items:center;gap:0.75rem">
-      <span style="font-size:0.85rem;color:#065f46">${auth.canEdit ? "Editor mode" : "Staff mode"}</span>
+    if (auth.canEdit && hasCloudSync()) {
+      addBtn.classList.remove("hidden");
+      addBtn.onclick = () => showProviderForm(null);
+    } else {
+      addBtn.classList.add("hidden");
+    }
+    el.innerHTML = `<div style="display:flex;align-items:center;gap:0.75rem;flex-wrap:wrap">
+      <span class="editor-badge">${auth.canEdit ? "Editor mode" : "Staff mode"}</span>
       <button class="btn btn-ghost" id="logout-btn">Sign out</button>
     </div>`;
     document.getElementById("logout-btn").onclick = async () => {
-      if (config.apiBase) await api("/api/auth", { method: "DELETE" }).catch(() => {});
+      if (useVercelSync()) await api("/api/auth", { method: "DELETE" }).catch(() => {});
       setStaffSession(null);
       auth = { authenticated: false, canComment: false, canEdit: false, role: null };
       nameInput.classList.add("hidden");
+      addBtn.classList.add("hidden");
       renderStaffControls();
       if (selectedProvider) openProvider(selectedProvider.id);
     };
   } else {
     nameInput.classList.add("hidden");
+    addBtn.classList.add("hidden");
     el.innerHTML = `<button class="btn btn-outline" id="login-btn">Staff login</button>`;
     document.getElementById("login-btn").onclick = showLoginModal;
   }
@@ -124,9 +340,9 @@ function showLoginModal() {
   root.innerHTML = `<div class="modal-panel" style="max-width:24rem;margin:4rem auto">
     <div class="modal-header"><h2 style="margin:0;font-size:1.1rem">Staff access</h2></div>
     <div class="modal-body">
-      <p style="font-size:0.875rem;color:#64748b;margin:0 0 1rem">Enter your access code. Staff codes add notes; editor codes edit descriptions and save to the database.</p>
+      <p style="font-size:0.875rem;color:#5c5c5c;margin:0 0 1rem">Staff codes add notes. Editor codes can add, edit, or remove providers and delete comments.</p>
       <input type="password" id="login-password" placeholder="Access code" />
-      <p id="login-error" class="hidden" style="color:#dc2626;font-size:0.85rem;margin:0.5rem 0 0"></p>
+      <p id="login-error" class="hidden" style="color:#b91c1c;font-size:0.85rem;margin:0.5rem 0 0"></p>
       <div style="display:flex;justify-content:flex-end;gap:0.5rem;margin-top:1rem">
         <button class="btn btn-ghost" id="login-cancel">Cancel</button>
         <button class="btn btn-primary" id="login-submit">Sign in</button>
@@ -138,7 +354,10 @@ function showLoginModal() {
     const password = document.getElementById("login-password").value;
     const err = document.getElementById("login-error");
     try {
-      if (config.apiBase) {
+      if (useGoogleSync()) {
+        const data = await googlePost({ action: "login", password });
+        auth = { authenticated: true, canComment: data.canComment, canEdit: data.canEdit, role: data.role, password };
+      } else if (useVercelSync()) {
         const res = await fetch(`${config.apiBase}/api/auth`, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
@@ -147,16 +366,11 @@ function showLoginModal() {
         });
         if (!res.ok) throw new Error("bad password");
         const data = await res.json();
-        auth = {
-          authenticated: true,
-          canComment: data.canComment,
-          canEdit: data.canEdit,
-          role: data.role,
-        };
+        auth = { authenticated: true, canComment: data.canComment, canEdit: data.canEdit, role: data.role };
       } else if (password === config.editorPassword) {
-        auth = { authenticated: true, canComment: true, canEdit: false, role: "editor" };
+        auth = { authenticated: true, canComment: true, canEdit: true, role: "editor", password };
       } else if (password === config.staffPassword) {
-        auth = { authenticated: true, canComment: true, canEdit: false, role: "staff" };
+        auth = { authenticated: true, canComment: true, canEdit: false, role: "staff", password };
       } else {
         throw new Error("bad password");
       }
@@ -170,10 +384,46 @@ function showLoginModal() {
   };
 }
 
+function showConfirm(message, onConfirm) {
+  const root = document.getElementById("modal-root");
+  root.classList.remove("hidden");
+  root.innerHTML = `<div class="modal-panel confirm-panel">
+    <div class="modal-header"><h2 style="margin:0;font-size:1.05rem">Please confirm</h2></div>
+    <div class="modal-body">
+      <p>${escapeHtml(message)}</p>
+      <p id="confirm-error" class="hidden" style="color:#b91c1c;font-size:0.85rem;margin:0.75rem 0 0"></p>
+      <div class="form-actions" style="border:0;padding-top:1.25rem;margin-top:0">
+        <button type="button" class="btn btn-ghost" id="confirm-cancel">Cancel</button>
+        <button type="button" class="btn btn-danger" id="confirm-ok">Confirm</button>
+      </div>
+    </div>
+  </div>`;
+  const okBtn = document.getElementById("confirm-ok");
+  const errEl = document.getElementById("confirm-error");
+  document.getElementById("confirm-cancel").onclick = () => {
+    if (selectedProvider) openProvider(selectedProvider.id);
+    else closeModal();
+  };
+  okBtn.onclick = async () => {
+    okBtn.disabled = true;
+    okBtn.textContent = "Working…";
+    errEl.classList.add("hidden");
+    try {
+      await onConfirm();
+    } catch (e) {
+      okBtn.disabled = false;
+      okBtn.textContent = "Confirm";
+      errEl.textContent = e.message || "Something went wrong. Try signing in again.";
+      errEl.classList.remove("hidden");
+    }
+  };
+}
+
 function renderFilters() {
   const allInsurance = [...new Set([...INSURANCE_OPTIONS, ...providers.flatMap((p) => p.insurance)])].sort();
   const allSpecialties = [...new Set([...SPECIALTY_OPTIONS, ...providers.flatMap((p) => p.specialties)])].sort();
   const allTypes = [...new Set([...PROVIDER_TYPES, ...providers.map((p) => p.type)])].sort();
+  const allLicensedStates = [...new Set([...LICENSED_STATE_OPTIONS, ...providers.flatMap((p) => p.licensed_states || [])])].sort();
 
   const el = document.getElementById("filters");
   el.innerHTML = `
@@ -183,15 +433,20 @@ function renderFilters() {
       <input type="search" id="search" placeholder="Name, specialty, address..." value="${escapeHtml(filters.q)}" />
     </div>
     ${checkboxGroup("Insurance", "insurance", allInsurance)}
+    ${checkboxGroup("Licensed state", "licensed_states", allLicensedStates)}
     ${checkboxGroup("Provider type", "type", allTypes)}
     ${checkboxGroup("Session format", "session_format", SESSION_FORMATS)}
     ${checkboxGroup("Specialties", "specialties", allSpecialties)}
     <button class="btn btn-ghost" id="clear-filters" style="width:100%">Clear all filters</button>
   `;
 
-  document.getElementById("search").oninput = (e) => { filters.q = e.target.value; renderProviders(); };
+  document.getElementById("search").oninput = (e) => {
+    filters.q = e.target.value;
+    clearTimeout(searchDebounceTimer);
+    searchDebounceTimer = setTimeout(renderProviders, 200);
+  };
   document.getElementById("clear-filters").onclick = () => {
-    Object.assign(filters, { q: "", insurance: [], type: [], session_format: [], specialties: [] });
+    Object.assign(filters, { q: "", insurance: [], type: [], session_format: [], specialties: [], licensed_states: [] });
     renderFilters();
     renderProviders();
   };
@@ -218,8 +473,7 @@ function filterProviders() {
     if (p.active === false) return false;
     if (filters.q) {
       const q = filters.q.toLowerCase();
-      const hay = [p.name, p.description, p.email, p.address, p.phone].join(" ").toLowerCase();
-      if (!hay.includes(q)) return false;
+      if (!(p._search || "").includes(q)) return false;
     }
     if (filters.insurance.length && !filters.insurance.some((ins) => p.insurance.some((pi) => pi.toLowerCase().includes(ins.toLowerCase())))) return false;
     if (filters.type.length && !filters.type.includes(p.type)) return false;
@@ -228,6 +482,10 @@ function filterProviders() {
       if (!ok) return false;
     }
     if (filters.specialties.length && !filters.specialties.some((s) => p.specialties.some((ps) => ps.toLowerCase().includes(s.toLowerCase())))) return false;
+    if (filters.licensed_states.length) {
+      const states = (p.licensed_states || []).map((s) => s.toUpperCase());
+      if (!filters.licensed_states.some((s) => states.includes(s.toUpperCase()))) return false;
+    }
     return true;
   });
 }
@@ -266,17 +524,56 @@ function renderProviders() {
 
 async function openProvider(id) {
   let provider = providers.find((p) => p.id === id);
-  let providerComments = comments[id] || [];
+  if (!provider || provider.active === false) return;
 
-  if (config.apiBase) {
+  selectedProvider = provider;
+  let providerComments = cloudComments[id] || comments[id] || null;
+  let commentsLoading = useGoogleSync() && providerComments === null;
+
+  if (useVercelSync()) {
     try {
       const data = await api(`/api/providers/${id}`);
       provider = data;
+      selectedProvider = provider;
       providerComments = data.comments || [];
-    } catch { /* fallback to local */ }
+    } catch { /* fallback */ }
+    commentsLoading = false;
   }
 
-  selectedProvider = provider;
+  renderProviderModal(provider, providerComments, commentsLoading);
+
+  if (useGoogleSync() && providerComments === null) {
+    loadProviderComments(id);
+  }
+}
+
+async function loadProviderComments(id) {
+  try {
+    const data = await googleGetCached({ action: "comments", providerId: id }, `cps:comments:${id}`);
+    cloudComments[id] = data.comments || [];
+    if (selectedProvider?.id === id) {
+      const el = document.getElementById("comments-list");
+      if (el) {
+        el.innerHTML = renderComments(cloudComments[id], id);
+        bindCommentDeleteButtons(id);
+      }
+    }
+  } catch {
+    const el = document.getElementById("comments-list");
+    if (el) el.innerHTML = `<p style="font-size:0.875rem;color:#888;margin:0">Could not load notes.</p>`;
+  }
+}
+
+function bindCommentDeleteButtons(id) {
+  document.querySelectorAll("[data-delete-comment]").forEach((btn) => {
+    btn.onclick = (e) => {
+      e.stopPropagation();
+      confirmDeleteComment(id, btn.dataset.deleteComment, btn.dataset.commentRow);
+    };
+  });
+}
+
+function renderProviderModal(provider, providerComments, commentsLoading) {
   const root = document.getElementById("modal-root");
   root.classList.remove("hidden");
 
@@ -288,12 +585,21 @@ async function openProvider(id) {
     websites.headway && ["Headway", websites.headway],
   ].filter(Boolean);
 
+  const canEditCloud = auth.canEdit && hasCloudSync();
+  const commentsHtml = commentsLoading
+    ? `<p style="font-size:0.875rem;color:#888;margin:0">Loading notes…</p>`
+    : renderComments(providerComments || [], provider.id);
+
   root.innerHTML = `<div class="modal-panel">
     <div class="modal-header">
-      <div><h2 style="margin:0">${escapeHtml(provider.name)}</h2><p style="margin:0.25rem 0 0;color:#64748b;font-size:0.9rem">${escapeHtml(provider.type)}</p></div>
+      <div><h2 style="margin:0">${escapeHtml(provider.name)}</h2><p style="margin:0.25rem 0 0;color:#5c5c5c;font-size:0.9rem">${escapeHtml(provider.type)}</p></div>
       <button class="close-btn" id="close-modal" aria-label="Close">✕</button>
     </div>
     <div class="modal-body">
+      ${canEditCloud ? `<div class="editor-actions">
+        <button class="btn btn-outline btn-sm" id="edit-provider-btn">Edit provider</button>
+        <button class="btn btn-danger btn-sm" id="delete-provider-btn">Delete provider</button>
+      </div>` : ""}
       <div class="badges" style="margin-bottom:1rem">
         ${provider.session_format !== "Unknown" ? `<span class="badge badge-blue">${escapeHtml(provider.session_format)}</span>` : ""}
       </div>
@@ -309,24 +615,19 @@ async function openProvider(id) {
         ${provider.modalities?.length ? `<div class="modal-section"><h4>Modalities</h4><p>${escapeHtml(provider.modalities.join(", "))}</p></div>` : ""}
       </div>` : ""}
       ${websiteLinks.length ? `<div class="modal-section"><h4>Websites & profiles</h4>${websiteLinks.map(([label, url]) => `<a class="link-btn" href="${normalizeUrl(url)}" target="_blank" rel="noopener">${label} ↗</a> `).join("")}</div>` : ""}
-      <div class="modal-section" id="description-section">
-        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:0.35rem">
-          <h4 style="margin:0">Description</h4>
-          ${auth.canEdit && config.apiBase ? `<button class="btn btn-ghost" id="edit-desc-btn" style="padding:0.25rem 0.5rem;font-size:0.8rem">Edit</button>` : ""}
-        </div>
-        <div id="description-content">
-          ${provider.description ? `<p style="white-space:pre-wrap;margin:0">${escapeHtml(provider.description)}</p>` : `<p style="color:#64748b;margin:0">No description yet.</p>`}
-        </div>
+      <div class="modal-section">
+        <h4>Description</h4>
+        ${provider.description ? `<p style="white-space:pre-wrap;margin:0">${escapeHtml(provider.description)}</p>` : `<p style="color:#888;margin:0">No description yet.</p>`}
       </div>
       <div class="comment-box">
         <h4 style="margin:0 0 0.75rem;font-size:0.9rem">Staff notes</h4>
-        <div id="comments-list">${renderComments(providerComments)}</div>
-        ${auth.canComment ? `<div style="margin-top:1rem;border-top:1px solid #e2e8f0;padding-top:1rem">
+        <div id="comments-list">${commentsHtml}</div>
+        ${auth.canComment ? `<div style="margin-top:1rem;border-top:1px solid var(--border);padding-top:1rem">
           <input type="text" id="comment-author" placeholder="Your name (e.g., Sally S.)" style="margin-bottom:0.5rem" />
           <textarea id="comment-body" rows="3" placeholder="Add a staff note about this provider..."></textarea>
           <button class="btn btn-primary" id="add-comment" style="margin-top:0.5rem">Add comment</button>
         </div>` : ""}
-        ${!config.apiBase ? `<p class="notice">Comments are saved in your browser only. To edit descriptions and save for all staff, connect this page to the Vercel app (set apiBase in config.js).</p>` : ""}
+        ${!hasCloudSync() ? `<p class="notice">Notes are saved in this browser only. Ask your admin to set up Google Sheets sync.</p>` : `<p class="notice notice-success">Team sync is on — changes are shared with all staff.</p>`}
       </div>
     </div>
   </div>`;
@@ -335,39 +636,228 @@ async function openProvider(id) {
   if (auth.canComment) {
     const staffName = document.getElementById("staff-name");
     if (staffName?.value) document.getElementById("comment-author").value = staffName.value;
-    document.getElementById("add-comment").onclick = () => addComment(id);
+    document.getElementById("add-comment").onclick = () => addComment(provider.id);
   }
-  if (auth.canEdit && config.apiBase) {
-    document.getElementById("edit-desc-btn").onclick = () => showDescriptionEditor(id, provider.description || "");
+  if (canEditCloud) {
+    document.getElementById("edit-provider-btn").onclick = () => showProviderForm(provider);
+    document.getElementById("delete-provider-btn").onclick = () => confirmDeleteProvider(provider);
   }
+  if (!commentsLoading) bindCommentDeleteButtons(provider.id);
 }
 
-function showDescriptionEditor(providerId, current) {
-  const container = document.getElementById("description-content");
-  const editBtn = document.getElementById("edit-desc-btn");
-  if (editBtn) editBtn.style.display = "none";
-  container.innerHTML = `
-    <textarea id="desc-editor" rows="8" style="width:100%">${escapeHtml(current)}</textarea>
-    <div style="display:flex;gap:0.5rem;margin-top:0.5rem">
-      <button class="btn btn-accent" id="save-desc-btn">Save description</button>
-      <button class="btn btn-ghost" id="cancel-desc-btn">Cancel</button>
-    </div>`;
-  document.getElementById("cancel-desc-btn").onclick = () => openProvider(providerId);
-  document.getElementById("save-desc-btn").onclick = async () => {
-    const description = document.getElementById("desc-editor").value;
-    await api(`/api/providers/${providerId}`, {
-      method: "PATCH",
-      body: JSON.stringify({ description }),
-    });
-    const idx = providers.findIndex((p) => p.id === providerId);
-    if (idx >= 0) providers[idx].description = description;
-    openProvider(providerId);
+function showProviderForm(provider) {
+  const isNew = !provider;
+  const p = provider ? { ...provider } : { ...emptyProvider(), id: nextProviderId() };
+  const websites = p.websites || {};
+
+  const root = document.getElementById("modal-root");
+  root.classList.remove("hidden");
+  root.innerHTML = `<div class="modal-panel modal-wide">
+    <div class="modal-header">
+      <h2 style="margin:0;font-size:1.1rem">${isNew ? "Add new provider" : "Edit provider"}</h2>
+      <button class="close-btn" id="close-form" aria-label="Close">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="form-grid two-col">
+        <div class="form-field" style="grid-column:1/-1">
+          <label for="pf-name">Name *</label>
+          <input type="text" id="pf-name" value="${escapeHtml(p.name)}" required />
+        </div>
+        <div class="form-field">
+          <label for="pf-type">Provider type</label>
+          <select id="pf-type">${PROVIDER_TYPES.map((t) => `<option value="${escapeHtml(t)}" ${p.type === t ? "selected" : ""}>${escapeHtml(t)}</option>`).join("")}</select>
+        </div>
+        <div class="form-field">
+          <label for="pf-session">Session format</label>
+          <select id="pf-session">${SESSION_FORMATS.map((t) => `<option value="${escapeHtml(t)}" ${p.session_format === t ? "selected" : ""}>${escapeHtml(t)}</option>`).join("")}</select>
+        </div>
+        <div class="form-field">
+          <label for="pf-phone">Phone</label>
+          <input type="text" id="pf-phone" value="${escapeHtml(p.phone || "")}" />
+        </div>
+        <div class="form-field">
+          <label for="pf-email">Email</label>
+          <input type="email" id="pf-email" value="${escapeHtml(p.email || "")}" />
+        </div>
+        <div class="form-field" style="grid-column:1/-1">
+          <label for="pf-address">Address</label>
+          <input type="text" id="pf-address" value="${escapeHtml(p.address || "")}" />
+        </div>
+        <div class="form-field" style="grid-column:1/-1">
+          <label for="pf-states">Licensed states</label>
+          <input type="text" id="pf-states" value="${escapeHtml(joinList(p.licensed_states))}" placeholder="NY, NJ, CT" />
+          <p class="hint">Comma-separated state abbreviations</p>
+        </div>
+        <div class="form-field" style="grid-column:1/-1">
+          <label for="pf-insurance">Insurance accepted</label>
+          <input type="text" id="pf-insurance" value="${escapeHtml(joinList(p.insurance))}" placeholder="Aetna, Cigna, Sliding Scale" />
+          <p class="hint">Comma-separated</p>
+        </div>
+        <div class="form-field" style="grid-column:1/-1">
+          <label for="pf-specialties">Specialties</label>
+          <input type="text" id="pf-specialties" value="${escapeHtml(joinList(p.specialties))}" placeholder="CBT, Trauma, LGBTQ+" />
+        </div>
+        <div class="form-field" style="grid-column:1/-1">
+          <label for="pf-modalities">Modalities</label>
+          <input type="text" id="pf-modalities" value="${escapeHtml(joinList(p.modalities))}" placeholder="CBT, DBT, EMDR" />
+        </div>
+        <div class="form-field" style="grid-column:1/-1">
+          <label for="pf-desc">Description</label>
+          <textarea id="pf-desc" rows="6">${escapeHtml(p.description || "")}</textarea>
+        </div>
+        <div class="form-field">
+          <label for="pf-web-practice">Practice website</label>
+          <input type="url" id="pf-web-practice" value="${escapeHtml(websites.practice || "")}" placeholder="https://" />
+        </div>
+        <div class="form-field">
+          <label for="pf-web-pt">Psychology Today</label>
+          <input type="url" id="pf-web-pt" value="${escapeHtml(websites.psychology_today || "")}" placeholder="https://" />
+        </div>
+        <div class="form-field">
+          <label for="pf-web-alma">Alma</label>
+          <input type="url" id="pf-web-alma" value="${escapeHtml(websites.alma || "")}" placeholder="https://" />
+        </div>
+        <div class="form-field">
+          <label for="pf-web-headway">Headway</label>
+          <input type="url" id="pf-web-headway" value="${escapeHtml(websites.headway || "")}" placeholder="https://" />
+        </div>
+      </div>
+      <p id="form-error" class="hidden" style="color:#b91c1c;font-size:0.85rem;margin:0.75rem 0 0"></p>
+      <div class="form-actions">
+        <button class="btn btn-ghost" id="form-cancel">${isNew ? "Cancel" : "Back"}</button>
+        <button class="btn btn-primary" id="form-save">${isNew ? "Create provider" : "Save changes"}</button>
+      </div>
+    </div>
+  </div>`;
+
+  document.getElementById("close-form").onclick = () => (isNew ? closeModal() : openProvider(p.id));
+  document.getElementById("form-cancel").onclick = () => (isNew ? closeModal() : openProvider(p.id));
+  document.getElementById("form-save").onclick = () => saveProviderForm(p.id, isNew);
+}
+
+async function saveProviderForm(id, isNew) {
+  const name = document.getElementById("pf-name").value.trim();
+  const err = document.getElementById("form-error");
+  if (!name) {
+    err.textContent = "Name is required.";
+    err.classList.remove("hidden");
+    return;
+  }
+
+  const sessionFormat = document.getElementById("pf-session").value;
+  const provider = {
+    id,
+    name,
+    type: document.getElementById("pf-type").value,
+    phone: document.getElementById("pf-phone").value.trim() || null,
+    email: document.getElementById("pf-email").value.trim() || null,
+    address: document.getElementById("pf-address").value.trim() || null,
+    session_format: sessionFormat,
+    in_person: sessionFormat === "In-Person" || sessionFormat === "Both",
+    licensed_states: parseList(document.getElementById("pf-states").value),
+    insurance: parseList(document.getElementById("pf-insurance").value),
+    specialties: parseList(document.getElementById("pf-specialties").value),
+    modalities: parseList(document.getElementById("pf-modalities").value),
+    description: document.getElementById("pf-desc").value.trim(),
+    websites: {
+      practice: document.getElementById("pf-web-practice").value.trim() || undefined,
+      psychology_today: document.getElementById("pf-web-pt").value.trim() || undefined,
+      alma: document.getElementById("pf-web-alma").value.trim() || undefined,
+      headway: document.getElementById("pf-web-headway").value.trim() || undefined,
+    },
+    accepting_clients: true,
+    active: true,
   };
+
+  Object.keys(provider.websites).forEach((k) => {
+    if (!provider.websites[k]) delete provider.websites[k];
+  });
+
+  const updatedBy = document.getElementById("staff-name")?.value || auth.role || "Editor";
+
+  try {
+    if (useGoogleSync()) {
+      await googlePost({
+        action: "saveProvider",
+        password: sessionPassword,
+        provider,
+        updated_by: updatedBy,
+      });
+    } else if (useVercelSync()) {
+      await api(isNew ? "/api/providers" : `/api/providers/${id}`, {
+        method: isNew ? "POST" : "PATCH",
+        body: JSON.stringify(provider),
+      });
+    } else {
+      err.textContent = "Cloud sync required to save providers.";
+      err.classList.remove("hidden");
+      return;
+    }
+
+    const idx = providers.findIndex((x) => x.id === id);
+    if (idx >= 0) providers[idx] = provider;
+    else providers.push(provider);
+
+    invalidateProvidersCache();
+    buildSearchIndex();
+    renderFilters();
+    renderProviders();
+    openProvider(id);
+  } catch (e) {
+    err.textContent = e.message || "Save failed. Try signing in again.";
+    err.classList.remove("hidden");
+  }
 }
 
-function renderComments(list) {
-  if (!list.length) return `<p style="font-size:0.875rem;color:#64748b;margin:0">No staff comments yet.</p>`;
-  return list.map((c) => `<div class="comment-item"><p style="margin:0">${escapeHtml(c.body)}</p><p class="comment-meta">— ${escapeHtml(c.author_name)} · ${formatDate(c.created_at)}</p></div>`).join("");
+function confirmDeleteProvider(provider) {
+  showConfirm(
+    `Delete "${provider.name}" from the directory? This will hide the provider from all staff. This cannot be undone.`,
+    async () => {
+      const updatedBy = document.getElementById("staff-name")?.value || auth.role || "Editor";
+      if (useGoogleSync()) {
+        await googlePost({
+          action: "deleteProvider",
+          password: sessionPassword,
+          provider_id: provider.id,
+          updated_by: updatedBy,
+        });
+      }
+      const idx = providers.findIndex((p) => p.id === provider.id);
+      if (idx >= 0) providers[idx].active = false;
+      invalidateProvidersCache();
+      closeModal();
+      renderProviders();
+    }
+  );
+}
+
+function renderComments(list, providerId) {
+  if (!list.length) return `<p style="font-size:0.875rem;color:#888;margin:0">No staff comments yet.</p>`;
+  const canDelete = auth.canEdit && hasCloudSync();
+  return list.map((c) => `<div class="comment-item">
+    <div class="comment-item-header">
+      <p style="margin:0;flex:1">${escapeHtml(c.body)}</p>
+      ${canDelete ? `<button type="button" class="btn btn-ghost btn-sm" data-delete-comment="${escapeHtml(c.id)}" data-comment-row="${c.row || ""}" title="Delete comment">Delete</button>` : ""}
+    </div>
+    <p class="comment-meta">— ${escapeHtml(c.author_name)} · ${formatDate(c.created_at)}</p>
+  </div>`).join("");
+}
+
+function confirmDeleteComment(providerId, commentId, commentRow) {
+  showConfirm("Delete this staff comment? This cannot be undone.", async () => {
+    if (useGoogleSync()) {
+      await googlePost({
+        action: "deleteComment",
+        password: sessionPassword,
+        comment_id: commentId,
+        comment_row: commentRow ? Number(commentRow) : undefined,
+      });
+    } else {
+      throw new Error("Cloud sync is required to delete comments.");
+    }
+    invalidateCommentsCache(providerId);
+    await openProvider(providerId);
+  });
 }
 
 async function addComment(providerId) {
@@ -375,7 +865,16 @@ async function addComment(providerId) {
   const body = document.getElementById("comment-body").value.trim();
   if (!author || !body) return;
 
-  if (config.apiBase) {
+  if (useGoogleSync()) {
+    await googlePost({
+      action: "addComment",
+      password: sessionPassword,
+      provider_id: providerId,
+      author_name: author,
+      body,
+    });
+    invalidateCommentsCache(providerId);
+  } else if (useVercelSync()) {
     await api(`/api/providers/${providerId}/comments`, {
       method: "POST",
       body: JSON.stringify({ author_name: author, body }),
@@ -383,6 +882,7 @@ async function addComment(providerId) {
   } else {
     if (!comments[providerId]) comments[providerId] = [];
     comments[providerId].unshift({
+      id: `local-${Date.now()}`,
       author_name: author,
       body,
       created_at: new Date().toISOString(),

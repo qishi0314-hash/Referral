@@ -1,6 +1,5 @@
-// Leave empty for static GitHub Pages (comments saved in browser).
-// When deployed to Vercel, set apiBase to your site URL e.g. "https://your-app.vercel.app"
+// Cloud sync via Google Sheets (see GOOGLE_SETUP.md)
 window.APP_CONFIG = {
-  googleScriptUrl: "https://script.google.com/macros/s/AKfycbylYn2g8isnHqAkNz9iSrczrBsypnJP-QjqtkOpysh6Bar7b2WsEK0gbGuYFb_Bng/exec",
+  googleScriptUrl: "https://script.google.com/macros/s/AKfycbxFDF63rLsZRtvVr7_ctFKoBgxEe2e_7jLzCXmHvm4inGxMERh07xbNJ66vP_rg8R_V/exec",
   apiBase: "",
 };
