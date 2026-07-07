@@ -1,3 +1,10 @@
+/**
+ * CPS Referral Directory — static site application
+ *
+ * Handles search/filters, staff login, provider detail modals, and Google Sheets sync.
+ * Config: assets/config.js | Data: data/providers.json
+ * Docs: README.md, STAFF_GUIDE.md, GOOGLE_SETUP.md, CONTRIBUTING.md
+ */
 const INSURANCE_OPTIONS = [
   "1199", "Aetna", "Blue Cross Blue Shield", "Cigna", "Emblem", "GHI",
   "Healthfirst", "HIP", "Homestead", "Humana", "MagnaCare", "Medicaid",
