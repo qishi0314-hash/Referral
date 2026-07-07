@@ -11,6 +11,10 @@ const PROVIDER_TYPES = [
 
 const SESSION_FORMATS = ["In-Person", "Virtual", "Both"];
 
+const LICENSED_STATE_OPTIONS = [
+  "CO", "CT", "FL", "IL", "MA", "NJ", "NY",
+];
+
 const SPECIALTY_OPTIONS = [
   "ADHD", "Autism/Asperger's", "Bilingual", "CBT", "DBT", "Eating Disorders",
   "Grief/Bereavement", "LGBTQ+", "Substance Abuse", "Trauma", "Veterans",
@@ -44,6 +48,7 @@ const filters = {
   type: [],
   session_format: [],
   specialties: [],
+  licensed_states: [],
 };
 
 function loadLocalComments() {
@@ -143,7 +148,9 @@ async function googleGetCached(params, cacheKey) {
 
 function buildSearchIndex() {
   providers.forEach((p) => {
-    p._search = [p.name, p.description, p.email, p.address, p.phone].join(" ").toLowerCase();
+    p._search = [p.name, p.description, p.email, p.address, p.phone, ...(p.licensed_states || [])]
+      .join(" ")
+      .toLowerCase();
   });
 }
 
@@ -409,6 +416,7 @@ function renderFilters() {
   const allInsurance = [...new Set([...INSURANCE_OPTIONS, ...providers.flatMap((p) => p.insurance)])].sort();
   const allSpecialties = [...new Set([...SPECIALTY_OPTIONS, ...providers.flatMap((p) => p.specialties)])].sort();
   const allTypes = [...new Set([...PROVIDER_TYPES, ...providers.map((p) => p.type)])].sort();
+  const allLicensedStates = [...new Set([...LICENSED_STATE_OPTIONS, ...providers.flatMap((p) => p.licensed_states || [])])].sort();
 
   const el = document.getElementById("filters");
   el.innerHTML = `
@@ -418,6 +426,7 @@ function renderFilters() {
       <input type="search" id="search" placeholder="Name, specialty, address..." value="${escapeHtml(filters.q)}" />
     </div>
     ${checkboxGroup("Insurance", "insurance", allInsurance)}
+    ${checkboxGroup("Licensed state", "licensed_states", allLicensedStates)}
     ${checkboxGroup("Provider type", "type", allTypes)}
     ${checkboxGroup("Session format", "session_format", SESSION_FORMATS)}
     ${checkboxGroup("Specialties", "specialties", allSpecialties)}
@@ -430,7 +439,7 @@ function renderFilters() {
     searchDebounceTimer = setTimeout(renderProviders, 200);
   };
   document.getElementById("clear-filters").onclick = () => {
-    Object.assign(filters, { q: "", insurance: [], type: [], session_format: [], specialties: [] });
+    Object.assign(filters, { q: "", insurance: [], type: [], session_format: [], specialties: [], licensed_states: [] });
     renderFilters();
     renderProviders();
   };
@@ -466,6 +475,10 @@ function filterProviders() {
       if (!ok) return false;
     }
     if (filters.specialties.length && !filters.specialties.some((s) => p.specialties.some((ps) => ps.toLowerCase().includes(s.toLowerCase())))) return false;
+    if (filters.licensed_states.length) {
+      const states = (p.licensed_states || []).map((s) => s.toUpperCase());
+      if (!filters.licensed_states.some((s) => states.includes(s.toUpperCase()))) return false;
+    }
     return true;
   });
 }
