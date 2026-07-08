@@ -5,7 +5,7 @@ Use the **search box** or **filters** (insurance, location, specialty, etc.) —
 Make sure provider **descriptions include keywords** staff will search.
 
 ## 2. Limit who can edit
-Only **1–2 editors** should have the Editor login — too many editors makes changes harder to track and easier to mix up. Editors keep the list accurate and up to date, and try to incorporate feedback from staff.
+Only **1–2 editors** should have the Editor login — too many editors makes changes harder to track and easier to mix up. Editors keep the list accurate and up to date, and incorporate comments from staff.
 
 ## 3. Keep descriptions clean
 Staff cannot edit the directory directly. Editors add updates at the **top of Description** — include the info, who contributed it, and the date.
