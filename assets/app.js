@@ -381,11 +381,29 @@ function showConfirm(message, onConfirm) {
   };
 }
 
+function uniqueFilterOptions(...sources) {
+  return [...new Set(sources.flat())]
+    .filter((opt) => opt != null && String(opt).trim())
+    .sort((a, b) => String(a).localeCompare(String(b)));
+}
+
 function renderFilters() {
-  const allInsurance = [...new Set([...INSURANCE_OPTIONS, ...providers.flatMap((p) => p.insurance)])].sort();
-  const allSpecialties = [...new Set([...SPECIALTY_OPTIONS, ...providers.flatMap((p) => p.specialties)])].sort();
-  const allTypes = [...new Set([...PROVIDER_TYPES, ...providers.map((p) => p.type)])].sort();
-  const allLicensedStates = [...new Set([...LICENSED_STATE_OPTIONS, ...providers.flatMap((p) => p.licensed_states || [])])].sort();
+  const allInsurance = uniqueFilterOptions(
+    INSURANCE_OPTIONS,
+    providers.flatMap((p) => p.insurance || [])
+  );
+  const allSpecialties = uniqueFilterOptions(
+    SPECIALTY_OPTIONS,
+    providers.flatMap((p) => p.specialties || [])
+  );
+  const allTypes = uniqueFilterOptions(
+    PROVIDER_TYPES,
+    providers.map((p) => p.type)
+  );
+  const allLicensedStates = uniqueFilterOptions(
+    LICENSED_STATE_OPTIONS,
+    providers.flatMap((p) => p.licensed_states || [])
+  );
 
   const el = document.getElementById("filters");
   el.innerHTML = `
