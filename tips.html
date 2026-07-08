@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tips — CPS Referral Directory</title>
+  <link rel="stylesheet" href="assets/style.css" />
+  <style>
+    .tips-page {
+      max-width: 42rem;
+      margin: 0 auto;
+      padding: 2rem 1.5rem 3rem;
+    }
+    .tips-page h1 {
+      margin: 0 0 0.25rem;
+      font-size: 1.5rem;
+      color: var(--fordham-maroon);
+    }
+    .tips-page .subtitle {
+      margin: 0 0 2rem;
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+    .tip {
+      display: grid;
+      grid-template-columns: 2.5rem 1fr;
+      gap: 1rem;
+      margin-bottom: 1.75rem;
+      padding-bottom: 1.75rem;
+      border-bottom: 1px solid var(--border);
+    }
+    .tip:last-child {
+      border-bottom: 0;
+      margin-bottom: 0;
+      padding-bottom: 0;
+    }
+    .tip-num {
+      width: 2.5rem;
+      height: 2.5rem;
+      border-radius: 50%;
+      background: var(--fordham-maroon-light);
+      color: var(--fordham-maroon);
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.1rem;
+    }
+    .tip h2 {
+      margin: 0 0 0.35rem;
+      font-size: 1.05rem;
+    }
+    .tip p {
+      margin: 0;
+      font-size: 0.92rem;
+      color: var(--muted);
+    }
+    .visual {
+      margin-top: 0.75rem;
+      padding: 0.75rem 1rem;
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: 0.5rem;
+      font-size: 0.85rem;
+    }
+    .visual-search {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      color: #888;
+    }
+    .visual-search span {
+      flex: 1;
+      padding: 0.4rem 0.6rem;
+      border: 1px solid var(--border);
+      border-radius: 0.35rem;
+      color: var(--foreground);
+      background: #faf9f7;
+    }
+    .visual-lock {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+    }
+    .visual-desc {
+      font-family: ui-monospace, monospace;
+      white-space: pre-wrap;
+      line-height: 1.45;
+      color: var(--foreground);
+    }
+    .visual-desc .new {
+      color: var(--fordham-maroon);
+      font-weight: 600;
+    }
+    .back-link {
+      display: inline-block;
+      margin-bottom: 1.5rem;
+      font-size: 0.9rem;
+      color: var(--fordham-maroon);
+      text-decoration: none;
+    }
+    .back-link:hover { text-decoration: underline; }
+    @media print {
+      .back-link, .brand-bar { display: none; }
+      .tips-page { padding: 0; max-width: none; }
+      body { background: white; }
+    }
+  </style>
+</head>
+<body>
+  <div class="brand-bar"></div>
+  <div class="tips-page">
+    <a class="back-link" href="index.html">← Back to directory</a>
+    <h1>Tips</h1>
+    <p class="subtitle">CPS Referral Search Tool — quick guide for staff</p>
+
+    <article class="tip">
+      <div class="tip-num">1</div>
+      <div>
+        <h2>Search by keyword</h2>
+        <p>Use the search box for locations, insurance, specialties — e.g. <strong>Bronx</strong>, <strong>Aetna</strong>, <strong>DBT</strong>. Make sure provider descriptions include words staff will search.</p>
+        <div class="visual visual-search">
+          🔍 <span>Bronx</span>
+        </div>
+      </div>
+    </article>
+
+    <article class="tip">
+      <div class="tip-num">2</div>
+      <div>
+        <h2>Limit who can edit</h2>
+        <p>Only <strong>1–2 editors</strong> should have the Editor login. They keep the list accurate and up to date.</p>
+        <div class="visual visual-lock">
+          🔒 Editor login → add / edit / remove providers
+        </div>
+      </div>
+    </article>
+
+    <article class="tip">
+      <div class="tip-num">3</div>
+      <div>
+        <h2>Keep descriptions clean</h2>
+        <p>Put <strong>new updates at the top</strong>. Sign your name and date. Leave older info below.</p>
+        <div class="visual visual-desc"><span class="new">--- NOT accepting new clients (Sally S., 7/8/2026) ---</span>
+
+[older description text stays here]</div>
+      </div>
+    </article>
+  </div>
+</body>
+</html>
