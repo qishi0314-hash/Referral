@@ -589,24 +589,35 @@ async function openProvider(id) {
 
   if (useGoogleSync() && providerComments === null) {
     loadProviderComments(id);
+  } else if (
+    useGoogleSync() &&
+    providerComments?.some((c) => String(c.id).startsWith("pending-"))
+  ) {
+    refreshProviderCommentsFromServer(id);
   }
 }
 
 async function loadProviderComments(id) {
   try {
     const data = await googleGetCached({ action: "comments", providerId: id }, `cps:comments:${id}`);
-    cloudComments[id] = data.comments || [];
+    setProviderCommentsList(id, data.comments || []);
     if (selectedProvider?.id === id) {
-      const el = document.getElementById("comments-list");
-      if (el) {
-        el.innerHTML = renderComments(cloudComments[id], id);
-        bindCommentDeleteButtons(id);
-      }
+      refreshCommentsList(id);
     }
   } catch {
     const el = document.getElementById("comments-list");
     if (el) el.innerHTML = `<p style="font-size:0.875rem;color:#888;margin:0">Could not load notes.</p>`;
   }
+}
+
+async function refreshProviderCommentsFromServer(providerId) {
+  try {
+    const data = await googleGet({ action: "comments", providerId });
+    setProviderCommentsList(providerId, data.comments || []);
+    if (selectedProvider?.id === providerId) {
+      refreshCommentsList(providerId);
+    }
+  } catch (_) { /* keep optimistic list */ }
 }
 
 function bindCommentDeleteButtons(id) {
@@ -901,6 +912,8 @@ function confirmDeleteComment(providerId, commentId, commentRow) {
           password: sessionPassword,
           comment_id: commentId,
           comment_row: commentRow ? Number(commentRow) : undefined,
+          provider_id: providerId,
+          body: removed?.body,
         });
       } else {
         throw new Error("Cloud sync is required to delete comments.");
@@ -946,10 +959,8 @@ async function addComment(providerId) {
       if (data.comment) {
         replaceProviderComment(providerId, optimistic.id, data.comment);
       } else {
-        replaceProviderComment(providerId, optimistic.id, {
-          ...optimistic,
-          _pending: false,
-        });
+        // Old Apps Script without comment in response — fetch real ids from sheet
+        await refreshProviderCommentsFromServer(providerId);
       }
     } catch (err) {
       removeProviderComment(providerId, optimistic.id);

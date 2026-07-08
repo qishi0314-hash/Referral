@@ -55,7 +55,12 @@ function doPost(e) {
     if (action === "deleteComment") {
       if (role !== "editor") return json_({ error: "Editor access required" });
       if (!data.comment_id && !data.comment_row) return json_({ error: "Missing comment identifier" });
-      const deleted = deleteComment_(data.comment_id, data.comment_row);
+      const deleted = deleteComment_(
+        data.comment_id,
+        data.comment_row,
+        data.provider_id,
+        data.body
+      );
       if (!deleted) return json_({ error: "Comment not found" });
       return json_({ success: true });
     }
@@ -163,8 +168,10 @@ function addComment_(providerId, authorName, body) {
   const author = authorName.trim();
   const text = body.trim();
   sheet.appendRow([createdAt, pid, author, text, commentId]);
+  const row = sheet.getLastRow();
   return {
     id: commentId,
+    row: row,
     provider_id: pid,
     author_name: author,
     body: text,
@@ -172,29 +179,53 @@ function addComment_(providerId, authorName, body) {
   };
 }
 
-function deleteComment_(commentId, commentRow) {
+function deleteComment_(commentId, commentRow, providerId, bodyText) {
   const sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName(COMMENTS_SHEET);
   if (!sheet) return false;
 
   const rows = sheet.getDataRange().getValues();
+  const idStr = String(commentId || "").trim();
+
+  // Legacy ids like "row-5" map directly to sheet row numbers
+  if (idStr.indexOf("row-") === 0) {
+    const rowNum = Number(idStr.substring(4));
+    if (!isNaN(rowNum) && rowNum > 1 && rowNum <= rows.length) {
+      sheet.deleteRow(rowNum);
+      return true;
+    }
+  }
 
   if (commentRow) {
     const rowNum = Number(commentRow);
-    if (rowNum > 1 && rowNum <= rows.length) {
+    if (!isNaN(rowNum) && rowNum > 1 && rowNum <= rows.length) {
       sheet.deleteRow(rowNum);
       return true;
     }
   }
 
   for (let i = 1; i < rows.length; i++) {
-    const rowId = rows[i][4] || "row-" + (i + 1);
+    const cellId = rows[i][4];
+    const rowId = cellId ? String(cellId).trim() : "row-" + (i + 1);
     const sheetRow = i + 1;
     if (
-      String(rowId) === String(commentId) ||
-      String(i) === String(commentId) ||
-      String(sheetRow) === String(commentId)
+      rowId === idStr ||
+      String(sheetRow) === idStr ||
+      (cellId && String(cellId).trim() === idStr)
     ) {
       sheet.deleteRow(sheetRow);
+      return true;
+    }
+  }
+
+  // Fallback: match by provider + body (handles stale client ids after optimistic add)
+  if (providerId && bodyText) {
+    const pid = String(providerId);
+    const body = String(bodyText).trim();
+    for (let i = rows.length - 1; i >= 1; i--) {
+      const row = rows[i];
+      if (String(row[1]) !== pid) continue;
+      if (String(row[3] || "").trim() !== body) continue;
+      sheet.deleteRow(i + 1);
       return true;
     }
   }
