@@ -1,7 +1,7 @@
 /**
  * CPS Referral Directory — static site application
  *
- * Handles search/filters, staff login, provider detail modals, and Google Sheets sync.
+ * Handles search/filters, editor login, provider detail modals, and Google Sheets sync.
  * Config: assets/config.js | Data: data/providers.json
  * Docs: README.md, STAFF_GUIDE.md, GOOGLE_SETUP.md, CONTRIBUTING.md
  */
@@ -34,14 +34,11 @@ const MODALITY_OPTIONS = [
 const config = window.APP_CONFIG || {
   googleScriptUrl: "",
   apiBase: "",
-  staffPassword: "fordham-cps-staff",
   editorPassword: "fordham-cps-editor",
 };
 
 let providers = [];
-let comments = loadLocalComments();
-let cloudComments = {};
-let auth = { authenticated: false, canComment: false, canEdit: false, role: null };
+let auth = { authenticated: false, canEdit: false, role: null };
 let sessionPassword = "";
 let selectedProvider = null;
 let searchDebounceTimer = null;
@@ -57,18 +54,6 @@ const filters = {
   specialties: [],
   licensed_states: [],
 };
-
-function loadLocalComments() {
-  try {
-    return JSON.parse(localStorage.getItem("cps_comments") || "{}");
-  } catch {
-    return {};
-  }
-}
-
-function saveLocalComments() {
-  localStorage.setItem("cps_comments", JSON.stringify(comments));
-}
 
 function loadStaffSession() {
   try {
@@ -123,57 +108,6 @@ function cacheSet(key, data) {
   try {
     sessionStorage.setItem(key, JSON.stringify({ at: Date.now(), data }));
   } catch { /* quota */ }
-}
-
-function invalidateCommentsCache(providerId) {
-  delete cloudComments[providerId];
-  sessionStorage.removeItem(`cps:comments:${providerId}`);
-  sessionStorage.removeItem("cps:allComments");
-}
-
-function getProviderCommentsList(providerId) {
-  return cloudComments[providerId] || comments[providerId] || [];
-}
-
-function setProviderCommentsList(providerId, list) {
-  cloudComments[providerId] = list;
-  cloudComments[String(providerId)] = list;
-  cacheSet(`cps:comments:${providerId}`, { comments: list });
-  const allCached = cacheGet("cps:allComments");
-  if (allCached?.byProvider) {
-    allCached.byProvider[String(providerId)] = list;
-    cacheSet("cps:allComments", allCached);
-  }
-}
-
-function refreshCommentsList(providerId) {
-  if (selectedProvider?.id !== providerId) return;
-  const el = document.getElementById("comments-list");
-  if (!el) return;
-  el.innerHTML = renderComments(getProviderCommentsList(providerId), providerId);
-  bindCommentDeleteButtons(providerId);
-}
-
-function prependProviderComment(providerId, comment) {
-  setProviderCommentsList(providerId, [comment, ...getProviderCommentsList(providerId)]);
-  refreshCommentsList(providerId);
-}
-
-function replaceProviderComment(providerId, tempId, comment) {
-  const list = getProviderCommentsList(providerId);
-  const idx = list.findIndex((c) => c.id === tempId);
-  if (idx >= 0) list[idx] = comment;
-  else list.unshift(comment);
-  setProviderCommentsList(providerId, list);
-  refreshCommentsList(providerId);
-}
-
-function removeProviderComment(providerId, commentId) {
-  setProviderCommentsList(
-    providerId,
-    getProviderCommentsList(providerId).filter((c) => c.id !== commentId)
-  );
-  refreshCommentsList(providerId);
 }
 
 function invalidateProvidersCache() {
@@ -288,7 +222,7 @@ function nextProviderId() {
 }
 
 async function init() {
-  auth = loadStaffSession() || { authenticated: false, canComment: false, canEdit: false, role: null };
+  auth = loadStaffSession() || { authenticated: false, canEdit: false, role: null };
   if (auth.password) sessionPassword = auth.password;
 
   const res = await fetch("data/providers.json");
@@ -305,8 +239,8 @@ async function init() {
   } else if (useVercelSync()) {
     try {
       const data = await api("/api/auth");
-      if (data?.authenticated) {
-        auth = { authenticated: true, canComment: data.canComment, canEdit: data.canEdit, role: data.role };
+      if (data?.authenticated && data.canEdit) {
+        auth = { authenticated: true, canEdit: true, role: data.role };
         setStaffSession(auth);
       }
     } catch { /* static fallback */ }
@@ -330,51 +264,34 @@ async function syncCloudData(base) {
     renderFilters();
     renderProviders();
   } catch (_) { /* keep base list */ }
-  prefetchAllComments();
-}
-
-async function prefetchAllComments() {
-  if (!useGoogleSync()) return;
-  try {
-    const data = await googleGetCached({ action: "allComments" }, "cps:allComments");
-    const byProvider = data?.byProvider || {};
-    for (const [pid, list] of Object.entries(byProvider)) {
-      cloudComments[Number(pid)] = list;
-      cloudComments[pid] = list;
-    }
-  } catch (_) { /* old script without allComments — per-provider fetch still works */ }
 }
 
 function renderStaffControls() {
   const el = document.getElementById("staff-controls");
-  const nameInput = document.getElementById("staff-name");
   const addBtn = document.getElementById("add-provider-btn");
 
-  if (auth.authenticated) {
-    nameInput.classList.remove("hidden");
-    if (auth.canEdit && hasCloudSync()) {
+  if (auth.authenticated && auth.canEdit) {
+    if (hasCloudSync()) {
       addBtn.classList.remove("hidden");
       addBtn.onclick = () => showProviderForm(null);
     } else {
       addBtn.classList.add("hidden");
     }
     el.innerHTML = `<div style="display:flex;align-items:center;gap:0.75rem;flex-wrap:wrap">
-      <span class="editor-badge">${auth.canEdit ? "Editor mode" : "Staff mode"}</span>
+      <span class="editor-badge">Editor mode</span>
       <button class="btn btn-ghost" id="logout-btn">Sign out</button>
     </div>`;
     document.getElementById("logout-btn").onclick = async () => {
       if (useVercelSync()) await api("/api/auth", { method: "DELETE" }).catch(() => {});
       setStaffSession(null);
-      auth = { authenticated: false, canComment: false, canEdit: false, role: null };
-      nameInput.classList.add("hidden");
+      auth = { authenticated: false, canEdit: false, role: null };
       addBtn.classList.add("hidden");
       renderStaffControls();
       if (selectedProvider) openProvider(selectedProvider.id);
     };
   } else {
-    nameInput.classList.add("hidden");
     addBtn.classList.add("hidden");
-    el.innerHTML = `<button class="btn btn-outline" id="login-btn">Staff login</button>`;
+    el.innerHTML = `<button class="btn btn-outline" id="login-btn">Editor login</button>`;
     document.getElementById("login-btn").onclick = showLoginModal;
   }
 }
@@ -383,9 +300,9 @@ function showLoginModal() {
   const root = document.getElementById("modal-root");
   root.classList.remove("hidden");
   root.innerHTML = `<div class="modal-panel" style="max-width:24rem;margin:4rem auto">
-    <div class="modal-header"><h2 style="margin:0;font-size:1.1rem">Staff access</h2></div>
+    <div class="modal-header"><h2 style="margin:0;font-size:1.1rem">Editor access</h2></div>
     <div class="modal-body">
-      <p style="font-size:0.875rem;color:#5c5c5c;margin:0 0 1rem">Staff codes add notes. Editor codes can add, edit, or remove providers and delete comments.</p>
+      <p style="font-size:0.875rem;color:#5c5c5c;margin:0 0 1rem">Editor codes can add, edit, or remove providers in the directory.</p>
       <input type="password" id="login-password" placeholder="Access code" />
       <p id="login-error" class="hidden" style="color:#b91c1c;font-size:0.85rem;margin:0.5rem 0 0"></p>
       <div style="display:flex;justify-content:flex-end;gap:0.5rem;margin-top:1rem">
@@ -401,7 +318,8 @@ function showLoginModal() {
     try {
       if (useGoogleSync()) {
         const data = await googlePost({ action: "login", password });
-        auth = { authenticated: true, canComment: data.canComment, canEdit: data.canEdit, role: data.role, password };
+        if (!data.canEdit) throw new Error("Editor access required");
+        auth = { authenticated: true, canEdit: true, role: data.role, password };
       } else if (useVercelSync()) {
         const res = await fetch(`${config.apiBase}/api/auth`, {
           method: "POST",
@@ -411,11 +329,10 @@ function showLoginModal() {
         });
         if (!res.ok) throw new Error("bad password");
         const data = await res.json();
-        auth = { authenticated: true, canComment: data.canComment, canEdit: data.canEdit, role: data.role };
+        if (!data.canEdit) throw new Error("Editor access required");
+        auth = { authenticated: true, canEdit: true, role: data.role };
       } else if (password === config.editorPassword) {
-        auth = { authenticated: true, canComment: true, canEdit: true, role: "editor", password };
-      } else if (password === config.staffPassword) {
-        auth = { authenticated: true, canComment: true, canEdit: false, role: "staff", password };
+        auth = { authenticated: true, canEdit: true, role: "editor", password };
       } else {
         throw new Error("bad password");
       }
@@ -568,68 +485,14 @@ function renderProviders() {
 }
 
 async function openProvider(id) {
-  let provider = providers.find((p) => p.id === id);
+  const provider = providers.find((p) => p.id === id);
   if (!provider || provider.active === false) return;
 
   selectedProvider = provider;
-  let providerComments = cloudComments[id] || comments[id] || null;
-  let commentsLoading = useGoogleSync() && providerComments === null;
-
-  if (useVercelSync()) {
-    try {
-      const data = await api(`/api/providers/${id}`);
-      provider = data;
-      selectedProvider = provider;
-      providerComments = data.comments || [];
-    } catch { /* fallback */ }
-    commentsLoading = false;
-  }
-
-  renderProviderModal(provider, providerComments, commentsLoading);
-
-  if (useGoogleSync() && providerComments === null) {
-    loadProviderComments(id);
-  } else if (
-    useGoogleSync() &&
-    providerComments?.some((c) => String(c.id).startsWith("pending-"))
-  ) {
-    refreshProviderCommentsFromServer(id);
-  }
+  renderProviderModal(provider);
 }
 
-async function loadProviderComments(id) {
-  try {
-    const data = await googleGetCached({ action: "comments", providerId: id }, `cps:comments:${id}`);
-    setProviderCommentsList(id, data.comments || []);
-    if (selectedProvider?.id === id) {
-      refreshCommentsList(id);
-    }
-  } catch {
-    const el = document.getElementById("comments-list");
-    if (el) el.innerHTML = `<p style="font-size:0.875rem;color:#888;margin:0">Could not load notes.</p>`;
-  }
-}
-
-async function refreshProviderCommentsFromServer(providerId) {
-  try {
-    const data = await googleGet({ action: "comments", providerId });
-    setProviderCommentsList(providerId, data.comments || []);
-    if (selectedProvider?.id === providerId) {
-      refreshCommentsList(providerId);
-    }
-  } catch (_) { /* keep optimistic list */ }
-}
-
-function bindCommentDeleteButtons(id) {
-  document.querySelectorAll("[data-delete-comment]").forEach((btn) => {
-    btn.onclick = (e) => {
-      e.stopPropagation();
-      confirmDeleteComment(id, btn.dataset.deleteComment, btn.dataset.commentRow);
-    };
-  });
-}
-
-function renderProviderModal(provider, providerComments, commentsLoading) {
+function renderProviderModal(provider) {
   const root = document.getElementById("modal-root");
   root.classList.remove("hidden");
 
@@ -642,9 +505,6 @@ function renderProviderModal(provider, providerComments, commentsLoading) {
   ].filter(Boolean);
 
   const canEditCloud = auth.canEdit && hasCloudSync();
-  const commentsHtml = commentsLoading
-    ? `<p style="font-size:0.875rem;color:#888;margin:0">Loading notes…</p>`
-    : renderComments(providerComments || [], provider.id);
 
   root.innerHTML = `<div class="modal-panel">
     <div class="modal-header">
@@ -675,30 +535,14 @@ function renderProviderModal(provider, providerComments, commentsLoading) {
         <h4>Description</h4>
         ${provider.description ? `<p style="white-space:pre-wrap;margin:0">${escapeHtml(provider.description)}</p>` : `<p style="color:#888;margin:0">No description yet.</p>`}
       </div>
-      <div class="comment-box">
-        <h4 style="margin:0 0 0.75rem;font-size:0.9rem">Staff notes</h4>
-        <div id="comments-list">${commentsHtml}</div>
-        ${auth.canComment ? `<div style="margin-top:1rem;border-top:1px solid var(--border);padding-top:1rem">
-          <input type="text" id="comment-author" placeholder="Your name (e.g., Sally S.)" style="margin-bottom:0.5rem" />
-          <textarea id="comment-body" rows="3" placeholder="Add a staff note about this provider..."></textarea>
-          <button class="btn btn-primary" id="add-comment" style="margin-top:0.5rem">Add comment</button>
-        </div>` : ""}
-        ${!hasCloudSync() ? `<p class="notice">Notes are saved in this browser only. Ask your admin to set up Google Sheets sync.</p>` : `<p class="notice notice-success">Team sync is on — changes are shared with all staff.</p>`}
-      </div>
     </div>
   </div>`;
 
   document.getElementById("close-modal").onclick = closeModal;
-  if (auth.canComment) {
-    const staffName = document.getElementById("staff-name");
-    if (staffName?.value) document.getElementById("comment-author").value = staffName.value;
-    document.getElementById("add-comment").onclick = () => addComment(provider.id);
-  }
   if (canEditCloud) {
     document.getElementById("edit-provider-btn").onclick = () => showProviderForm(provider);
     document.getElementById("delete-provider-btn").onclick = () => confirmDeleteProvider(provider);
   }
-  if (!commentsLoading) bindCommentDeleteButtons(provider.id);
 }
 
 function showProviderForm(provider) {
@@ -829,7 +673,7 @@ async function saveProviderForm(id, isNew) {
     if (!provider.websites[k]) delete provider.websites[k];
   });
 
-  const updatedBy = document.getElementById("staff-name")?.value || auth.role || "Editor";
+  const updatedBy = auth.role || "Editor";
 
   try {
     if (useGoogleSync()) {
@@ -869,7 +713,7 @@ function confirmDeleteProvider(provider) {
   showConfirm(
     `Delete "${provider.name}" from the directory? This will hide the provider from all staff. This cannot be undone.`,
     async () => {
-      const updatedBy = document.getElementById("staff-name")?.value || auth.role || "Editor";
+      const updatedBy = auth.role || "Editor";
       if (useGoogleSync()) {
         await googlePost({
           action: "deleteProvider",
@@ -887,126 +731,6 @@ function confirmDeleteProvider(provider) {
   );
 }
 
-function renderComments(list, providerId) {
-  if (!list.length) return `<p style="font-size:0.875rem;color:#888;margin:0">No staff comments yet.</p>`;
-  const canDelete = auth.canEdit && hasCloudSync();
-  return list.map((c) => `<div class="comment-item${c._pending ? " comment-pending" : ""}">
-    <div class="comment-item-header">
-      <p style="margin:0;flex:1">${escapeHtml(c.body)}</p>
-      ${canDelete && !c._pending ? `<button type="button" class="btn btn-ghost btn-sm" data-delete-comment="${escapeHtml(c.id)}" data-comment-row="${c.row || ""}" title="Delete comment">Delete</button>` : ""}
-    </div>
-    <p class="comment-meta">— ${escapeHtml(c.author_name)} · ${c._pending ? "Saving…" : formatDate(c.created_at)}</p>
-  </div>`).join("");
-}
-
-function confirmDeleteComment(providerId, commentId, commentRow) {
-  showConfirm("Delete this staff comment? This cannot be undone.", async () => {
-    const list = getProviderCommentsList(providerId);
-    const removed = list.find((c) => c.id === commentId);
-    removeProviderComment(providerId, commentId);
-
-    try {
-      if (useGoogleSync()) {
-        await googlePost({
-          action: "deleteComment",
-          password: sessionPassword,
-          comment_id: commentId,
-          comment_row: commentRow ? Number(commentRow) : undefined,
-          provider_id: providerId,
-          body: removed?.body,
-        });
-      } else {
-        throw new Error("Cloud sync is required to delete comments.");
-      }
-    } catch (err) {
-      if (removed) prependProviderComment(providerId, removed);
-      alert(err.message || "Could not delete comment.");
-    }
-  });
-}
-
-async function addComment(providerId) {
-  const author = document.getElementById("comment-author").value.trim();
-  const body = document.getElementById("comment-body").value.trim();
-  if (!author || !body) return;
-
-  const btn = document.getElementById("add-comment");
-  const bodyEl = document.getElementById("comment-body");
-
-  if (useGoogleSync()) {
-    const optimistic = {
-      id: `pending-${Date.now()}`,
-      author_name: author,
-      body,
-      created_at: new Date().toISOString(),
-      _pending: true,
-    };
-    prependProviderComment(providerId, optimistic);
-    bodyEl.value = "";
-    if (btn) {
-      btn.disabled = true;
-      btn.textContent = "Saving…";
-    }
-
-    try {
-      const data = await googlePost({
-        action: "addComment",
-        password: sessionPassword,
-        provider_id: providerId,
-        author_name: author,
-        body,
-      });
-      if (data.comment) {
-        replaceProviderComment(providerId, optimistic.id, data.comment);
-      } else {
-        // Old Apps Script without comment in response — fetch real ids from sheet
-        await refreshProviderCommentsFromServer(providerId);
-      }
-    } catch (err) {
-      removeProviderComment(providerId, optimistic.id);
-      alert(err.message || "Could not save comment.");
-    } finally {
-      if (btn) {
-        btn.disabled = false;
-        btn.textContent = "Add comment";
-      }
-    }
-    return;
-  }
-
-  if (useVercelSync()) {
-    if (btn) {
-      btn.disabled = true;
-      btn.textContent = "Saving…";
-    }
-    try {
-      await api(`/api/providers/${providerId}/comments`, {
-        method: "POST",
-        body: JSON.stringify({ author_name: author, body }),
-      });
-      bodyEl.value = "";
-      await openProvider(providerId);
-    } finally {
-      if (btn) {
-        btn.disabled = false;
-        btn.textContent = "Add comment";
-      }
-    }
-    return;
-  }
-
-  if (!comments[providerId]) comments[providerId] = [];
-  comments[providerId].unshift({
-    id: `local-${Date.now()}`,
-    author_name: author,
-    body,
-    created_at: new Date().toISOString(),
-  });
-  saveLocalComments();
-  bodyEl.value = "";
-  refreshCommentsList(providerId);
-}
-
 function closeModal() {
   document.getElementById("modal-root").classList.add("hidden");
   selectedProvider = null;
@@ -1018,11 +742,6 @@ function escapeHtml(str) {
 
 function normalizeUrl(url) {
   return url.startsWith("http") ? url : `https://${url}`;
-}
-
-function formatDate(iso) {
-  const d = new Date(iso.includes("T") ? iso : iso + "Z");
-  return d.toLocaleDateString("en-US", { month: "2-digit", day: "2-digit", year: "numeric" });
 }
 
 init();
