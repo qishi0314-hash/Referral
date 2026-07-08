@@ -407,6 +407,11 @@ input:focus, textarea:focus, select:focus {
   color: #999;
 }
 
+.comment-pending {
+  opacity: 0.75;
+  border-style: dashed;
+}
+
 .link-btn {
   display: inline-flex;
   align-items: center;

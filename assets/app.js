@@ -131,6 +131,51 @@ function invalidateCommentsCache(providerId) {
   sessionStorage.removeItem("cps:allComments");
 }
 
+function getProviderCommentsList(providerId) {
+  return cloudComments[providerId] || comments[providerId] || [];
+}
+
+function setProviderCommentsList(providerId, list) {
+  cloudComments[providerId] = list;
+  cloudComments[String(providerId)] = list;
+  cacheSet(`cps:comments:${providerId}`, { comments: list });
+  const allCached = cacheGet("cps:allComments");
+  if (allCached?.byProvider) {
+    allCached.byProvider[String(providerId)] = list;
+    cacheSet("cps:allComments", allCached);
+  }
+}
+
+function refreshCommentsList(providerId) {
+  if (selectedProvider?.id !== providerId) return;
+  const el = document.getElementById("comments-list");
+  if (!el) return;
+  el.innerHTML = renderComments(getProviderCommentsList(providerId), providerId);
+  bindCommentDeleteButtons(providerId);
+}
+
+function prependProviderComment(providerId, comment) {
+  setProviderCommentsList(providerId, [comment, ...getProviderCommentsList(providerId)]);
+  refreshCommentsList(providerId);
+}
+
+function replaceProviderComment(providerId, tempId, comment) {
+  const list = getProviderCommentsList(providerId);
+  const idx = list.findIndex((c) => c.id === tempId);
+  if (idx >= 0) list[idx] = comment;
+  else list.unshift(comment);
+  setProviderCommentsList(providerId, list);
+  refreshCommentsList(providerId);
+}
+
+function removeProviderComment(providerId, commentId) {
+  setProviderCommentsList(
+    providerId,
+    getProviderCommentsList(providerId).filter((c) => c.id !== commentId)
+  );
+  refreshCommentsList(providerId);
+}
+
 function invalidateProvidersCache() {
   sessionStorage.removeItem("cps:providers");
 }
@@ -834,29 +879,36 @@ function confirmDeleteProvider(provider) {
 function renderComments(list, providerId) {
   if (!list.length) return `<p style="font-size:0.875rem;color:#888;margin:0">No staff comments yet.</p>`;
   const canDelete = auth.canEdit && hasCloudSync();
-  return list.map((c) => `<div class="comment-item">
+  return list.map((c) => `<div class="comment-item${c._pending ? " comment-pending" : ""}">
     <div class="comment-item-header">
       <p style="margin:0;flex:1">${escapeHtml(c.body)}</p>
-      ${canDelete ? `<button type="button" class="btn btn-ghost btn-sm" data-delete-comment="${escapeHtml(c.id)}" data-comment-row="${c.row || ""}" title="Delete comment">Delete</button>` : ""}
+      ${canDelete && !c._pending ? `<button type="button" class="btn btn-ghost btn-sm" data-delete-comment="${escapeHtml(c.id)}" data-comment-row="${c.row || ""}" title="Delete comment">Delete</button>` : ""}
     </div>
-    <p class="comment-meta">— ${escapeHtml(c.author_name)} · ${formatDate(c.created_at)}</p>
+    <p class="comment-meta">— ${escapeHtml(c.author_name)} · ${c._pending ? "Saving…" : formatDate(c.created_at)}</p>
   </div>`).join("");
 }
 
 function confirmDeleteComment(providerId, commentId, commentRow) {
   showConfirm("Delete this staff comment? This cannot be undone.", async () => {
-    if (useGoogleSync()) {
-      await googlePost({
-        action: "deleteComment",
-        password: sessionPassword,
-        comment_id: commentId,
-        comment_row: commentRow ? Number(commentRow) : undefined,
-      });
-    } else {
-      throw new Error("Cloud sync is required to delete comments.");
+    const list = getProviderCommentsList(providerId);
+    const removed = list.find((c) => c.id === commentId);
+    removeProviderComment(providerId, commentId);
+
+    try {
+      if (useGoogleSync()) {
+        await googlePost({
+          action: "deleteComment",
+          password: sessionPassword,
+          comment_id: commentId,
+          comment_row: commentRow ? Number(commentRow) : undefined,
+        });
+      } else {
+        throw new Error("Cloud sync is required to delete comments.");
+      }
+    } catch (err) {
+      if (removed) prependProviderComment(providerId, removed);
+      alert(err.message || "Could not delete comment.");
     }
-    invalidateCommentsCache(providerId);
-    await openProvider(providerId);
   });
 }
 
@@ -865,32 +917,83 @@ async function addComment(providerId) {
   const body = document.getElementById("comment-body").value.trim();
   if (!author || !body) return;
 
+  const btn = document.getElementById("add-comment");
+  const bodyEl = document.getElementById("comment-body");
+
   if (useGoogleSync()) {
-    await googlePost({
-      action: "addComment",
-      password: sessionPassword,
-      provider_id: providerId,
-      author_name: author,
-      body,
-    });
-    invalidateCommentsCache(providerId);
-  } else if (useVercelSync()) {
-    await api(`/api/providers/${providerId}/comments`, {
-      method: "POST",
-      body: JSON.stringify({ author_name: author, body }),
-    });
-  } else {
-    if (!comments[providerId]) comments[providerId] = [];
-    comments[providerId].unshift({
-      id: `local-${Date.now()}`,
+    const optimistic = {
+      id: `pending-${Date.now()}`,
       author_name: author,
       body,
       created_at: new Date().toISOString(),
-    });
-    saveLocalComments();
+      _pending: true,
+    };
+    prependProviderComment(providerId, optimistic);
+    bodyEl.value = "";
+    if (btn) {
+      btn.disabled = true;
+      btn.textContent = "Saving…";
+    }
+
+    try {
+      const data = await googlePost({
+        action: "addComment",
+        password: sessionPassword,
+        provider_id: providerId,
+        author_name: author,
+        body,
+      });
+      if (data.comment) {
+        replaceProviderComment(providerId, optimistic.id, data.comment);
+      } else {
+        replaceProviderComment(providerId, optimistic.id, {
+          ...optimistic,
+          _pending: false,
+        });
+      }
+    } catch (err) {
+      removeProviderComment(providerId, optimistic.id);
+      alert(err.message || "Could not save comment.");
+    } finally {
+      if (btn) {
+        btn.disabled = false;
+        btn.textContent = "Add comment";
+      }
+    }
+    return;
   }
 
-  openProvider(providerId);
+  if (useVercelSync()) {
+    if (btn) {
+      btn.disabled = true;
+      btn.textContent = "Saving…";
+    }
+    try {
+      await api(`/api/providers/${providerId}/comments`, {
+        method: "POST",
+        body: JSON.stringify({ author_name: author, body }),
+      });
+      bodyEl.value = "";
+      await openProvider(providerId);
+    } finally {
+      if (btn) {
+        btn.disabled = false;
+        btn.textContent = "Add comment";
+      }
+    }
+    return;
+  }
+
+  if (!comments[providerId]) comments[providerId] = [];
+  comments[providerId].unshift({
+    id: `local-${Date.now()}`,
+    author_name: author,
+    body,
+    created_at: new Date().toISOString(),
+  });
+  saveLocalComments();
+  bodyEl.value = "";
+  refreshCommentsList(providerId);
 }
 
 function closeModal() {

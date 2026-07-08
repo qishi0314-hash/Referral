@@ -48,8 +48,8 @@ function doPost(e) {
       if (!data.provider_id || !data.author_name || !data.body) {
         return json_({ error: "Missing fields" });
       }
-      addComment_(data.provider_id, data.author_name, data.body);
-      return json_({ success: true });
+      const comment = addComment_(data.provider_id, data.author_name, data.body);
+      return json_({ success: true, comment: comment });
     }
 
     if (action === "deleteComment") {
@@ -157,14 +157,19 @@ function addComment_(providerId, authorName, body) {
     "body",
     "comment_id",
   ]);
+  const createdAt = new Date();
   const commentId = Utilities.getUuid();
-  sheet.appendRow([
-    new Date(),
-    Number(providerId),
-    authorName.trim(),
-    body.trim(),
-    commentId,
-  ]);
+  const pid = Number(providerId);
+  const author = authorName.trim();
+  const text = body.trim();
+  sheet.appendRow([createdAt, pid, author, text, commentId]);
+  return {
+    id: commentId,
+    provider_id: pid,
+    author_name: author,
+    body: text,
+    created_at: formatDate_(createdAt),
+  };
 }
 
 function deleteComment_(commentId, commentRow) {
