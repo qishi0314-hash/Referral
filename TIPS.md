@@ -11,7 +11,7 @@ Only **1–2 editors** should have the Editor login. They keep the list accurate
 Staff cannot edit the directory directly. Editors add updates at the **top of Description** — include the info, who contributed it, and the date.
 
 ```
---- NOT accepting new clients (reported by Sally S., 7/8/2026) ---
+--- NOT accepting new clients (Sally S., 7/8/2026) ---
 
 [older description text]
 ```
